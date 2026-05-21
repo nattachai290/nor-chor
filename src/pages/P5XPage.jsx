@@ -223,6 +223,35 @@ export default function P5XPage() {
     }
   }
 
+  function CharCard({ c }) {
+    const ec = ELEM_COLORS[c.element] || '#888'
+    const isActive = charName === c.name
+    const starColor = c.rarity === 5 ? '#ffcc44' : c.rarity === 4 ? '#ccaa22' : '#aa8811'
+    return (
+      <div className={'char-card' + (isActive ? ' selected' : '')}
+        onClick={() => setCharName(isActive ? '' : c.name)}>
+        <div className="char-avatar-wrap">
+          <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
+            {PORTRAITS[c.name]
+              ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait"
+                  onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
+              : null}
+            <span style={{ color: ec, fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>
+              {c.codename.slice(0,3)}
+            </span>
+          </div>
+          {ROLE_IMG[c.role] && (
+            <div className="char-role-badge">
+              <img src={ROLE_IMG[c.role]} alt={c.role} />
+            </div>
+          )}
+        </div>
+        <div className="char-card-name">{c.codename}</div>
+        <div className="char-card-stars" style={{ color: starColor }}>{'★'.repeat(c.rarity)}</div>
+      </div>
+    )
+  }
+
   function StatRow({ label, statKey, max, maxRange, unit = '%' }) {
     return (
       <div className="p5x-stat-row">
@@ -265,78 +294,15 @@ export default function P5XPage() {
           <div className="char-grid-wrap">
             {grouped5.length > 0 && <div className="char-grid-label">⭐⭐⭐⭐⭐ 5-Star</div>}
             <div className="char-grid">
-              {grouped5.map(c => {
-                const ec = ELEM_COLORS[c.element] || '#888'
-                const isActive = charName === c.name
-                return (
-                  <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
-                    onClick={() => setCharName(isActive ? '' : c.name)}>
-                    <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {PORTRAITS[c.name]
-                        ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
-                        : null}
-                      <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>{c.codename.slice(0,3)}</span>
-                      {ROLE_IMG[c.role] && (
-                        <div className="char-role-badge">
-                          <img src={ROLE_IMG[c.role]} alt={c.role} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="char-card-name">{c.codename}</div>
-                    <div className="char-card-stars" style={{ color: '#ffcc44' }}>{'★'.repeat(c.rarity)}</div>
-                  </div>
-                )
-              })}
+              {grouped5.map(c => <CharCard key={c.name} c={c} />)}
             </div>
-            {grouped4.length > 0 && <div className="char-grid-label" style={{ marginTop: 8 }}>⭐⭐⭐⭐ 4-Star</div>}
+            {grouped4.length > 0 && <div className="char-grid-label" style={{ marginTop:8 }}>⭐⭐⭐⭐ 4-Star</div>}
             <div className="char-grid">
-              {grouped4.map(c => {
-                const ec = ELEM_COLORS[c.element] || '#888'
-                const isActive = charName === c.name
-                return (
-                  <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
-                    onClick={() => setCharName(isActive ? '' : c.name)}>
-                    <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {PORTRAITS[c.name]
-                        ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
-                        : null}
-                      <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>{c.codename.slice(0,3)}</span>
-                      {ROLE_IMG[c.role] && (
-                        <div className="char-role-badge">
-                          <img src={ROLE_IMG[c.role]} alt={c.role} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="char-card-name">{c.codename}</div>
-                    <div className="char-card-stars" style={{ color: '#ccaa22' }}>{'★'.repeat(c.rarity)}</div>
-                  </div>
-                )
-              })}
+              {grouped4.map(c => <CharCard key={c.name} c={c} />)}
             </div>
-            {grouped3.length > 0 && <div className="char-grid-label" style={{ marginTop: 8 }}>⭐⭐⭐ 3-Star</div>}
+            {grouped3.length > 0 && <div className="char-grid-label" style={{ marginTop:8 }}>⭐⭐⭐ 3-Star</div>}
             <div className="char-grid">
-              {grouped3.map(c => {
-                const ec = ELEM_COLORS[c.element] || '#888'
-                const isActive = charName === c.name
-                return (
-                  <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
-                    onClick={() => setCharName(isActive ? '' : c.name)}>
-                    <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {PORTRAITS[c.name]
-                        ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
-                        : null}
-                      <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>{c.codename.slice(0,3)}</span>
-                      {ROLE_IMG[c.role] && (
-                        <div className="char-role-badge">
-                          <img src={ROLE_IMG[c.role]} alt={c.role} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="char-card-name">{c.codename}</div>
-                    <div className="char-card-stars" style={{ color: '#aa8811' }}>{'★'.repeat(c.rarity)}</div>
-                  </div>
-                )
-              })}
+              {grouped3.map(c => <CharCard key={c.name} c={c} />)}
             </div>
           </div>
 
