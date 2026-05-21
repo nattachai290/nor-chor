@@ -37,6 +37,16 @@ const CHARACTERS = [
   {name:'Yui Yoshida',     codename:'Yui',     role:'Assassin',   element:'Electric', rarity:4, cards:['Courage 4pc','Valor 2pc'],     weapon:'Best Electric ATK weapon',                       statPrio:['ATK%','CRIT Rate%','Electric DMG%'],              note:'Single-target Electric DPS. Courage 4pc excels vs solo bosses.'},
 ]
 
+const BASE = 'https://lufel.net/apps/guides/data/assets/make-party/'
+const ROLE_IMG = {
+  Sweeper:    BASE + 'pasted-1772094048970.png',
+  Assassin:   BASE + 'pasted-1772094055909.png',
+  Strategist: BASE + 'pasted-1772094061413.png',
+  Saboteur:   BASE + 'pasted-1772094196652.png',
+  Guardian:   BASE + 'pasted-1772094066423.png',
+  Medic:      BASE + 'pasted-1772094075911.png',
+  Elucidator: BASE + 'pasted-1772094090247.png',
+}
 const ROLE_ICONS = {Sweeper:'🌊', Assassin:'⚔️', Medic:'💚', Guardian:'🛡️', Saboteur:'🎯', Strategist:'🎵', Elucidator:'📡', Virtuoso:'✨'}
 const ELEM_COLORS = {Fire:'#ff4422',Ice:'#44aaff',Electric:'#ffee00',Wind:'#44ffaa',Nuclear:'#ff8800',Curse:'#aa44ff',Bless:'#ffcc44',Physical:'#ff8866','-':'#888888'}
 const ROLE_COLORS = {Sweeper:'#40c8ff', Assassin:'#ff6030', Medic:'#40ff80', Guardian:'#8080ff', Saboteur:'#ffcc40', Strategist:'#b060ff', Elucidator:'#40ffcc', Virtuoso:'#ff88ff'}
@@ -168,19 +178,14 @@ export default function P5XPage() {
           <div className="section-title">📖 BUILD REFERENCE</div>
 
           <div className="filter-row">
-            {[
-              ['all','All'],
-              ['Sweeper','🌊 Sweeper'],
-              ['Assassin','⚔️ Assassin'],
-              ['Guardian','🛡️ Guardian'],
-              ['Strategist','🎵 Strategist'],
-              ['Saboteur','🎯 Saboteur'],
-              ['Elucidator','📡 Elucidator'],
-              ['Medic','💚 Medic'],
-              ['Virtuoso','✨ Virtuoso'],
-            ].map(([f,label]) => (
+            {['all','Sweeper','Assassin','Strategist','Saboteur','Guardian','Medic','Elucidator','Virtuoso'].map(f => (
               <button key={f} className={'filter-btn' + (filter===f?' active':'')} onClick={() => { setFilter(f); setCharName('') }}>
-                {label}
+                {f === 'all' ? 'All' : (
+                  <>
+                    {ROLE_IMG[f] && <img src={ROLE_IMG[f]} alt={f} className="filter-role-icon" />}
+                    {f}
+                  </>
+                )}
               </button>
             ))}
           </div>
@@ -195,8 +200,8 @@ export default function P5XPage() {
                   <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
                     onClick={() => setCharName(isActive ? '' : c.name)}>
                     <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {c.portrait
-                        ? <img src={c.portrait} alt={c.codename} />
+                      {ROLE_IMG[c.role]
+                        ? <img src={ROLE_IMG[c.role]} alt={c.role} style={{ width:'70%', height:'70%', objectFit:'contain', filter:'brightness(0) invert(1)' }} />
                         : <span style={{ color: ec }}>{c.codename.slice(0,3)}</span>}
                     </div>
                     <div className="char-card-name">{c.codename}</div>
@@ -214,8 +219,8 @@ export default function P5XPage() {
                   <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
                     onClick={() => setCharName(isActive ? '' : c.name)}>
                     <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {c.portrait
-                        ? <img src={c.portrait} alt={c.codename} />
+                      {ROLE_IMG[c.role]
+                        ? <img src={ROLE_IMG[c.role]} alt={c.role} style={{ width:'70%', height:'70%', objectFit:'contain', filter:'brightness(0) invert(1)' }} />
                         : <span style={{ color: ec }}>{c.codename.slice(0,3)}</span>}
                     </div>
                     <div className="char-card-name">{c.codename}</div>

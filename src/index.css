@@ -157,7 +157,9 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .section-title { font-family:'Cinzel Decorative',serif; font-size:0.82rem; color:var(--persona); letter-spacing:1px; border-left:3px solid var(--persona); padding-left:9px; margin-bottom:10px; margin-top:4px; text-shadow:0 0 12px #b060ff55; }
 .section-box { background:var(--p5x-card); border:1px solid var(--p5x-border); border-radius:14px; padding:12px 14px; margin-bottom:12px; }
 .filter-row { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px; }
-.filter-btn { padding:4px 11px; border-radius:20px; border:1px solid var(--p5x-border); background:#0e0a1a; color:var(--p5x-muted); font-family:'Exo 2',sans-serif; font-size:0.7rem; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.filter-btn { display:inline-flex; align-items:center; gap:5px; padding:4px 11px; border-radius:20px; border:1px solid var(--p5x-border); background:#0e0a1a; color:var(--p5x-muted); font-family:'Exo 2',sans-serif; font-size:0.7rem; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.filter-role-icon { width:16px; height:16px; object-fit:contain; filter:brightness(0) invert(0.5); }
+.filter-btn.active .filter-role-icon { filter:brightness(0) invert(1); }
 .filter-btn:hover { border-color:var(--persona); color:var(--persona3); }
 .filter-btn.active { background:linear-gradient(135deg,var(--persona2),#3d0a88); border-color:var(--persona); color:#fff; box-shadow:0 0 8px #b060ff44; }
 .char-grid-wrap { margin-bottom:10px; }
