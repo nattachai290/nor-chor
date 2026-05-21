@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 
+// ── Google Drive config ──────────────────────────────────────────────────────
+// สร้าง Client ID ที่ https://console.cloud.google.com → APIs & Services → Credentials
+// เพิ่ม Authorized JS origin: https://nattachai290.github.io
+const DRIVE_CLIENT_ID = ''   // ← วาง Client ID ของคุณที่นี่
+const DRIVE_FILE = 'enj-excavator-data.json'
+// ────────────────────────────────────────────────────────────────────────────
+
 const G = [
   {name:'Aeonclipse',  gpm:30,    bc:20,        bu:10},
   {name:'Archspire',   gpm:75,    bc:50,        bu:25},
@@ -43,6 +50,11 @@ export default function ENJPage() {
   const [copyOk, setCopyOk] = useState(false)
   const [showDetail, setShowDetail] = useState(false)
   const detailRef = useRef(null)
+  const [driveToken, setDriveToken] = useState(null)
+  const [driveUser, setDriveUser] = useState(null)
+  const [driveStatus, setDriveStatus] = useState('')
+  const [driveMsg, setDriveMsg] = useState('')
+  const gisRef = useRef(null)
 
   const totalBoost = boost + Math.min(dragon * 0.025, 50)
   const dragonPct = Math.min(dragon * 0.025, 50)
@@ -103,6 +115,93 @@ export default function ENJPage() {
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
   }, [])
+
+  // ── Google Drive ────────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!DRIVE_CLIENT_ID) return
+    const s = document.createElement('script')
+    s.src = 'https://accounts.google.com/gsi/client'
+    s.async = true
+    s.onload = () => {
+      gisRef.current = window.google.accounts.oauth2.initTokenClient({
+        client_id: DRIVE_CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/drive.appdata email profile',
+        callback: async (resp) => {
+          if (resp.error) { setDriveStatus('error'); setDriveMsg('เชื่อมต่อไม่สำเร็จ'); return }
+          setDriveToken(resp.access_token)
+          const info = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${resp.access_token}` }
+          }).then(r => r.json()).catch(() => null)
+          setDriveUser(info ? { name: info.name, email: info.email, pic: info.picture } : null)
+          setDriveStatus('connected')
+          setDriveMsg('')
+        }
+      })
+    }
+    document.body.appendChild(s)
+    return () => { try { document.body.removeChild(s) } catch {} }
+  }, [])
+
+  function connectDrive() { gisRef.current?.requestAccessToken() }
+
+  function disconnectDrive() {
+    if (driveToken) window.google?.accounts.oauth2.revoke(driveToken, () => {})
+    setDriveToken(null); setDriveUser(null); setDriveStatus(''); setDriveMsg('')
+  }
+
+  async function driveSearch(token) {
+    const r = await fetch(
+      `https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name='${DRIVE_FILE}'&fields=files(id)`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    const d = await r.json()
+    return d.files?.[0] || null
+  }
+
+  async function saveToDrive() {
+    if (!driveToken) return
+    setDriveStatus('saving')
+    try {
+      const data = JSON.stringify({ version: 1, dragon, boost, counts, usteps })
+      const existing = await driveSearch(driveToken)
+      if (existing) {
+        await fetch(`https://www.googleapis.com/upload/drive/v3/files/${existing.id}?uploadType=media`, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${driveToken}`, 'Content-Type': 'application/json' },
+          body: data,
+        })
+      } else {
+        const form = new FormData()
+        form.append('metadata', new Blob([JSON.stringify({ name: DRIVE_FILE, parents: ['appDataFolder'] })], { type: 'application/json' }))
+        form.append('file', new Blob([data], { type: 'application/json' }))
+        await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+          method: 'POST', headers: { Authorization: `Bearer ${driveToken}` }, body: form,
+        })
+      }
+      setDriveStatus('connected'); setDriveMsg('✅ บันทึกแล้ว')
+    } catch { setDriveStatus('error'); setDriveMsg('❌ บันทึกไม่สำเร็จ') }
+    setTimeout(() => setDriveMsg(''), 2500)
+  }
+
+  async function loadFromDrive() {
+    if (!driveToken) return
+    setDriveStatus('loading')
+    try {
+      const file = await driveSearch(driveToken)
+      if (!file) { setDriveStatus('connected'); setDriveMsg('⚠️ ไม่พบข้อมูลใน Drive'); setTimeout(() => setDriveMsg(''), 3000); return }
+      const resp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
+        headers: { Authorization: `Bearer ${driveToken}` }
+      })
+      const d = await resp.json()
+      if (d.counts) setCounts(d.counts.slice(0, G.length).map(v => Number(v) || 0))
+      if (d.usteps) setUsteps(d.usteps.slice(0, G.length).map(v => Number(v) || 0))
+      if (d.dragon !== undefined) setDragon(Number(d.dragon) || 0)
+      if (d.boost !== undefined) setBoost(Number(d.boost) || 0)
+      setDriveStatus('connected'); setDriveMsg('✅ โหลดแล้ว')
+    } catch { setDriveStatus('error'); setDriveMsg('❌ โหลดไม่สำเร็จ') }
+    setTimeout(() => setDriveMsg(''), 2500)
+  }
+  // ──────────────────────────────────────────────────────────────────────────
 
   function changeCount(i, d) {
     setCounts(prev => { const n = [...prev]; n[i] = Math.max(0, n[i] + d); return n })
@@ -175,8 +274,8 @@ export default function ENJPage() {
           <div className="total-boost">💫 {totalBoost.toFixed(2)}%</div>
         </div>
 
-        {/* Save/Load buttons */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+        {/* Save/Load + Drive buttons */}
+        <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
           <button className="btn-calc"
             style={{ background: 'linear-gradient(135deg,#0d3b1f,#1a6b35)', color: 'var(--green)', flex: 1 }}
             onClick={() => setShowExport(true)}>
@@ -187,6 +286,38 @@ export default function ENJPage() {
             onClick={() => setShowImport(true)}>
             📥 Load (Import)
           </button>
+        </div>
+        {/* Google Drive row */}
+        <div style={{ marginBottom: 10 }}>
+          {!driveToken ? (
+            <button className="btn-calc drive-connect-btn"
+              disabled={!DRIVE_CLIENT_ID}
+              title={!DRIVE_CLIENT_ID ? 'ยังไม่ได้ตั้งค่า Google Client ID' : ''}
+              onClick={connectDrive}
+              style={{ width: '100%', background: 'linear-gradient(135deg,#1a0a2e,#2a1255)', border: '1px solid #4285f4', color: '#8ab4f8', opacity: DRIVE_CLIENT_ID ? 1 : 0.45 }}>
+              <img src="https://www.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png" alt="Drive" style={{ width: 18, verticalAlign: 'middle', marginRight: 6 }} />
+              🔗 Connect Google Drive
+            </button>
+          ) : (
+            <div style={{ background: '#0d1a0d', border: '1px solid #2a6b35', borderRadius: 10, padding: '8px 12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                {driveUser?.pic && <img src={driveUser.pic} referrerPolicy="no-referrer" alt="" style={{ width: 24, height: 24, borderRadius: '50%' }} />}
+                <span style={{ fontSize: '0.78rem', color: 'var(--gem)', flex: 1 }}>☁️ {driveUser?.email || 'Connected'}</span>
+                <button onClick={disconnectDrive} style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '1rem', lineHeight: 1 }}>✕</button>
+              </div>
+              <div style={{ display: 'flex', gap: 6 }}>
+                <button className="btn-calc" onClick={saveToDrive} disabled={driveStatus === 'saving'}
+                  style={{ flex: 1, background: 'linear-gradient(135deg,#0d3b1f,#1a6b35)', color: 'var(--green)', fontSize: '0.78rem', padding: '6px 8px' }}>
+                  {driveStatus === 'saving' ? '⏳ กำลังบันทึก...' : '☁️ บันทึกลง Drive'}
+                </button>
+                <button className="btn-calc" onClick={loadFromDrive} disabled={driveStatus === 'loading'}
+                  style={{ flex: 1, background: 'linear-gradient(135deg,#0d1a3b,#1a3565)', color: 'var(--blue)', fontSize: '0.78rem', padding: '6px 8px' }}>
+                  {driveStatus === 'loading' ? '⏳ กำลังโหลด...' : '☁️ โหลดจาก Drive'}
+                </button>
+              </div>
+              {driveMsg && <div style={{ marginTop: 5, fontSize: '0.75rem', color: driveMsg.startsWith('✅') ? 'var(--gem)' : 'var(--orange)' }}>{driveMsg}</div>}
+            </div>
+          )}
         </div>
 
         {/* Stats bar */}
