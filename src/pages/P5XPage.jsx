@@ -47,6 +47,25 @@ const ROLE_IMG = {
   Medic:      BASE + 'pasted-1772094075911.png',
   Elucidator: BASE + 'pasted-1772094090247.png',
 }
+const P = 'https://lufel.net/assets/img/character-cards/'
+const PORTRAITS = {
+  'Ren Amamiya':      P + '렌.webp',
+  'Ann Takamaki':     P + '앤.webp',
+  'Ryuji Sakamoto':   P + '류지.webp',
+  'Kasumi Yoshizawa': P + '카스미.webp',
+  'Futaba Sakura':    P + '후타바.webp',
+  'Ayaka Sakai':      P + '아야카.webp',
+  'Tempest Riko':     P + '리코.webp',
+  'Yaoling Li':       P + '야오링.webp',
+  'Seiji Shiratori':  P + '세이지.webp',
+  'Manaka Nagao':     P + '마나카.webp',
+  'Yusuke Kitagawa':  P + '유스케.webp',
+  'Makoto Niijima':   P + '유키 마코토.webp',
+  'Morgana':          P + '모나.webp',
+  'Minami Miyashita': P + '미나미.webp',
+  'Lufel':            P + '루펠.webp',
+  'Yui Yoshida':      P + '유이.webp',
+}
 const ROLE_ICONS = {Sweeper:'🌊', Assassin:'⚔️', Medic:'💚', Guardian:'🛡️', Saboteur:'🎯', Strategist:'🎵', Elucidator:'📡', Virtuoso:'✨'}
 const ELEM_COLORS = {Fire:'#ff4422',Ice:'#44aaff',Electric:'#ffee00',Wind:'#44ffaa',Nuclear:'#ff8800',Curse:'#aa44ff',Bless:'#ffcc44',Physical:'#ff8866','-':'#888888'}
 const ROLE_COLORS = {Sweeper:'#40c8ff', Assassin:'#ff6030', Medic:'#40ff80', Guardian:'#8080ff', Saboteur:'#ffcc40', Strategist:'#b060ff', Elucidator:'#40ffcc', Virtuoso:'#ff88ff'}
@@ -200,9 +219,10 @@ export default function P5XPage() {
                   <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
                     onClick={() => setCharName(isActive ? '' : c.name)}>
                     <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {c.portrait
-                        ? <img src={c.portrait} alt={c.codename} className="portrait" />
-                        : <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700 }}>{c.codename.slice(0,3)}</span>}
+                      {PORTRAITS[c.name]
+                        ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
+                        : null}
+                      <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>{c.codename.slice(0,3)}</span>
                       {ROLE_IMG[c.role] && (
                         <div className="char-role-badge">
                           <img src={ROLE_IMG[c.role]} alt={c.role} />
@@ -224,9 +244,10 @@ export default function P5XPage() {
                   <div key={c.name} className={'char-card' + (isActive ? ' selected' : '')}
                     onClick={() => setCharName(isActive ? '' : c.name)}>
                     <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
-                      {c.portrait
-                        ? <img src={c.portrait} alt={c.codename} className="portrait" />
-                        : <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700 }}>{c.codename.slice(0,3)}</span>}
+                      {PORTRAITS[c.name]
+                        ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
+                        : null}
+                      <span style={{ color: ec, fontSize:'0.7rem', fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>{c.codename.slice(0,3)}</span>
                       {ROLE_IMG[c.role] && (
                         <div className="char-role-badge">
                           <img src={ROLE_IMG[c.role]} alt={c.role} />
@@ -244,7 +265,11 @@ export default function P5XPage() {
           {currentChar && (
             <div className="char-info active">
               <div className="char-header">
-                <div className="char-role-icon">{ROLE_ICONS[currentChar.role]||'❓'}</div>
+                <div className="char-header-portrait">
+                  {PORTRAITS[currentChar.name]
+                    ? <img src={PORTRAITS[currentChar.name]} alt={currentChar.codename} onError={e => e.target.style.display='none'} />
+                    : <span>{ROLE_ICONS[currentChar.role]||'❓'}</span>}
+                </div>
                 <div className="char-title">
                   <div className="char-name">{currentChar.name}</div>
                   <div className="char-codename">{currentChar.codename}</div>
