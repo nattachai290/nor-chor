@@ -41,7 +41,7 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
   text-align: center; margin-bottom: 6px;
 }
 .home-sub { text-align: center; color: var(--muted); font-size: 0.78rem; margin-bottom: 28px; }
-.game-cards { display: flex; gap: 14px; flex-wrap: wrap; max-width: 700px; margin: 0 auto; }
+.game-cards { display: flex; gap: 16px; flex-wrap: wrap; max-width: 960px; margin: 0 auto; }
 .game-card {
   flex: 1; min-width: 220px; background: var(--card); border: 1px solid var(--border);
   border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--text);
@@ -49,10 +49,10 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 }
 .game-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px #00ff8822; border-color: var(--gem); }
 .game-card.p5x:hover { box-shadow: 0 6px 24px #b060ff22; border-color: var(--persona); }
-.game-card-icon { font-size: 2rem; }
-.game-card-name { font-family: 'Cinzel Decorative', serif; font-size: 0.9rem; color: var(--gold); }
+.game-card-icon { font-size: clamp(2rem,4vw,3.5rem); }
+.game-card-name { font-family: 'Cinzel Decorative', serif; font-size: clamp(0.9rem,2vw,1.2rem); color: var(--gold); }
 .game-card.p5x .game-card-name { color: var(--persona3); }
-.game-card-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+.game-card-desc { font-size: clamp(0.72rem,1.2vw,0.95rem); color: var(--muted); line-height: 1.5; }
 .game-card-tag {
   font-size: 0.62rem; padding: 2px 8px; border-radius: 10px; display: inline-block;
   background: #061a0c; border: 1px solid var(--border); color: var(--gem); margin-top: 4px;
@@ -161,13 +161,13 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
   .p5x-header h1 { font-size:2rem; }
   .p5x-header p { font-size:0.9rem; }
   .section-title { font-size:1rem; }
-  .char-card { width:88px; }
-  .char-avatar { width:64px; height:64px; }
-  .char-card-name { font-size:0.68rem; }
-  .char-card-stars { font-size:0.58rem; }
-  .char-role-badge { width:24px; height:24px; }
-  .char-role-badge img { width:17px; height:17px; }
-  .char-header-portrait { width:72px; height:72px; }
+  .char-card { width:106px; }
+  .char-avatar { width:80px; height:80px; }
+  .char-card-name { font-size:0.74rem; }
+  .char-card-stars { font-size:0.62rem; }
+  .char-role-badge { width:28px; height:28px; }
+  .char-role-badge img { width:20px; height:20px; }
+  .char-header-portrait { width:88px; height:88px; }
   .filter-btn { font-size:0.8rem; padding:5px 14px; }
   .filter-role-icon { width:18px; height:18px; }
   .section-box { padding:16px 20px; }
