@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Auth</title>
+  <style>
+    body { margin: 0; background: #0a0618; color: #ccaaff; font-family: sans-serif;
+           display: flex; align-items: center; justify-content: center; height: 100vh; }
+    p { font-size: 1rem; opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <p id="msg">กำลังตรวจสอบ...</p>
+  <script>
+    const hash = window.location.hash.slice(1)
+    const params = new URLSearchParams(hash)
+    const token = params.get('access_token')
+    const msg = document.getElementById('msg')
+    if (token && window.opener && !window.opener.closed) {
+      window.opener.postMessage({ access_token: token }, window.location.origin)
+      msg.textContent = '✅ เชื่อมต่อสำเร็จ กำลังปิดหน้าต่างนี้...'
+      window.close()
+    } else if (params.get('error')) {
+      msg.textContent = '❌ ยกเลิกการเชื่อมต่อ คุณสามารถปิดหน้าต่างนี้ได้'
+    } else {
+      msg.textContent = '⚠️ ไม่พบ token คุณสามารถปิดหน้าต่างนี้ได้'
+    }
+  </script>
+</body>
+</html>

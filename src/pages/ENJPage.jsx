@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 
 // ── Google Drive config ──────────────────────────────────────────────────────
 // สร้าง Client ID ที่ https://console.cloud.google.com → APIs & Services → Credentials
-// เพิ่ม Authorized JS origin: https://nattachai290.github.io
+// เพิ่ม Authorized JS origins: https://nattachai290.github.io
+// เพิ่ม Authorized redirect URIs: https://nattachai290.github.io/enj-excavator/oauth-callback.html
 const DRIVE_CLIENT_ID = ''   // ← วาง Client ID ของคุณที่นี่
 const DRIVE_FILE = 'enj-excavator-data.json'
 // ────────────────────────────────────────────────────────────────────────────
@@ -54,7 +55,6 @@ export default function ENJPage() {
   const [driveUser, setDriveUser] = useState(null)
   const [driveStatus, setDriveStatus] = useState('')
   const [driveMsg, setDriveMsg] = useState('')
-  const gisRef = useRef(null)
 
   const totalBoost = boost + Math.min(dragon * 0.025, 50)
   const dragonPct = Math.min(dragon * 0.025, 50)
@@ -117,35 +117,47 @@ export default function ENJPage() {
   }, [])
 
   // ── Google Drive ────────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (!DRIVE_CLIENT_ID) return
-    const s = document.createElement('script')
-    s.src = 'https://accounts.google.com/gsi/client'
-    s.async = true
-    s.onload = () => {
-      gisRef.current = window.google.accounts.oauth2.initTokenClient({
-        client_id: DRIVE_CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/drive.appdata email profile',
-        callback: async (resp) => {
-          if (resp.error) { setDriveStatus('error'); setDriveMsg('เชื่อมต่อไม่สำเร็จ'); return }
-          setDriveToken(resp.access_token)
-          const info = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-            headers: { Authorization: `Bearer ${resp.access_token}` }
-          }).then(r => r.json()).catch(() => null)
-          setDriveUser(info ? { name: info.name, email: info.email, pic: info.picture } : null)
-          setDriveStatus('connected')
-          setDriveMsg('')
-        }
-      })
+  function connectDrive() {
+    if (!DRIVE_CLIENT_ID) {
+      setDriveMsg('⚠️ ยังไม่ได้ตั้งค่า Google Client ID ใน ENJPage.jsx')
+      setTimeout(() => setDriveMsg(''), 4000)
+      return
     }
-    document.body.appendChild(s)
-    return () => { try { document.body.removeChild(s) } catch {} }
-  }, [])
-
-  function connectDrive() { gisRef.current?.requestAccessToken() }
+    const callbackUrl = window.location.origin + import.meta.env.BASE_URL + 'oauth-callback.html'
+    const params = new URLSearchParams({
+      client_id: DRIVE_CLIENT_ID,
+      redirect_uri: callbackUrl,
+      response_type: 'token',
+      scope: 'https://www.googleapis.com/auth/drive.appdata email profile',
+      prompt: 'select_account',
+    })
+    const popup = window.open(
+      'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString(),
+      'googleAuth',
+      'width=520,height=640,resizable=yes,scrollbars=yes'
+    )
+    function onMessage(e) {
+      if (e.origin !== window.location.origin) return
+      if (!e.data?.access_token) return
+      window.removeEventListener('message', onMessage)
+      clearInterval(checkClosed)
+      const token = e.data.access_token
+      setDriveToken(token)
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(r => r.json()).then(info => {
+        setDriveUser({ name: info.name, email: info.email, pic: info.picture })
+        setDriveStatus('connected')
+        setDriveMsg('')
+      }).catch(() => { setDriveStatus('connected'); setDriveMsg('') })
+    }
+    window.addEventListener('message', onMessage)
+    const checkClosed = setInterval(() => {
+      if (popup?.closed) { clearInterval(checkClosed); window.removeEventListener('message', onMessage) }
+    }, 1000)
+  }
 
   function disconnectDrive() {
-    if (driveToken) window.google?.accounts.oauth2.revoke(driveToken, () => {})
     setDriveToken(null); setDriveUser(null); setDriveStatus(''); setDriveMsg('')
   }
 
@@ -290,14 +302,15 @@ export default function ENJPage() {
         {/* Google Drive row */}
         <div style={{ marginBottom: 10 }}>
           {!driveToken ? (
+            <>
             <button className="btn-calc drive-connect-btn"
-              disabled={!DRIVE_CLIENT_ID}
-              title={!DRIVE_CLIENT_ID ? 'ยังไม่ได้ตั้งค่า Google Client ID' : ''}
               onClick={connectDrive}
-              style={{ width: '100%', background: 'linear-gradient(135deg,#1a0a2e,#2a1255)', border: '1px solid #4285f4', color: '#8ab4f8', opacity: DRIVE_CLIENT_ID ? 1 : 0.45 }}>
+              style={{ width: '100%', background: 'linear-gradient(135deg,#1a0a2e,#2a1255)', border: '1px solid #4285f4', color: '#8ab4f8' }}>
               <img src="https://www.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png" alt="Drive" style={{ width: 18, verticalAlign: 'middle', marginRight: 6 }} />
               🔗 Connect Google Drive
             </button>
+            {driveMsg && <div style={{ marginTop: 5, fontSize: '0.75rem', color: 'var(--orange)' }}>{driveMsg}</div>}
+            </>
           ) : (
             <div style={{ background: '#0d1a0d', border: '1px solid #2a6b35', borderRadius: 10, padding: '8px 12px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
