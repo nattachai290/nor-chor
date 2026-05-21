@@ -74,13 +74,7 @@ export default function P5XPage() {
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
 
-  const filtered = CHARACTERS.filter(c => {
-    if (filter === 'all') return true
-    if (filter === 'dps') return DPS_ROLES.includes(c.role)
-    if (filter === 'support') return SUPPORT_ROLES.includes(c.role)
-    if (filter === 'medic') return MEDIC_ROLES.includes(c.role)
-    return true
-  })
+  const filtered = CHARACTERS.filter(c => filter === 'all' || c.role === filter)
 
   const grouped5 = filtered.filter(c => c.rarity === 5)
   const grouped4 = filtered.filter(c => c.rarity === 4)
@@ -177,7 +171,15 @@ export default function P5XPage() {
           <div className="section-title">📖 BUILD REFERENCE</div>
 
           <div className="filter-row">
-            {[['all','All'],['dps','⚔️ DPS'],['support','🎵 Support'],['medic','💚 Medic']].map(([f,label]) => (
+            {[
+              ['all','All'],
+              ['Sweeper','🌊 Sweeper'],
+              ['Assassin','⚔️ Assassin'],
+              ['Strategist','🎵 Strategist'],
+              ['Saboteur','🎯 Saboteur'],
+              ['Navigator','📡 Navigator'],
+              ['Medic','💚 Medic'],
+            ].map(([f,label]) => (
               <button key={f} className={'filter-btn' + (filter===f?' active':'')} onClick={() => { setFilter(f); setCharName('') }}>
                 {label}
               </button>
