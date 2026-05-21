@@ -37,7 +37,7 @@ const CHARACTERS = [
   {name:'Turbo',           codename:'Turbo',   role:'Sweeper',    element:'Electric', rarity:5, cards:['Courage 4pc','Valor 2pc'],      weapon:'Best Electric ATK weapon',                       statPrio:['ATK%','CRIT Rate%','CRIT DMG%','Electric DMG%'], note:'Fast Electric Sweeper. High hit-count attacks make Courage 4pc very effective.'},
   {name:'Matoi',           codename:'Matoi',   role:'Guardian',   element:'Wind',     rarity:5, cards:['Peace 4pc','Opulence 2pc'],    weapon:'Best HP/DEF tanking weapon',                     statPrio:['HP%','DEF%','SPD'],                               note:'Wind-element Guardian. Provides party-wide damage mitigation and taunts.'},
   {name:'Howler',          codename:'Howler',  role:'Sweeper',    element:'Fire',     rarity:5, cards:['Power 4pc','Strife 2pc'],       weapon:'Best Fire ATK weapon',                           statPrio:['ATK%','Fire DMG%','CRIT Rate%','CRIT DMG%'],      note:'Aggressive Fire Sweeper with strong AoE coverage. Power 4pc amplifies team damage.'},
-  {name:'J&C',             codename:'J&C',     role:'Saboteur',   element:'Curse',    rarity:5, cards:['Hindrance 4pc','Strife 2pc'],   weapon:'Best Curse / debuff weapon',                     statPrio:['ATK%','SPD','DEF%'],                              note:'Dual-persona Saboteur. Curses and debilitates enemies, synergises with Curse DPS.'},
+  {name:'J&C',             codename:'J&C',     role:'Virtuoso',   element:'Curse',    rarity:5, cards:['Hindrance 4pc','Strife 2pc'],   weapon:'Best Curse / debuff weapon',                     statPrio:['ATK%','SPD','DEF%'],                              note:'Dual-persona Virtuoso. Unique performance mechanics that alternate between two fighting styles.'},
   {name:'Noir',            codename:'Noir',    role:'Strategist', element:'-',        rarity:5, cards:['Opulence 4pc','Integrity 2pc'], weapon:'Best SPD/Support weapon',                        statPrio:['ATK%','SPD','HP%'],                               note:'Elegant Strategist. Buffs party ATK and applies pierce, enabling high team damage output.'},
   {name:'Cherish',         codename:'Cherish', role:'Guardian',   element:'Bless',    rarity:5, cards:['Peace 4pc','Virtue 2pc'],      weapon:'Best HP/Shield weapon',                          statPrio:['HP%','DEF%','Healing Bonus%'],                    note:'Bless Guardian specialising in shields and party protection. Virtue 2pc enhances Bless synergy.'},
   {name:'Messa',           codename:'Messa',   role:'Guardian',   element:'Nuclear',  rarity:5, cards:['Peace 4pc','Opulence 2pc'],    weapon:'Best Nuclear tank weapon',                       statPrio:['HP%','DEF%','SPD'],                               note:'Nuclear Guardian. Tanks damage while inflicting Nuclear weakness for DPS follow-ups.'},
@@ -46,8 +46,6 @@ const CHARACTERS = [
   // ─── 4-Star ─────────────────────────────────────────────────────────────
   {name:'Morgana',         codename:'Mona',    role:'Medic',      element:'Wind',     rarity:4, cards:['Peace 4pc','Opulence 2pc'],    weapon:'Best Healing / HP weapon',                       statPrio:['HP%','Healing Bonus%','DEF%'],                    note:'Only character who can revive allies mid-battle. Prioritise HP% for better revive threshold.'},
   {name:'Minami Miyashita',codename:'Bui',     role:'Medic',      element:'Bless',    rarity:4, cards:['Peace 4pc','Virtue 2pc'],      weapon:'Best Healing weapon',                            statPrio:['HP%','Healing Bonus%','DEF%'],                    note:'Top healer — removes all status effects from the party.'},
-  {name:'Lufel',           codename:'Lufel',   role:'Medic',      element:'Fire',     rarity:4, cards:['Peace 4pc','Victory 2pc'],     weapon:'Best Healing / ATK scaling weapon',              statPrio:['HP%','Healing Bonus%','ATK%'],                    note:'Best 4-star support. Heals scale with ATK so ATK% investment is worthwhile alongside HP%.'},
-  {name:'Yui Yoshida',     codename:'Yui',     role:'Assassin',   element:'Electric', rarity:4, cards:['Courage 4pc','Valor 2pc'],     weapon:'Best Electric ATK weapon',                       statPrio:['ATK%','CRIT Rate%','Electric DMG%'],              note:'Single-target Electric DPS. Courage 4pc excels vs solo bosses.'},
   {name:'Vino',            codename:'Vino',    role:'Saboteur',   element:'Curse',    rarity:4, cards:['Hindrance 4pc','Strife 2pc'],   weapon:'Best Curse debuff weapon',                       statPrio:['ATK%','SPD','DEF%'],                              note:'4★ Saboteur. Applies Curse debuffs to boost Curse DPS team output.'},
   {name:'Riddle',          codename:'Riddle',  role:'Strategist', element:'-',        rarity:4, cards:['Integrity 4pc','Opulence 2pc'], weapon:'Best SPD support weapon',                        statPrio:['ATK%','SPD','HP%'],                               note:'Speedster Strategist. Integrity 4pc sustains high action frequency.'},
   {name:'Cattle',          codename:'Cattle',  role:'Medic',      element:'Wind',     rarity:4, cards:['Abundance 4pc','Peace 2pc'],    weapon:'Best Healing weapon',                            statPrio:['HP%','Healing Bonus%','DEF%'],                    note:'Steady 4★ Healer. Provides consistent HP recovery for the party.'},
@@ -72,6 +70,7 @@ const ROLE_IMG = {
   Guardian:   BASE + 'pasted-1772094066423.png',
   Medic:      BASE + 'pasted-1772094075911.png',
   Elucidator: BASE + 'pasted-1772094090247.png',
+  Virtuoso:   import.meta.env.BASE_URL + 'roles/virtuoso.svg',
 }
 const BASE_PORTRAITS = import.meta.env.BASE_URL + 'portraits/'
 const PORTRAITS = {
@@ -100,8 +99,6 @@ const PORTRAITS = {
   'Marian':           BASE_PORTRAITS + 'marian.webp',
   'Morgana':          BASE_PORTRAITS + 'mona.webp',
   'Minami Miyashita': BASE_PORTRAITS + 'bui.webp',
-  'Lufel':            BASE_PORTRAITS + 'lufel.webp',
-  'Yui Yoshida':      BASE_PORTRAITS + 'yui.webp',
   'Vino':             BASE_PORTRAITS + 'vino.webp',
   'Riddle':           BASE_PORTRAITS + 'riddle.webp',
   'Cattle':           BASE_PORTRAITS + 'cattle.webp',
@@ -139,6 +136,7 @@ const statLabels = {atk:'ATK%',crit:'CRIT Rate%',cdmg:'CRIT DMG%',edm:'Elem DMG%
 
 export default function P5XPage() {
   const [filter, setFilter] = useState('all')
+  const [elemFilter, setElemFilter] = useState('all')
   const [charName, setCharName] = useState('')
   const [legendOpen, setLegendOpen] = useState(false)
   const [stats, setStats] = useState({atk:0,crit:0,cdmg:0,hp:0,def:0,edm:0,heal:0,spd:0})
@@ -150,7 +148,10 @@ export default function P5XPage() {
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
 
-  const filtered = CHARACTERS.filter(c => filter === 'all' || c.role === filter)
+  const filtered = CHARACTERS.filter(c =>
+    (filter === 'all' || c.role === filter) &&
+    (elemFilter === 'all' || c.element === elemFilter)
+  )
 
   const grouped5 = filtered.filter(c => c.rarity === 5)
   const grouped4 = filtered.filter(c => c.rarity === 4)
@@ -277,6 +278,7 @@ export default function P5XPage() {
         <div className="section-box">
           <div className="section-title">📖 BUILD REFERENCE</div>
 
+          <div className="filter-group-label">Role</div>
           <div className="filter-row">
             {['all','Sweeper','Assassin','Strategist','Saboteur','Guardian','Medic','Elucidator','Virtuoso'].map(f => (
               <button key={f} className={'filter-btn' + (filter===f?' active':'')} onClick={() => { setFilter(f); setCharName('') }}>
@@ -288,6 +290,24 @@ export default function P5XPage() {
                 )}
               </button>
             ))}
+          </div>
+          <div className="filter-group-label" style={{ marginTop: 8 }}>Element</div>
+          <div className="filter-row">
+            {['all','Fire','Ice','Electric','Wind','Nuclear','Curse','Bless','Physical','-'].map(e => {
+              const ec = ELEM_COLORS[e] || '#888'
+              const isActive = elemFilter === e
+              const label = {Fire:'Fire',Ice:'Ice',Electric:'Elec',Wind:'Wind',Nuclear:'Nuclear',Curse:'Curse',Bless:'Bless',Physical:'Phys','-':'None'}[e] || e
+              return (
+                <button key={e}
+                  className={'filter-btn' + (isActive ? ' active' : '')}
+                  style={isActive && e !== 'all'
+                    ? { borderColor: ec, color: ec, background: ec + '22', boxShadow: `0 0 10px ${ec}55` }
+                    : e !== 'all' ? { borderColor: ec + '66', color: ec + 'cc' } : {}}
+                  onClick={() => { setElemFilter(e); setCharName('') }}>
+                  {e === 'all' ? 'All' : <><span style={{ color: ec }}>●</span> {label}</>}
+                </button>
+              )
+            })}
           </div>
 
           <div className="char-grid-wrap">
