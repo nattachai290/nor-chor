@@ -190,9 +190,99 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .char-card { display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 8px; border-radius:14px; border:1px solid var(--p5x-border); background:#0c0c22; cursor:pointer; transition:all .2s; width:130px; position:relative; }
 .char-card:hover { border-color:var(--persona); background:#1a0a3a; transform:translateY(-2px); box-shadow:0 4px 16px #d040ff33; }
 .char-card.selected { border-color:var(--persona); background:linear-gradient(160deg,#220a44,#0f0f2a); box-shadow:0 0 16px #d040ff66, inset 0 0 8px #d040ff22; }
-.char-avatar { width:94px; height:94px; border-radius:50%; border:2px solid; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; letter-spacing:-0.5px; overflow:hidden; position:relative; }
-.char-avatar img.portrait { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.char-avatar { width:94px; height:94px; border-radius:50%; border:2px solid; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; letter-spacing:-0.5px; overflow:hidden; position:relative; z-index:1; }
+.char-avatar img.portrait { width:100%; height:100%; object-fit:contain; object-position:center center; }
 .char-avatar-wrap { position:relative; display:inline-flex; }
+
+/* ── ELEMENT BORDER GIMMICKS ── */
+/* rotating ring layer behind avatar */
+.char-avatar-wrap::before {
+  content:''; position:absolute; inset:-4px; border-radius:50%;
+  z-index:0; pointer-events:none; opacity:0;
+}
+@keyframes elem-spin { to { transform:rotate(360deg); } }
+
+/* FIRE — fast spinning flame ring + hot glow */
+.elem-border-Fire .char-avatar { border-color:#ff4422; animation:ring-fire 1.8s ease-in-out infinite; }
+.elem-border-Fire.char-avatar-wrap::before {
+  background:conic-gradient(#ff4422 0deg,#ff8800 70deg,transparent 150deg,#ff4422 230deg,#ff8800 310deg,transparent 360deg);
+  opacity:1; animation:elem-spin 1.8s linear infinite;
+}
+@keyframes ring-fire {
+  0%,100% { box-shadow:0 0 8px #ff4422aa,0 0 18px #ff220055; }
+  50%      { box-shadow:0 0 16px #ff6622,0 0 30px #ff4422aa,0 0 44px #ff000033; }
+}
+
+/* ICE — slow shimmer, crystalline sparkle */
+.elem-border-Ice .char-avatar { border-color:#44aaff; animation:ring-ice 2.8s ease-in-out infinite; }
+@keyframes ring-ice {
+  0%,100% { box-shadow:0 0 8px #44aaffaa,0 0 18px #00ccff44; }
+  50%      { box-shadow:0 0 16px #44aaff,0 0 30px #00ddffaa,0 0 42px #44aaff44; }
+}
+
+/* ELECTRIC — ultra-fast spinning multi-arc + strobe */
+.elem-border-Electric .char-avatar { border-color:#ffee00; animation:ring-electric 0.5s steps(3) infinite; }
+.elem-border-Electric.char-avatar-wrap::before {
+  background:conic-gradient(#ffee00 0deg,transparent 45deg,#ffe800 90deg,transparent 135deg,#ffee00 180deg,transparent 225deg,#ffe800 270deg,transparent 315deg,#ffee00 360deg);
+  opacity:1; animation:elem-spin 0.32s linear infinite;
+}
+@keyframes ring-electric {
+  0%  { box-shadow:0 0 8px #ffee00,0 0 16px #ffee0088; }
+  33% { box-shadow:0 0 22px #ffe000,0 0 38px #ffee00,3px 0 18px #fffaaa; }
+  66% { box-shadow:0 0 5px #ffee00,-2px 0 12px #ffee0044; }
+  100%{ box-shadow:0 0 14px #ffee00,0 0 24px #ffee0088; }
+}
+
+/* WIND — medium spinning swirl ring + soft glow */
+.elem-border-Wind .char-avatar { border-color:#44ffaa; box-shadow:0 0 10px #44ffaa66; }
+.elem-border-Wind.char-avatar-wrap::before {
+  background:conic-gradient(#44ffaa 0deg,transparent 100deg,#22dd88 160deg,transparent 260deg,#44ffaa 340deg,transparent 360deg);
+  opacity:1; animation:elem-spin 2.5s linear infinite;
+}
+
+/* NUCLEAR — slow deep pulse, radioactive orange */
+.elem-border-Nuclear .char-avatar { border-color:#ff8800; animation:ring-nuclear 2.5s ease-in-out infinite; }
+@keyframes ring-nuclear {
+  0%,100% { box-shadow:0 0 8px #ff8800aa,0 0 18px #ff880044; }
+  50%      { box-shadow:0 0 18px #ff8800,0 0 34px #ff880088,0 0 52px #ff440033; }
+}
+
+/* CURSE — slow mystic spinning dark ring + deep glow */
+.elem-border-Curse .char-avatar { border-color:#aa44ff; animation:ring-curse 2s ease-in-out infinite; }
+.elem-border-Curse.char-avatar-wrap::before {
+  background:conic-gradient(#aa44ff 0deg,transparent 90deg,#8800ee 180deg,transparent 270deg,#cc55ff 360deg);
+  opacity:0.85; animation:elem-spin 3.5s linear infinite;
+}
+@keyframes ring-curse {
+  0%,100% { box-shadow:0 0 10px #aa44ffaa,0 0 22px #8800ff55; }
+  50%      { box-shadow:0 0 20px #aa44ff,0 0 36px #aa44ffaa,0 0 56px #8800ff44; }
+}
+
+/* BLESS — slow divine golden ray ring + divine shine */
+.elem-border-Bless .char-avatar { border-color:#ffcc44; animation:ring-bless 2.5s ease-in-out infinite; }
+.elem-border-Bless.char-avatar-wrap::before {
+  background:conic-gradient(#ffcc44 0deg,#fff5aa 40deg,transparent 90deg,#ffcc44 150deg,#fff5aa 190deg,transparent 240deg,#ffcc44 300deg,#fff5aa 340deg,transparent 360deg);
+  opacity:1; animation:elem-spin 5s linear infinite;
+}
+@keyframes ring-bless {
+  0%,100% { box-shadow:0 0 10px #ffcc44aa,0 0 22px #ffaa0055; }
+  50%      { box-shadow:0 0 18px #ffcc44,0 0 34px #ffcc44aa,0 0 50px #ffaa0044; }
+}
+
+/* PHYSICAL — thick border + impact-pulse glow */
+.elem-border-Physical .char-avatar { border-color:#ff8866; border-width:3px; animation:ring-physical 2s ease-in-out infinite; }
+@keyframes ring-physical {
+  0%,100% { box-shadow:0 0 8px #ff886688,0 0 18px #ff440033; }
+  40%      { box-shadow:0 0 4px #ff8866,0 0 10px #ff442222; }
+  70%      { box-shadow:0 0 16px #ff8866,0 0 28px #ff886677; }
+}
+
+/* NO ELEMENT — subtle silver shimmer */
+.elem-border-none .char-avatar { border-color:#666688; animation:ring-none 3.5s ease-in-out infinite; }
+@keyframes ring-none {
+  0%,100% { box-shadow:0 0 4px #66668844; }
+  50%      { box-shadow:0 0 10px #88889966,0 0 18px #66668833; }
+}
 .char-role-badge { position:absolute; bottom:-5px; right:-5px; width:30px; height:30px; border-radius:50%; background:#0a0618; border:2px solid var(--p5x-border); display:flex; align-items:center; justify-content:center; overflow:hidden; z-index:2; }
 .char-role-badge img { width:22px; height:22px; object-fit:contain; mix-blend-mode:screen; }
 .char-card-name { font-size:0.82rem; color:var(--p5x-text); text-align:center; line-height:1.2; word-break:break-word; font-weight:600; }

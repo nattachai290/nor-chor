@@ -225,11 +225,12 @@ export default function P5XPage() {
     const ec = ELEM_COLORS[c.element] || '#888'
     const isActive = charName === c.name
     const starColor = c.rarity === 5 ? '#ffcc44' : c.rarity === 4 ? '#ccaa22' : '#aa8811'
+    const elemKey = c.element === '-' ? 'none' : c.element
     return (
       <div className={'char-card' + (isActive ? ' selected' : '')}
         onClick={() => setCharName(isActive ? '' : c.name)}>
-        <div className="char-avatar-wrap">
-          <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
+        <div className={`char-avatar-wrap elem-border-${elemKey}`}>
+          <div className="char-avatar" style={{ background: ec + '22' }}>
             {PORTRAITS[c.name]
               ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait"
                   onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
