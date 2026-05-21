@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💎 ENJ Excavators Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gem:#00e87a;--gem2:#00a855;--gold:#a8ff6e;--dark:#050f08;
+  --card:#0a1f10;--border:#1a4d25;--text:#d4f5dc;--muted:#5a8c65;
+  --green:#00ff88;--red:#ff4e6a;--orange:#aaff44;--blue:#88ffcc;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--dark);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;
+  background-image:radial-gradient(ellipse at 20% 0%,#003d1a55 0%,transparent 60%),
+  radial-gradient(ellipse at 80% 100%,#001a0d88 0%,transparent 60%);}
+header{text-align:center;padding:16px 16px 8px;border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,#051a0a 0%,transparent 100%);}
+header h1{font-family:'Cinzel Decorative',serif;font-size:clamp(0.95rem,4.5vw,1.4rem);
+  color:var(--gold);text-shadow:0 0 20px #f5c54288;letter-spacing:2px;}
+header p{color:var(--muted);font-size:0.75rem;margin-top:3px;}
+.container{max-width:700px;margin:0 auto;padding:10px 12px;}
+
+/* Countdown */
+.countdown-box{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:10px 14px;margin-bottom:10px;text-align:center;}
+.countdown-box .cd-title{font-size:0.72rem;color:var(--muted);margin-bottom:4px;}
+.countdown-box .cd-time{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--green);letter-spacing:2px;}
+.countdown-box .cd-thai{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+
+/* Boost section */
+.boost-section{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:10px 14px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;}
+.boost-item{display:flex;align-items:center;gap:8px;}
+.boost-item label{font-size:0.76rem;color:var(--muted);white-space:nowrap;min-width:110px;}
+.boost-item input{width:80px;padding:5px 7px;background:#050f08;border:1px solid var(--border);
+  border-radius:7px;color:var(--gold);font-family:'Exo 2',sans-serif;font-size:0.88rem;text-align:center;}
+.boost-item .pct-display{font-size:0.78rem;color:var(--gold);}
+.total-boost{background:#061a0c;border:1px solid var(--gem);border-radius:8px;
+  padding:6px 12px;font-family:'Cinzel Decorative',serif;font-size:0.95rem;color:var(--green);
+  text-align:center;}
+
+/* Stats */
+.stats-bar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
+.stat-box{flex:1;min-width:80px;background:var(--card);border:1px solid var(--border);
+  border-radius:9px;padding:8px 10px;text-align:center;}
+.stat-box .val{font-family:'Cinzel Decorative',serif;font-size:0.88rem;color:var(--gem);}
+.stat-box .lbl{font-size:0.62rem;color:var(--muted);margin-top:2px;}
+
+/* Recommend bar */
+.recommend{background:linear-gradient(135deg,#061a0c,#050f08);border:1px solid var(--gold);
+  border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:0.8rem;line-height:1.7;}
+.recommend b{color:var(--gold);}
+.rec-top{display:flex;gap:10px;flex-wrap:wrap;}
+.rec-item{flex:1;min-width:120px;background:#050f08;border-radius:8px;padding:8px 10px;}
+.rec-item .rec-label{font-size:0.68rem;color:var(--muted);}
+.rec-item .rec-val{font-weight:700;color:var(--green);font-size:0.85rem;margin-top:2px;}
+.rec-item .rec-sub{font-size:0.68rem;color:var(--orange);margin-top:1px;}
+
+/* Goblin cards */
+.goblin-list{display:flex;flex-direction:column;gap:7px;}
+.g-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:10px 12px;}
+.g-card.best-g{border-color:var(--gold);box-shadow:0 0 10px #f5c54222;}
+.g-card.best-u{border-color:var(--gem);box-shadow:0 0 10px #b44fff22;}
+.g-card.best-both{border-color:var(--green);box-shadow:0 0 12px #4eff9133;}
+
+.g-head{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.g-name{font-weight:700;color:var(--text);font-size:0.85rem;flex:1;}
+.badges{display:flex;gap:4px;}
+.badge{padding:1px 7px;border-radius:10px;font-size:0.65rem;font-weight:700;}
+.badge.bg{background:var(--gold);color:#061a0c;}
+.badge.bu{background:var(--gem);color:#fff;}
+.badge.bb{background:var(--green);color:#0d0818;}
+
+.g-rows{display:flex;flex-direction:column;gap:6px;}
+.g-row{display:flex;align-items:center;gap:8px;}
+.row-label{font-size:0.7rem;color:var(--muted);width:28px;text-align:right;flex-shrink:0;}
+
+.counter{display:flex;align-items:center;}
+.cnt-btn{width:30px;height:30px;border:1px solid var(--border);background:#050f08;
+  color:var(--text);font-size:1rem;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;user-select:none;}
+.cnt-btn:first-child{border-radius:7px 0 0 7px;}
+.cnt-btn:last-child{border-radius:0 7px 7px 0;}
+.cnt-btn.plus{border-color:var(--gem2);color:var(--gem);}
+.cnt-btn.plus:hover{background:var(--gem2);color:#fff;}
+.cnt-btn.minus:hover{background:#2a0a0a;color:var(--red);}
+.cnt-val{min-width:36px;height:30px;background:#050f08;border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:0.9rem;color:#fff;}
+.cnt-val.pct{min-width:44px;font-size:0.82rem;}
+
+.g-meta{flex:1;display:flex;flex-direction:column;gap:2px;}
+.g-cost{font-size:0.72rem;color:var(--orange);}
+.g-eff{font-size:0.68rem;color:var(--muted);}
+.g-eff span{font-weight:700;}
+.g-eff span.good{color:var(--green);}
+.g-eff span.ok{color:var(--orange);}
+.g-eff span.bad{color:var(--muted);}
+
+.eff-bar-wrap{height:3px;background:#0a1f10;border-radius:3px;margin-top:3px;}
+.eff-bar-g{height:100%;border-radius:3px;background:linear-gradient(90deg,#b8860b,var(--gold));transition:width .3s;}
+.eff-bar-u{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gem2),var(--gem));transition:width .3s;}
+
+.divider{height:1px;background:var(--border);margin:6px 0;opacity:0.5;}
+
+.btn-calc{width:100%;padding:11px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Exo 2',sans-serif;font-size:0.88rem;font-weight:700;letter-spacing:1px;
+  background:linear-gradient(135deg,#b8860b,var(--gold));color:#061a0c;
+  margin-top:10px;transition:all .2s;}
+.btn-calc:hover{transform:translateY(-2px);box-shadow:0 4px 16px #f5c54244;}
+
+@media(max-width:400px){.cnt-btn{width:27px;height:27px;}.cnt-val{height:27px;min-width:32px;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>💎 ENJ Excavators Calc</h1>
+  <p>เปรียบเทียบ +ตัว vs +% ทุก Goblin ในหน้าเดียว</p>
+</header>
+<div class="container">
+
+<!-- Countdown -->
+<div class="countdown-box">
+  <div class="cd-title">⏳ Season จบใน (วันอังคาร 19:00 น. ไทย)</div>
+  <div class="cd-time" id="cd-time">--:--:--:--</div>
+  <div class="cd-thai" id="cd-thai"></div>
+</div>
+
+<!-- Boost -->
+<div class="boost-section">
+  <div class="boost-item">
+    <label>🐉 Dragon Power</label>
+    <input type="number" id="dragon" value="98" min="0" oninput="recalc()">
+    <span style="font-size:0.72rem;color:var(--muted)">ตัว</span>
+    <span id="dragon-pct" class="pct-display"></span>
+  </div>
+  <div class="boost-item">
+    <label>✨ Primythical</label>
+    <input type="number" id="boost" value="38.1" min="0" step="0.1" oninput="recalc()">
+    <span style="font-size:0.72rem;color:var(--muted)">%</span>
+  </div>
+  <div class="total-boost" id="total-boost">💫 Total Boost: 0%</div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-box"><div class="val" id="s-gpm">0</div><div class="lbl">💎 Gems/min</div></div>
+  <div class="stat-box"><div class="val" id="s-count">0</div><div class="lbl">👺 Goblins</div></div>
+  <div class="stat-box"><div class="val" id="s-best-g">-</div><div class="lbl">🏆 ควร +ตัว</div></div>
+  <div class="stat-box"><div class="val" id="s-best-u">-</div><div class="lbl">⬆️ ควร +%</div></div>
+  <div class="stat-box"><div class="val" id="s-best-all">-</div><div class="lbl">🎯 คุ้มสุด</div></div>
+</div>
+
+<!-- Recommend -->
+<div class="recommend" id="recommend" style="display:none">
+  <div class="rec-top" id="rec-top"></div>
+</div>
+
+<!-- Quick Actions -->
+<div id="quick-actions" style="margin-bottom:10px;display:flex;flex-direction:column;gap:6px"></div>
+
+<!-- List -->
+<div class="goblin-list" id="goblin-list"></div>
+
+<button class="btn-calc" onclick="showDetail()">🔍 แสดงรายละเอียดเต็ม</button>
+
+<div style="display:flex;gap:8px;margin-top:8px;">
+  <button class="btn-calc" style="background:linear-gradient(135deg,#0d3b1f,#1a6b35);color:var(--green);flex:1" onclick="exportData()">📤 Export JSON</button>
+  <button class="btn-calc" style="background:linear-gradient(135deg,#0d1a3b,#1a3565);color:var(--blue);flex:1" onclick="importData()">📥 Import JSON</button>
+</div>
+
+
+<div id="export-modal" style="display:none;position:fixed;inset:0;background:#000a;z-index:100;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#0a1a0f;border:1px solid var(--gem);border-radius:14px;padding:16px;width:100%;max-width:500px">
+    <div style="font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:0.85rem;margin-bottom:10px">📤 Export Data</div>
+    <textarea id="export-text" readonly style="width:100%;height:140px;background:#050f08;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.75rem;padding:8px;resize:none;font-family:monospace"></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button onclick="copyExport()" style="flex:1;padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#b8860b,var(--gold));color:#061a0c;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif">📋 Copy</button>
+      <button onclick="closeModal('export-modal')" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:#050f08;color:var(--muted);cursor:pointer;font-family:'Exo 2',sans-serif">ปิด</button>
+    </div>
+    <div id="copy-ok" style="display:none;text-align:center;color:var(--green);font-size:0.78rem;margin-top:6px">✅ Copied!</div>
+  </div>
+</div>
+
+<div id="import-modal" style="display:none;position:fixed;inset:0;background:#000a;z-index:100;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#0a1a0f;border:1px solid var(--gem);border-radius:14px;padding:16px;width:100%;max-width:500px">
+    <div style="font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:0.85rem;margin-bottom:10px">📥 Import Data</div>
+    <textarea id="import-text" placeholder="วาง JSON ที่นี่..." style="width:100%;height:140px;background:#050f08;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.75rem;padding:8px;resize:none;font-family:monospace"></textarea>
+    <div id="import-err" style="display:none;color:var(--red);font-size:0.75rem;margin-top:4px"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button onclick="doImport()" style="flex:1;padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#0d3b1f,#1a6b35);color:var(--green);font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif">✅ Import</button>
+      <button onclick="closeModal('import-modal')" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:#050f08;color:var(--muted);cursor:pointer;font-family:'Exo 2',sans-serif">ปิด</button>
+    </div>
+  </div>
+</div>
+
+<div id="detail-area"></div>
+
+</div>
+<script>
+const G = [
+  {name:'Aeonclipse',  gpm:30,    bc:20,        bu:10},
+  {name:'Archspire',   gpm:75,    bc:50,        bu:25},
+  {name:'Oindrasdain', gpm:150,   bc:100,       bu:50},
+  {name:'Wanderer',    gpm:300,   bc:300,       bu:150},
+  {name:'Epochrome',   gpm:600,   bc:500,       bu:250},
+  {name:'Tramyarus',   gpm:900,   bc:2000,      bu:1000},
+  {name:'Pegasoid',    gpm:1200,  bc:5000,      bu:2500},
+  {name:'Forgehammer', gpm:1800,  bc:20000,     bu:10000},
+  {name:'Mike',        gpm:3600,  bc:40000,     bu:20000},
+  {name:'Stormwall',   gpm:5000,  bc:150000,    bu:75000},
+  {name:'Masked',      gpm:7500,  bc:300000,    bu:150000},
+  {name:'Soulshift',   gpm:10000, bc:1000000,   bu:500000},
+  {name:'Starbow',     gpm:15000, bc:2000000,   bu:1000000},
+  {name:'APG',         gpm:20000, bc:10000000,  bu:5000000},
+  {name:'Shadowsong',  gpm:30000, bc:20000000,  bu:10000000},
+  {name:'Eternal',     gpm:60000, bc:100000000, bu:25000000},
+  {name:'Seafoam',     gpm:60000, bc:100000000, bu:25000000},
+  {name:'Windstruck',  gpm:60000, bc:100000000, bu:25000000},
+  {name:'Bedrock',     gpm:60000, bc:100000000, bu:25000000},
+];
+
+const counts = G.map(()=>0);
+const usteps = G.map(()=>0);
+
+function fmt(n){
+  if(n>=1e9) return (n/1e9).toFixed(2)+'B';
+  if(n>=1e6) return (n/1e6).toFixed(2)+'M';
+  if(n>=1000) return (n/1000).toFixed(2)+'K';
+  return Math.round(n).toString();
+}
+
+function getBoost(){
+  const prim = parseFloat(document.getElementById('boost').value)||0;
+  const dragon = parseInt(document.getElementById('dragon').value)||0;
+  return prim + Math.min(dragon*0.025, 50);
+}
+
+// Cost formulas
+function nc1(i){ return G[i].bc * Math.pow(2, counts[i]); }
+function nu1(i){ return G[i].bu * Math.pow(2, usteps[i]); }
+
+// Efficiency: gpm gained per gem spent (boosted)
+function geff(i, boost){ return G[i].gpm*(1+boost/100) / nc1(i); }
+function ueff(i, boost){
+  const cnt = counts[i] || 0;
+  if(cnt === 0) return 0;
+  return cnt * G[i].gpm * 0.10 * (1+boost/100) / nu1(i);
+}
+
+function recalc(){
+  const dragon = parseInt(document.getElementById('dragon').value)||0;
+  const dragonPct = Math.min(dragon*0.025, 50);
+  document.getElementById('dragon-pct').textContent = '= '+dragonPct.toFixed(2)+'%';
+  const boost = getBoost();
+  document.getElementById('total-boost').textContent = '💫 '+boost.toFixed(2)+'%';
+
+  let tgpm=0, tcnt=0;
+  G.forEach((g,i)=>{ tgpm+=counts[i]*g.gpm; tcnt+=counts[i]; });
+  document.getElementById('s-gpm').textContent = fmt(tgpm*(1+boost/100));
+  document.getElementById('s-count').textContent = tcnt;
+
+  // best goblin (by geff)
+  let bgEff=-1, bgIdx=0;
+  G.forEach((_,i)=>{ const e=geff(i,boost); if(e>bgEff){bgEff=e;bgIdx=i;} });
+  document.getElementById('s-best-g').textContent = G[bgIdx].name;
+
+  // FIX: only consider goblins with actual upgrade efficiency (counts[i]>0)
+  let buEff=-1, buIdx=-1;
+  G.forEach((_,i)=>{ const e=ueff(i,boost); if(e>0 && e>buEff){buEff=e;buIdx=i;} });
+  document.getElementById('s-best-u').textContent = buIdx>=0 ? G[buIdx].name : '-';
+
+  // overall best: compare geff vs ueff (normalize — both are gpm/gem)
+  let bestEff=-1, bestIdx=0, bestType='g';
+  G.forEach((_,i)=>{
+    const ge=geff(i,boost), ue=ueff(i,boost);
+    if(ge>bestEff){bestEff=ge;bestIdx=i;bestType='g';}
+    if(ue>bestEff){bestEff=ue;bestIdx=i;bestType='u';}
+  });
+  document.getElementById('s-best-all').textContent = G[bestIdx].name+(bestType==='g'?' +ตัว':' +%');
+
+  // max effs for bar scaling
+  const maxGeff = Math.max(...G.map((_,i)=>geff(i,boost)));
+  const maxUeff = Math.max(...G.map((_,i)=>ueff(i,boost)));
+
+  // update cards
+  G.forEach((g,i)=>{
+    const ge = geff(i,boost);
+    const ue = ueff(i,boost);
+    const card = document.getElementById('card-'+i);
+    if(!card) return;
+
+    const isBestG = (i===bgIdx);
+    const isBestU = (buIdx>=0 && i===buIdx);
+
+    // FIX: use same condition for card class and badge (isBestG&&isBestU for best-both)
+    card.className = 'g-card' + (isBestG&&isBestU?' best-both':isBestG?' best-g':isBestU?' best-u':'');
+
+    // badges
+    const bEl = card.querySelector('.badges');
+    bEl.innerHTML = '';
+    if(isBestG&&isBestU) bEl.innerHTML='<span class="badge bb">🎯 คุ้มสุดทุกอย่าง</span>';
+    else {
+      if(isBestG) bEl.innerHTML+='<span class="badge bg">🏆 +ตัวดีสุด</span>';
+      if(isBestU) bEl.innerHTML+='<span class="badge bu">⬆️ +%ดีสุด</span>';
+    }
+
+    // goblin row
+    card.querySelector('.gcost').textContent = '💎 '+fmt(nc1(i));
+    const geColor = ge>=maxGeff*0.7?'good':ge>=maxGeff*0.3?'ok':'bad';
+    card.querySelector('.geff').innerHTML = 'eff: <span class="'+geColor+'">'+ge.toFixed(4)+'</span> gpm/gem';
+    card.querySelector('.gbar').style.width = (maxGeff>0?ge/maxGeff*100:0)+'%';
+
+    // upgrade row
+    card.querySelector('.ucost').textContent = '💎 '+fmt(nu1(i));
+    if(counts[i]===0){
+      card.querySelector('.ueff').innerHTML = '<span class="bad">ต้องมีตัวก่อน</span>';
+      card.querySelector('.ubar').style.width = '0%';
+    } else {
+      const ueColor = ue>=maxUeff*0.7?'good':ue>=maxUeff*0.3?'ok':'bad';
+      card.querySelector('.ueff').innerHTML = 'eff: <span class="'+ueColor+'">'+ue.toFixed(4)+'</span> gpm/gem';
+      card.querySelector('.ubar').style.width = (maxUeff>0?ue/maxUeff*100:0)+'%';
+    }
+  });
+
+  // recommend box
+  const rec = document.getElementById('recommend');
+  const recTop = document.getElementById('rec-top');
+  rec.style.display = 'block';
+  let recHtml = '';
+
+  // top 3 overall actions sorted by eff
+  const allActions = [];
+  G.forEach((g,i)=>{
+    allActions.push({name:g.name, type:'ตัว', eff:geff(i,boost), cost:nc1(i), gain:g.gpm*(1+boost/100)});
+    if(counts[i]>0) allActions.push({name:g.name, type:'%+10', eff:ueff(i,boost), cost:nu1(i), gain:counts[i]*g.gpm*0.1*(1+boost/100)});
+  });
+  allActions.sort((a,b)=>b.eff-a.eff);
+
+  ['🥇','🥈','🥉'].forEach((em,idx)=>{
+    if(!allActions[idx]) return;
+    const a=allActions[idx];
+    recHtml+=`<div class="rec-item">
+      <div class="rec-label">${em} อันดับ ${idx+1}</div>
+      <div class="rec-val">${a.name} ${a.type==='ตัว'?'<span style="color:var(--gold)">+ตัว</span>':'<span style="color:var(--gem)">+10%</span>'}</div>
+      <div class="rec-sub">ราคา ${fmt(a.cost)} 💎 · +${fmt(a.gain)}gpm</div>
+    </div>`;
+  });
+  recTop.innerHTML = recHtml;
+  updateQuickActions(allActions);
+}
+
+function changeCount(i, d){
+  counts[i]=Math.max(0,counts[i]+d);
+  document.getElementById('gcnt-'+i).textContent=counts[i];
+  recalc();
+}
+function changeUstep(i, d){
+  usteps[i]=Math.max(0,usteps[i]+d);
+  document.getElementById('ucnt-'+i).textContent=usteps[i]*10+'%';
+  recalc();
+}
+
+function buildCards(){
+  const gl = document.getElementById('goblin-list');
+  gl.innerHTML='';
+  G.forEach((g,i)=>{
+    const div=document.createElement('div');
+    div.className='g-card'; div.id='card-'+i;
+    div.innerHTML=`
+      <div class="g-head">
+        <div class="g-name">${g.name} <span style="color:var(--blue);font-size:0.7rem">${fmt(g.gpm)} gpm/ตัว</span></div>
+        <div class="badges"></div>
+      </div>
+      <div class="g-rows">
+        <div class="g-row">
+          <div class="row-label" style="color:var(--gold)">+ตัว</div>
+          <div class="counter">
+            <button class="cnt-btn minus" onclick="changeCount(${i},-1)">−</button>
+            <div class="cnt-val" id="gcnt-${i}">0</div>
+            <button class="cnt-btn plus" onclick="changeCount(${i},+1)">+</button>
+          </div>
+          <div class="g-meta">
+            <div class="g-cost gcost">💎 ${fmt(g.bc)}</div>
+            <div class="g-eff geff">eff: <span>-</span></div>
+            <div class="eff-bar-wrap"><div class="eff-bar-g gbar" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="g-row">
+          <div class="row-label" style="color:var(--gem)">+%</div>
+          <div class="counter">
+            <button class="cnt-btn minus" onclick="changeUstep(${i},-1)">−</button>
+            <div class="cnt-val pct" id="ucnt-${i}">0%</div>
+            <button class="cnt-btn plus" onclick="changeUstep(${i},+1)">+</button>
+          </div>
+          <div class="g-meta">
+            <div class="g-cost ucost">💎 ${fmt(g.bu)}</div>
+            <div class="g-eff ueff">eff: <span class="bad">ต้องมีตัวก่อน</span></div>
+            <div class="eff-bar-wrap"><div class="eff-bar-u ubar" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>`;
+    gl.appendChild(div);
+  });
+  recalc();
+}
+
+function showDetail(){
+  const boost=getBoost();
+  const allActions=[];
+  G.forEach((g,i)=>{
+    allActions.push({name:g.name,type:'ตัว',eff:geff(i,boost),cost:nc1(i),cnt:counts[i],gain:g.gpm*(1+boost/100)});
+    if(counts[i]>0) allActions.push({name:g.name,type:'+10%',eff:ueff(i,boost),cost:nu1(i),cnt:usteps[i]*10,gain:counts[i]*g.gpm*0.1*(1+boost/100)});
+  });
+  allActions.sort((a,b)=>b.eff-a.eff);
+  const em=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
+  let h=`<div style="background:linear-gradient(135deg,#061a0c,#050f08);border:1px solid var(--gem);border-radius:14px;padding:14px;margin-top:10px;animation:fadeIn .4s ease">
+    <div style="font-family:'Cinzel Decorative',serif;font-size:0.82rem;color:var(--gold);margin-bottom:10px">🎯 ทุก Action เรียงตามความคุ้ม</div>`;
+  allActions.forEach((a,i)=>{
+    const isG=a.type==='ตัว';
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:9px;margin-bottom:5px;background:#050f08;border-left:3px solid ${i<3?(i===0?'var(--gold)':i===1?'#c0c0c0':'#cd7f32'):'var(--border)'}">
+      <div style="font-size:0.95rem;width:22px">${em[i]||i+1}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:0.82rem;color:${isG?'var(--gold)':'var(--gem)'}">${a.name} <span style="font-size:0.72rem">${isG?'➕ตัว':'⬆️+10%'}</span></div>
+        <div style="font-size:0.7rem;color:var(--muted)">ราคา ${fmt(a.cost)} 💎 · ได้ +${fmt(a.gain)} gpm</div>
+      </div>
+      <div style="color:var(--green);font-weight:700;font-size:0.78rem;text-align:right">${a.eff.toFixed(5)}<br><span style="color:var(--muted);font-size:0.62rem">gpm/gem</span></div>
+    </div>`;
+  });
+  h+='</div>';
+  document.getElementById('detail-area').innerHTML=h;
+  document.getElementById('detail-area').scrollIntoView({behavior:'smooth'});
+}
+
+function updateQuickActions(allActions){
+  const qa = document.getElementById('quick-actions');
+  if(!qa) return;
+  const top = allActions.slice(0,5);
+  qa.innerHTML = top.map((a,i)=>{
+    const isG = a.type==='ตัว';
+    const idx = G.findIndex(g=>g.name===a.name);
+    const em = ['🥇','🥈','🥉','4️⃣','5️⃣'][i];
+    const color = isG ? 'var(--gold)' : 'var(--gem)';
+    const action = isG ? `changeCount(${idx},1)` : `changeUstep(${idx},1)`;
+    return `<button onclick="${action}" style="
+      width:100%;padding:9px 14px;border-radius:9px;border:1px solid ${color}33;
+      background:#0a1a0f;color:${color};font-family:'Exo 2',sans-serif;
+      font-size:0.82rem;font-weight:700;cursor:pointer;text-align:left;
+      display:flex;align-items:center;gap:8px;transition:background .15s;"
+      onmouseover="this.style.background='${color}22'"
+      onmouseout="this.style.background='#0a1a0f'">
+      <span>${em}</span>
+      <span style="flex:1">${a.name} <span style="opacity:0.7">${isG?'+1 ตัว':'+10%'}</span>
+        <span style="font-size:0.68rem;color:var(--muted)">(${isG?'มี '+counts[idx]+' ตัว':'อัพแล้ว '+(usteps[idx]*10)+'%'})</span>
+      </span>
+      <span style="font-size:0.72rem;color:var(--muted)">💎 ${fmt(a.cost)}</span>
+      <span style="font-size:0.78rem;color:var(--green)">+${fmt(a.gain)}</span>
+    </button>`;
+  }).join('');
+}
+
+function updateCountdown(){
+  const now = new Date();
+  // Next Tuesday 12:00 UTC (= 19:00 Thai time)
+  const day = now.getUTCDay();
+  let daysUntilTue = (2 - day + 7) % 7;
+  if(daysUntilTue === 0 && (now.getUTCHours() > 12 || (now.getUTCHours()===12 && now.getUTCMinutes()>0))) daysUntilTue = 7;
+  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilTue, 12, 0, 0));
+  const diff = next - now;
+  if(diff <= 0){ document.getElementById('cd-time').textContent = '🔴 Season จบแล้ว!'; return; }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('cd-time').textContent =
+    String(d).padStart(2,'0')+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m '+String(s).padStart(2,'0')+'s';
+  const thaiNext = new Date(next.getTime());
+  const thaiStr = thaiNext.toLocaleString('th-TH',{timeZone:'Asia/Bangkok',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('cd-thai').textContent = '📅 จบ '+thaiStr+' น.';
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+function exportData(){
+  const data = {
+    dragon: document.getElementById('dragon').value,
+    boost: document.getElementById('boost').value,
+    counts: counts,
+    usteps: usteps
+  };
+  document.getElementById('export-text').value = JSON.stringify(data);
+  document.getElementById('copy-ok').style.display='none';
+  document.getElementById('export-modal').style.display='flex';
+}
+
+function copyExport(){
+  const ta = document.getElementById('export-text');
+  ta.select(); ta.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(ta.value).catch(()=>{});
+  document.execCommand('copy');
+  const ok = document.getElementById('copy-ok');
+  ok.style.display='block';
+  setTimeout(()=>ok.style.display='none', 2000);
+}
+
+function importData(){
+  document.getElementById('import-text').value='';
+  document.getElementById('import-err').style.display='none';
+  document.getElementById('import-modal').style.display='flex';
+}
+
+function doImport(){
+  const txt = document.getElementById('import-text').value.trim();
+  const err = document.getElementById('import-err');
+  try {
+    const d = JSON.parse(txt);
+    if(!d.counts || !d.usteps) throw new Error('ข้อมูลไม่ถูกต้อง');
+    document.getElementById('dragon').value = d.dragon||0;
+    document.getElementById('boost').value = d.boost||0;
+    d.counts.forEach((v,i)=>{ if(i<counts.length){ counts[i]=v; document.getElementById('gcnt-'+i).textContent=v; }});
+    d.usteps.forEach((v,i)=>{ if(i<usteps.length){ usteps[i]=v; document.getElementById('ucnt-'+i).textContent=v*10+'%'; }});
+    recalc();
+    closeModal('import-modal');
+  } catch(e) {
+    err.textContent = '❌ JSON ไม่ถูกต้อง: '+e.message;
+    err.style.display='block';
+  }
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display='none';
+}
+
+buildCards();
+</script>
+</body>
+</html>
