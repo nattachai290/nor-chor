@@ -286,6 +286,8 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 }
 .char-role-badge { position:absolute; bottom:-5px; right:-5px; width:30px; height:30px; border-radius:50%; background:#0a0618; border:2px solid var(--p5x-border); display:flex; align-items:center; justify-content:center; overflow:hidden; z-index:2; }
 .char-role-badge img { width:22px; height:22px; object-fit:contain; mix-blend-mode:screen; }
+.char-elem-badge { position:absolute; top:-5px; left:-5px; width:26px; height:26px; border-radius:50%; background:#0a0618; border:2px solid var(--p5x-border); display:flex; align-items:center; justify-content:center; overflow:hidden; z-index:2; }
+.char-elem-badge img { width:16px; height:16px; object-fit:contain; mix-blend-mode:screen; }
 .char-card-name { font-size:0.82rem; color:var(--p5x-text); text-align:center; line-height:1.2; word-break:break-word; font-weight:600; }
 .char-card-stars { font-size:0.68rem; letter-spacing:-1px; }
 .char-info { display:none; }

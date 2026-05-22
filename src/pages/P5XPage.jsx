@@ -61,16 +61,28 @@ const CHARACTERS = [
   {name:'Okyann',          codename:'Okyann',  role:'Elucidator', element:'-',        rarity:4, cards:['Abundance 4pc','Opulence 2pc'], weapon:'Best Support weapon',                            statPrio:['HP%','SPD','DEF%'],                              note:'4★ Elucidator. Provides elemental resonance and damage amplification.'},
 ]
 
-const BASE = 'https://lufel.net/apps/guides/data/assets/make-party/'
+const BASE = import.meta.env.BASE_URL + 'p5x/roles/'
 const ROLE_IMG = {
-  Sweeper:    BASE + 'pasted-1772094048970.png',
-  Assassin:   BASE + 'pasted-1772094055909.png',
-  Strategist: BASE + 'pasted-1772094061413.png',
-  Saboteur:   BASE + 'pasted-1772094196652.png',
-  Guardian:   BASE + 'pasted-1772094066423.png',
-  Medic:      BASE + 'pasted-1772094075911.png',
-  Elucidator: BASE + 'pasted-1772094090247.png',
-  Virtuoso:   import.meta.env.BASE_URL + 'p5x/roles/virtuoso.svg',
+  Sweeper:    BASE + 'sweeper.svg',
+  Assassin:   BASE + 'assassin.svg',
+  Strategist: BASE + 'strategist.svg',
+  Saboteur:   BASE + 'saboteur.svg',
+  Guardian:   BASE + 'guardian.svg',
+  Medic:      BASE + 'medic.svg',
+  Elucidator: BASE + 'elucidator.svg',
+  Virtuoso:   BASE + 'virtuoso.svg',
+}
+const BASE_ELEM = import.meta.env.BASE_URL + 'p5x/elements/'
+const ELEM_IMG = {
+  Fire:     BASE_ELEM + 'fire.svg',
+  Ice:      BASE_ELEM + 'ice.svg',
+  Electric: BASE_ELEM + 'electric.svg',
+  Wind:     BASE_ELEM + 'wind.svg',
+  Nuclear:  BASE_ELEM + 'nuclear.svg',
+  Curse:    BASE_ELEM + 'curse.svg',
+  Bless:    BASE_ELEM + 'bless.svg',
+  Physical: BASE_ELEM + 'physical.svg',
+  '-':      BASE_ELEM + 'none.svg',
 }
 const BASE_PORTRAITS = import.meta.env.BASE_URL + 'p5x/portraits/'
 const PORTRAITS = {
@@ -231,6 +243,12 @@ export default function P5XPage() {
       <div className={'char-card' + (isActive ? ' selected' : '')}
         onClick={() => setCharName(isActive ? '' : c.name)}>
         <div className={`char-avatar-wrap elem-border-${elemKey}`}>
+          {ELEM_IMG[c.element] && (
+            <div className="char-elem-badge">
+              <img src={ELEM_IMG[c.element]} alt={c.element}
+                style={{ filter: `drop-shadow(0 0 2px ${ec})` }} />
+            </div>
+          )}
           <div className="char-avatar" style={{ background: ec + '22' }}>
             {PORTRAITS[c.name]
               ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait"
@@ -304,7 +322,13 @@ export default function P5XPage() {
                     ? { borderColor: ec, color: ec, background: ec + '22', boxShadow: `0 0 10px ${ec}55` }
                     : e !== 'all' ? { borderColor: ec + '66', color: ec + 'cc' } : {}}
                   onClick={() => { setElemFilter(e); setCharName('') }}>
-                  {e === 'all' ? 'All' : <><span style={{ color: ec }}>●</span> {label}</>}
+                  {e === 'all' ? 'All' : (
+                    <>
+                      <img src={ELEM_IMG[e]} alt={e} className="filter-role-icon"
+                        style={{ filter: isActive ? `drop-shadow(0 0 3px ${ec})` : `drop-shadow(0 0 1px ${ec}88)` }} />
+                      {label}
+                    </>
+                  )}
                 </button>
               )
             })}
