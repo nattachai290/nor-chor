@@ -261,9 +261,15 @@ export default function P5XPage() {
         onClick={() => setCharName(isActive ? '' : c.name)}>
         <div className={`char-avatar-wrap elem-border-${elemKey}`}>
           {ELEM_IMG[c.element] && (
-            <div className="char-elem-badge">
+            <div className={`char-elem-badge${c.element2 ? ' has-elem2' : ''}`}>
               <img src={ELEM_IMG[c.element]} alt={c.element}
                 style={{ filter: `drop-shadow(0 0 2px ${ec})` }} />
+            </div>
+          )}
+          {c.element2 && ELEM_IMG[c.element2] && (
+            <div className="char-elem-badge2">
+              <img src={ELEM_IMG[c.element2]} alt={c.element2}
+                style={{ filter: `drop-shadow(0 0 2px ${ELEM_COLORS[c.element2] || '#888'})` }} />
             </div>
           )}
           <div className="char-avatar" style={{ background: ec + '22' }}>
