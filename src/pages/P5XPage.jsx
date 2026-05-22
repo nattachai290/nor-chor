@@ -203,7 +203,7 @@ const CHARACTERS = [
     hiddenAbility: 'ATK +29%',
     weapons: [
       {
-        name: "New Year's Light", rarity: 5, img: 'p5x/weapon/new-years-light.png',
+        name: "New Year's Light", rarity: 5, img: 'p5x/weapon/new-year-light.png',
         hp: 2240, atk: 793, def: 392,
         bonusStats: {atk:30, crit:16},
         abilityName: "New Year's Light",
