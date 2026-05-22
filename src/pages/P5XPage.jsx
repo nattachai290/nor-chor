@@ -104,6 +104,11 @@ const CHARACTERS = [
           'When La Vie En Rose is active, inflict Burn on 1 random foe.',
           'Increase Fire damage by 25.5%/33.5%/33.5%/41.5%/41.5%/49.5%/49.5% for each Burning foe. Maximum of 76%/100%/100%/124%/124%/148%/148%.',
         ],
+        abilityTh: [
+          'เพิ่มความเสียหายธาตุไฟ 24.2%/24.2%/31.5%/31.5%/38.8%/38.8%/46.1%',
+          'เมื่อ La Vie En Rose ทำงาน ทำให้ศัตรูแบบสุ่ม 1 ตัวติด Burn',
+          'เพิ่มความเสียหายธาตุไฟ 25.5%/33.5%/33.5%/41.5%/41.5%/49.5%/49.5% ต่อศัตรูที่ติด Burn 1 ตัว สูงสุด 76%/100%/100%/124%/124%/148%/148%',
+        ],
       },
       {
         name: 'Masquerade Ribbon', rarity: 4, img: 'p5x/weapon/masquerade-ribbon.png',
@@ -113,6 +118,10 @@ const CHARACTERS = [
         ability: [
           'Increase Attack by 12.0%/16.0%/16.0%/20.0%/20.0%/24.0%/24.0%.',
           'When attacking a Burning foe, increase Attack by 23.7%/23.7%/30.8%/30.8%/37.9%/37.9%/45.0%.',
+        ],
+        abilityTh: [
+          'เพิ่ม Attack 12.0%/16.0%/16.0%/20.0%/20.0%/24.0%/24.0%',
+          'เมื่อโจมตีศัตรูที่ติด Burn เพิ่ม Attack 23.7%/23.7%/30.8%/30.8%/37.9%/37.9%/45.0%',
         ],
       },
     ],
@@ -200,6 +209,12 @@ const CHARACTERS = [
           'When using Woof Woof Blaze and activating the effect of Big Welcome, decrease the target\'s Defense by 16.6%/21.6%/21.6%/26.6%/26.6%/31.6%/31.6% more for 3 turns.',
           'When the effect of Furrocious Follow-Up is activated, decrease the target\'s Defense by 33.3%/43.3%/43.3%/53.3%/53.3%/63.3%/63.3% more for 3 turns. These 2 debuffs do not stack.',
         ],
+        abilityTh: [
+          'เพิ่ม ailment accuracy 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0%',
+          'เมื่อพันธมิตรใช้สกิลธาตุไฟ น้ำแข็ง ไฟฟ้า หรือลม หรือเปิดใช้ Resonance เพิ่ม ailment accuracy ของ Runa 23.0%/28.0%/28.0%/33.0%/33.0%/38.0%/38.0% เป็นเวลา 2 เทิร์น เอฟเฟกต์นี้ไม่สะสม',
+          'เมื่อใช้ Woof Woof Blaze และเปิดใช้เอฟเฟกต์ Big Welcome ลด DEF ของเป้าหมายเพิ่มอีก 16.6%/21.6%/21.6%/26.6%/26.6%/31.6%/31.6% เป็นเวลา 3 เทิร์น',
+          'เมื่อเปิดใช้เอฟเฟกต์ Furrocious Follow-Up ลด DEF ของเป้าหมายเพิ่มอีก 33.3%/43.3%/43.3%/53.3%/53.3%/63.3%/63.3% เป็นเวลา 3 เทิร์น debuff ทั้ง 2 ไม่สะสม',
+        ],
       },
       {
         name: 'Hunting Hound Claws', rarity: 4, img: 'p5x/weapon/hunting-hound-claws.png',
@@ -209,6 +224,10 @@ const CHARACTERS = [
         ability: [
           'Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.',
           'When Big Welcome or Furrocious Follow-Up is active, increase Runa\'s ailment accuracy by 22.0%/28.5%/28.5%/35.0%/35.0%/41.5%/41.5%.',
+        ],
+        abilityTh: [
+          'เพิ่ม Attack 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%',
+          'เมื่อ Big Welcome หรือ Furrocious Follow-Up ทำงาน เพิ่ม ailment accuracy ของ Runa 22.0%/28.5%/28.5%/35.0%/35.0%/41.5%/41.5%',
         ],
       },
     ],
@@ -293,6 +312,11 @@ const CHARACTERS = [
           'For every 3 Moon Phase or Full Moon stacks gained, increase critical rate by 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0% for 2 turns.',
           'When Makoto deals 4 or more hits of damage with 1 skill or Theurgy, increase that skill or Theurgy\'s damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%.',
         ],
+        abilityTh: [
+          'เพิ่ม Attack 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%',
+          'ทุกๆ การสะสม Moon Phase หรือ Full Moon 3 stack เพิ่ม CRIT Rate 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0% เป็นเวลา 2 เทิร์น',
+          'เมื่อ Makoto สร้างความเสียหาย 4 ครั้งขึ้นไปด้วยสกิลหรือ Theurgy เดียว เพิ่มความเสียหายของสกิลหรือ Theurgy นั้น 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%',
+        ],
       },
       {
         name: 'Translucent Blade', rarity: 4, img: 'p5x/weapon/translucent-blade.png',
@@ -302,6 +326,10 @@ const CHARACTERS = [
         ability: [
           'Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.',
           'When Makoto grants a buff to an ally, increase party\'s damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2%, and also increase Makoto\'s damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% more for 2 turns.',
+        ],
+        abilityTh: [
+          'เพิ่ม Attack 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%',
+          'เมื่อ Makoto ให้ buff แก่พันธมิตร เพิ่มความเสียหายของปาร์ตี้ 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% และเพิ่มความเสียหายของ Makoto อีก 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% เป็นเวลา 2 เทิร์น',
         ],
       },
     ],
@@ -375,6 +403,11 @@ const CHARACTERS = [
           'When Flaming Sword Dance is active, increase critical rate by 16.0%/21.0%/21.0%/26.0%/26.0%/31.0%/31.0%.',
           'When a Fire Technical is activated, increase that damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%.',
         ],
+        abilityTh: [
+          'เพิ่ม Attack 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%',
+          'เมื่อ Flaming Sword Dance ทำงาน เพิ่ม CRIT Rate 16.0%/21.0%/21.0%/26.0%/26.0%/31.0%/31.0%',
+          'เมื่อเปิดใช้ Fire Technical เพิ่มความเสียหายของ Technical นั้น 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%',
+        ],
       },
       {
         name: 'Cleansing Blade', rarity: 4, img: 'p5x/weapon/cleansing-blade.png',
@@ -384,6 +417,10 @@ const CHARACTERS = [
         ability: [
           'Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.',
           'When using Yanhua Slash, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%.',
+        ],
+        abilityTh: [
+          'เพิ่ม Attack 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%',
+          'เมื่อใช้ Yanhua Slash เพิ่ม Attack 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%',
         ],
       },
     ],
@@ -1128,7 +1165,7 @@ export default function P5XPage() {
                             </div>
                           </div>
                           <div className="weapon-ability-name">{w.abilityName}</div>
-                          {w.ability.map((line, li) => (
+                          {(lang === 'th' && w.abilityTh ? w.abilityTh : w.ability).map((line, li) => (
                             <div key={li} className="weapon-ability-line">{line}</div>
                           ))}
                           {isWSelected && <div className="weapon-selected-badge">✓ Selected</div>}
