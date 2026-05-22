@@ -105,7 +105,7 @@ const PORTRAITS = {
   'Seiji Shiratori':  BASE_PORTRAITS + 'fleuret.webp',
   'Manaka Nagao':     BASE_PORTRAITS + 'ange.webp',
   'Yusuke Kitagawa':  BASE_PORTRAITS + 'fox.webp',
-  'Makoto Niijima':   BASE_PORTRAITS + 'makoto.webp',
+  'Makoto Niijima':   BASE_PORTRAITS + 'queen.webp',
   'Goro Akechi':      BASE_PORTRAITS + 'crow.webp',
   'Luce':             BASE_PORTRAITS + 'luce.webp',
   'Turbo':            BASE_PORTRAITS + 'turbo.webp',
