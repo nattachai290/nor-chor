@@ -254,11 +254,14 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 /* Skills */
 .skill-grid { display:flex; flex-direction:column; gap:6px; }
 .skill-card { background:#0f0a24; border:1px solid #2a1a4a; border-radius:8px; padding:7px 10px; }
-.skill-type { display:inline-block; font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:1px 6px; border-radius:4px; margin-bottom:4px; }
+.skill-card-header { display:flex; align-items:center; gap:5px; margin-bottom:4px; }
+.skill-type { display:inline-block; font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:1px 6px; border-radius:4px; }
 .skill-type-normal   { background:#33334a; color:#aaaacc; border:1px solid #555577; }
 .skill-type-skill    { background:#0a2040; color:#66aaff; border:1px solid #2255aa; }
 .skill-type-ultimate { background:#2a1000; color:#ffaa44; border:1px solid #aa5500; }
 .skill-type-passive  { background:#0a2010; color:#44cc88; border:1px solid #226644; }
+.skill-elem-icon { width:14px; height:14px; object-fit:contain; mix-blend-mode:screen; }
+.skill-sp { margin-left:auto; font-size:0.6rem; color:var(--p5x-cyan); background:#001a2a; border:1px solid #005577; border-radius:4px; padding:0 5px; }
 .skill-name { font-size:0.8rem; font-weight:700; color:var(--p5x-text); margin-bottom:3px; }
 .skill-desc { font-size:0.72rem; color:var(--p5x-muted); line-height:1.5; }
 
@@ -270,10 +273,12 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .stat-lv80 { color:var(--persona3); font-weight:700; }
 
 /* Awareness */
-.awareness-list { display:flex; flex-direction:column; gap:4px; }
-.awareness-row { display:flex; align-items:center; gap:8px; padding:4px 6px; border-radius:6px; background:#0f0a24; }
-.aw-stage { font-size:0.62rem; font-weight:700; color:var(--persona); background:#1a0a3a; border:1px solid var(--persona2); border-radius:4px; padding:1px 6px; white-space:nowrap; }
-.aw-bonus { font-size:0.76rem; color:var(--p5x-text); }
+.awareness-list { display:flex; flex-direction:column; gap:5px; }
+.awareness-row { padding:6px 9px; border-radius:7px; background:#0f0a24; border:1px solid #1e1040; }
+.aw-header { display:flex; align-items:center; gap:7px; margin-bottom:2px; }
+.aw-stage { font-size:0.6rem; font-weight:700; color:var(--persona); background:#1a0a3a; border:1px solid var(--persona2); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.aw-name { font-size:0.78rem; font-weight:700; color:var(--p5x-text); }
+.aw-desc { font-size:0.7rem; color:var(--p5x-muted); line-height:1.5; padding-left:27px; }
 
 /* Hidden Ability */
 .hidden-ability-box { background:linear-gradient(135deg,#1a0a3a,#0f1a2a); border:1px solid var(--persona); border-radius:8px; padding:8px 12px; font-size:0.78rem; color:var(--p5x-text); line-height:1.6; box-shadow:0 0 10px #d040ff22; }

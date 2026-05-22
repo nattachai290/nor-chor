@@ -44,7 +44,30 @@ const CHARACTERS = [
   {name:'Messa',              codename:'Messa',          role:'Assassin',   element:'Physical',       rarity:5, cards:['Peace 4pc','Opulence 2pc'],     weapon:'Best Physical Assassin weapon',                 statPrio:['HP%','DEF%','SPD'],                              note:'Physical Assassin. Tanks damage while inflicting Physical weakness for DPS follow-ups.'},
   {name:'Phoebe',             codename:'Phoebe',         role:'Elucidator', element:'-',              rarity:5, cards:['Truth 4pc','Courage 2pc'],      weapon:'Best Ice ATK weapon',                           statPrio:['ATK%','Ice DMG%','CRIT Rate%','CRIT DMG%'],      note:'Ice Sweeper with crowd-control. Truth 4pc rewards pairing with a Saboteur.'},
   {name:'Marian',             codename:'Marian',         role:'Medic',      element:'Bless',          rarity:5, cards:['Courage 4pc','Valor 2pc'],      weapon:'Best Bless Healing weapon',                     statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],                 note:'Bless Medic with precise healing burst. Valor 2pc sustains high output.'},
-  {name:'Makoto (Alt)',       codename:'makoto',         role:'Assassin',   element:'Fire',           rarity:5, cards:['Courage 4pc','Resolve 2pc'],    weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','CRIT Rate%','CRIT DMG%','Fire DMG%'],     note:'Fire Assassin variant. High single-target burst damage.'},
+  {name:'Makoto (Alt)',       codename:'makoto',         role:'Assassin',   element:'Fire',           rarity:5, cards:['Courage 4pc','Resolve 2pc'],    weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','CRIT Rate%','CRIT DMG%','Fire DMG%'],     note:'Fire Assassin variant. Moon Phase stacks → Scarlet Hades burst. Dual Theurgy (Ardhanari + Cadenza). Strong with ally buff support.',
+    skills:[
+      {name:'Melody of Flames',  type:'Skill',    element:'Fire',   sp:20, desc:'Deal Fire DMG to 1 foe (59.8% ATK × 3 hits). Gain 2 Moon Phase stacks (lasts 2 turns, max 4). When spending Moon Phase for Scarlet Hades, increase skill multiplier by 32.5% for 2 turns.'},
+      {name:'Nocturne of Battle',type:'Skill',    element:'Buff',   sp:20, desc:'Increase party CRIT DMG by 23.4% and Makoto ATK by 19.5% for 2 turns. Gain 2 Moon Phase stacks (lasts 2 turns, max 4).'},
+      {name:'Scarlet Hades',     type:'Skill',    element:'Fire',   sp:24, desc:'Requires 2+ Moon Phase stacks. Spend all Moon Phase → Fire DMG (91.5% ATK/stack). Then spend all Full Moon → Fire DMG (150.7% ATK/stack). At 4 stacks: pierce rate +11.7%, damage +24.4%.'},
+      {name:'Ardhanari',         type:'Ultimate', element:'Fire',   sp:0,  desc:'Theurgy (100 gauge). Fire DMG to 1 foe (147.5% ATK × 4 hits). Gain 1 Full Moon stack (lasts 2 turns, max 4).'},
+      {name:'Cadenza',           type:'Ultimate', element:'Buff',   sp:0,  desc:'Theurgy (100 gauge). Increase party ATK by 24.4% and damage by 19.5% for 2 turns. Gain 1 Full Moon stack (lasts 2 turns, max 4).'},
+      {name:'Assist',            type:'Normal',   element:'Buff',   sp:0,  desc:'Increase 1 ally ATK by 20% for 1 turn.'},
+      {name:'On-Site Leader',    type:'Passive',  element:'-',      sp:0,  desc:'After activating a Theurgy, increase party ATK by 40.0% for 2 turns. SEES members gain +30.0% ATK more.'},
+      {name:'Entrusted Hope',    type:'Passive',  element:'-',      sp:0,  desc:'When receiving buff/heal/shield from an ally, increase CRIT DMG by 7.2% for 2 turns (max 3 stacks).'},
+    ],
+    awareness:[
+      {stage:0, name:'Pathfinder',             desc:'Dual Theurgy: Cadenza & Ardhanari. At battle start, fill Theurgy Gauge to 35 if below. When receiving ally buff/heal/shield, gain 1 Moon Phase stack (max 1/turn, lasts 2 turns, max 4). Moon Phase: pierce rate +4%/8%/12% (at Lv.1/50/70).'},
+      {stage:1, name:'Result of Coincidence',  desc:'Melody of Flames: deals 1 more Fire hit. Nocturne of Battle: also increase party pierce rate by 10% for 2 turns. Scarlet Hades (4 stacks): Makoto CRIT Rate +16%.'},
+      {stage:2, name:'Immovable Soul',         desc:'When Makoto has 4 Moon Phase stacks on his action turn, auto-activate Nocturne of Battle once (cooldown: 1 turn).'},
+      {stage:3, name:'Under the Full Moon',    desc:'Increase skill level of Scarlet Hades and Combat Tactics by 3.'},
+      {stage:4, name:'Thorny Path',            desc:'Cadenza: party damage +10% more for 2 turns. Ardhanari: deals 2 more Fire hits.'},
+      {stage:5, name:'Soul Flames',            desc:'Increase skill level of Melody of Flames and Nocturne of Battle by 3.'},
+      {stage:6, name:'Burn My Dread',          desc:'Activating a Theurgy also triggers the other Theurgy\'s effects. Scarlet Hades Full Moon stack damage +35%. First fatal hit: survive at 1 HP (KO\'d at turn end unless HP restored above 25%).'},
+    ],
+    baseStats:     {hp:292,  atk:105,  def:52,  spd:98},
+    baseStatsLv80: {hp:3270, atk:1190, def:593, spd:98},
+    hiddenAbility: 'ATK +29%',
+  },
   {name:'Closer (Tropical)',  codename:'closer-tropical',role:'Sweeper',    element:'Bless',          rarity:5, cards:['Courage 4pc','Virtue 2pc'],     weapon:'Best Bless ATK weapon',                         statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],                 note:'Bless Sweeper variant. Tropical-themed alternate version of Closer.'},
   {name:'Rin (Firecracker)',  codename:'rin-firecracker',role:'Sweeper',    element:'Fire',           rarity:5, cards:['Power 4pc','Courage 2pc'],      weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','Fire DMG%','CRIT Rate%','CRIT DMG%'],     note:'Fire Sweeper variant. Festive alternate version of Rin.'},
   {name:'Mont (Frostgale)',   codename:'mont-frostgale', role:'Assassin',   element:'Wind',           element2:'Ice', rarity:5, cards:['Courage 4pc','Valor 2pc'], weapon:'Best Wind/Ice ATK weapon',               statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],                 note:'Dual-element Wind/Ice Assassin variant. Unique frostgale mechanics merge both elements.'},
@@ -418,7 +441,14 @@ export default function P5XPage() {
                       : <div className="skill-grid">
                           {(currentChar.skills || []).map((sk, i) => (
                             <div key={i} className="skill-card">
-                              <span className={`skill-type skill-type-${sk.type.toLowerCase()}`}>{sk.type}</span>
+                              <div className="skill-card-header">
+                                <span className={`skill-type skill-type-${sk.type.toLowerCase()}`}>{sk.type}</span>
+                                {sk.element && sk.element !== '-' && ELEM_IMG[sk.element] && (
+                                  <img src={ELEM_IMG[sk.element]} alt={sk.element} className="skill-elem-icon"
+                                    style={{ filter: `drop-shadow(0 0 2px ${ELEM_COLORS[sk.element]||'#888'})` }} />
+                                )}
+                                {sk.sp > 0 && <span className="skill-sp">SP {sk.sp}</span>}
+                              </div>
                               <div className="skill-name">{sk.name}</div>
                               <div className="skill-desc">{sk.desc}</div>
                             </div>
@@ -457,8 +487,11 @@ export default function P5XPage() {
                       : <div className="awareness-list">
                           {(currentChar.awareness || []).map((aw, i) => (
                             <div key={i} className="awareness-row">
-                              <span className="aw-stage">LV {aw.stage}</span>
-                              <span className="aw-bonus">{aw.bonus}</span>
+                              <div className="aw-header">
+                                <span className="aw-stage">{aw.stage}</span>
+                                <span className="aw-name">{aw.name || aw.bonus || ''}</span>
+                              </div>
+                              {aw.desc && <div className="aw-desc">{aw.desc}</div>}
                             </div>
                           ))}
                         </div>
