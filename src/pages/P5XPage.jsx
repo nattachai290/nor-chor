@@ -273,9 +273,10 @@ export default function P5XPage() {
                 style={{ filter: `drop-shadow(0 0 2px ${ELEM_COLORS[c.element2] || '#888'})` }} />
             </div>
           )}
-          <div className="char-avatar" style={{ background: ec + '22', borderColor: ec }}>
+          <div className="char-avatar" style={{ background: `radial-gradient(circle at 50% 38%, ${ec}44, #0a0818)`, borderColor: ec }}>
             {PORTRAITS[c.name]
               ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait"
+                  style={{ filter: 'brightness(1.12) contrast(1.08) drop-shadow(0 2px 6px #000a)' }}
                   onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }} />
               : null}
             <span style={{ color: ec, fontWeight:700, display: PORTRAITS[c.name] ? 'none' : 'flex' }}>
