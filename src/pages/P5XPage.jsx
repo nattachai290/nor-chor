@@ -32,12 +32,12 @@ const CHARACTERS = [
   {name:'Manaka Nagao',    codename:'Ange',    role:'Strategist', element:'-',        rarity:5, cards:['Opulence 4pc','Integrity 2pc'], weapon:'Best SPD/Support weapon',                        statPrio:['ATK%','SPD','HP%'],                               note:'Provides ATK%, DMG%, and pierce buffs to allies. Integrity 2pc enables more support actions.'},
   {name:'Yusuke Kitagawa', codename:'Fox',     role:'Sweeper',    element:'Ice',      rarity:5, cards:['Truth 4pc','Courage 2pc'],      weapon:'Best Ice ATK weapon',                            statPrio:['ATK%','Ice DMG%','CRIT Rate%'],                   note:'Ice AoE DPS. Truth 4pc punishes debuffed targets — pair with Saboteur for maximum output.'},
   {name:'Makoto Niijima',  codename:'Queen',   role:'Sweeper',    element:'Nuclear',  rarity:5, cards:['Truth 4pc','Courage 2pc'],      weapon:'Best Nuclear ATK weapon',                        statPrio:['ATK%','Nuclear DMG%','CRIT Rate%'],               note:'Nuclear AoE damage. Truth 4pc synergises with Nuclear\'s natural debuff/meltdown mechanic.'},
-  {name:'Goro Akechi',     codename:'Crow',    role:'Assassin',   element:'Bless',    rarity:5, cards:['Courage 4pc','Resolve 2pc'],    weapon:'Best Bless ATK weapon',                          statPrio:['ATK%','CRIT Rate%','CRIT DMG%','Bless DMG%'],    note:'High-powered Bless single-target DPS. CRIT-focused kit synergises with Resolve 2pc.'},
+  {name:'Goro Akechi',     codename:'Crow',    role:'Assassin',   element:'Almighty', rarity:5, cards:['Courage 4pc','Resolve 2pc'],    weapon:'Best Almighty ATK weapon',                       statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],               note:'High-powered Almighty single-target DPS. Almighty bypasses resistances. CRIT-focused kit synergises with Resolve 2pc.'},
   {name:'Luce',            codename:'Luce',    role:'Elucidator', element:'-',        rarity:5, cards:['Abundance 4pc','Opulence 2pc'], weapon:'Best Support weapon',                            statPrio:['HP%','SPD','DEF%'],                              note:'Support Navigator. Provides intel buffs and elemental resonance to the team.'},
   {name:'Turbo',           codename:'Turbo',   role:'Sweeper',    element:'Electric', rarity:5, cards:['Courage 4pc','Valor 2pc'],      weapon:'Best Electric ATK weapon',                       statPrio:['ATK%','CRIT Rate%','CRIT DMG%','Electric DMG%'], note:'Fast Electric Sweeper. High hit-count attacks make Courage 4pc very effective.'},
   {name:'Matoi',           codename:'Matoi',   role:'Guardian',   element:'Wind',     rarity:5, cards:['Peace 4pc','Opulence 2pc'],    weapon:'Best HP/DEF tanking weapon',                     statPrio:['HP%','DEF%','SPD'],                               note:'Wind-element Guardian. Provides party-wide damage mitigation and taunts.'},
   {name:'Howler',          codename:'Howler',  role:'Sweeper',    element:'Fire',     rarity:5, cards:['Power 4pc','Strife 2pc'],       weapon:'Best Fire ATK weapon',                           statPrio:['ATK%','Fire DMG%','CRIT Rate%','CRIT DMG%'],      note:'Aggressive Fire Sweeper with strong AoE coverage. Power 4pc amplifies team damage.'},
-  {name:'J&C',             codename:'J&C',     role:'Virtuoso',   element:'Curse',    rarity:5, cards:['Hindrance 4pc','Strife 2pc'],   weapon:'Best Curse / debuff weapon',                     statPrio:['ATK%','SPD','DEF%'],                              note:'Dual-persona Virtuoso. Unique performance mechanics that alternate between two fighting styles.'},
+  {name:'J&C',             codename:'J&C',     role:'Virtuoso',   element:'Almighty', rarity:5, cards:['Hindrance 4pc','Strife 2pc'],   weapon:'Best Almighty / debuff weapon',                  statPrio:['ATK%','SPD','DEF%'],                              note:'Dual-persona Virtuoso. Almighty element bypasses resistances. Unique performance mechanics alternate between two fighting styles.'},
   {name:'Noir',            codename:'Noir',    role:'Strategist', element:'-',        rarity:5, cards:['Opulence 4pc','Integrity 2pc'], weapon:'Best SPD/Support weapon',                        statPrio:['ATK%','SPD','HP%'],                               note:'Elegant Strategist. Buffs party ATK and applies pierce, enabling high team damage output.'},
   {name:'Cherish',         codename:'Cherish', role:'Guardian',   element:'Bless',    rarity:5, cards:['Peace 4pc','Virtue 2pc'],      weapon:'Best HP/Shield weapon',                          statPrio:['HP%','DEF%','Healing Bonus%'],                    note:'Bless Guardian specialising in shields and party protection. Virtue 2pc enhances Bless synergy.'},
   {name:'Messa',           codename:'Messa',   role:'Guardian',   element:'Nuclear',  rarity:5, cards:['Peace 4pc','Opulence 2pc'],    weapon:'Best Nuclear tank weapon',                       statPrio:['HP%','DEF%','SPD'],                               note:'Nuclear Guardian. Tanks damage while inflicting Nuclear weakness for DPS follow-ups.'},
@@ -82,6 +82,7 @@ const ELEM_IMG = {
   Curse:    BASE_ELEM + 'curse.webp',
   Bless:    BASE_ELEM + 'bless.webp',
   Physical: BASE_ELEM + 'physical.webp',
+  Almighty: BASE_ELEM + 'almighty.webp',
   '-':      BASE_ELEM + 'none.svg',
 }
 const BASE_PORTRAITS = import.meta.env.BASE_URL + 'p5x/portraits/'
@@ -126,7 +127,7 @@ const PORTRAITS = {
   'Okyann':           BASE_PORTRAITS + 'okyann.webp',
 }
 const ROLE_ICONS = {Sweeper:'🌊', Assassin:'⚔️', Medic:'💚', Guardian:'🛡️', Saboteur:'🎯', Strategist:'🎵', Elucidator:'📡', Virtuoso:'✨'}
-const ELEM_COLORS = {Fire:'#ff4422',Ice:'#44aaff',Electric:'#ffee00',Wind:'#44ffaa',Nuclear:'#ff8800',Curse:'#aa44ff',Bless:'#ffcc44',Physical:'#ff8866','-':'#888888'}
+const ELEM_COLORS = {Fire:'#ff4422',Ice:'#44aaff',Electric:'#ffee00',Wind:'#44ffaa',Nuclear:'#ff8800',Curse:'#aa44ff',Bless:'#ffcc44',Physical:'#ff8866',Almighty:'#ffffff','-':'#888888'}
 const ROLE_COLORS = {Sweeper:'#40c8ff', Assassin:'#ff6030', Medic:'#40ff80', Guardian:'#8080ff', Saboteur:'#ffcc40', Strategist:'#b060ff', Elucidator:'#40ffcc', Virtuoso:'#ff88ff'}
 
 const STAT_TARGETS = {
@@ -311,10 +312,10 @@ export default function P5XPage() {
           </div>
           <div className="filter-group-label" style={{ marginTop: 8 }}>Element</div>
           <div className="filter-row">
-            {['all','Fire','Ice','Electric','Wind','Nuclear','Curse','Bless','Physical','-'].map(e => {
+            {['all','Fire','Ice','Electric','Wind','Nuclear','Curse','Bless','Physical','Almighty','-'].map(e => {
               const ec = ELEM_COLORS[e] || '#888'
               const isActive = elemFilter === e
-              const label = {Fire:'Fire',Ice:'Ice',Electric:'Elec',Wind:'Wind',Nuclear:'Nuclear',Curse:'Curse',Bless:'Bless',Physical:'Phys','-':'None'}[e] || e
+              const label = {Fire:'Fire',Ice:'Ice',Electric:'Elec',Wind:'Wind',Nuclear:'Nuclear',Curse:'Curse',Bless:'Bless',Physical:'Phys',Almighty:'Almighty','-':'None'}[e] || e
               return (
                 <button key={e}
                   className={'filter-btn' + (isActive ? ' active' : '')}

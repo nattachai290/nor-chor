@@ -278,6 +278,18 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
   70%      { box-shadow:0 0 16px #ff8866,0 0 28px #ff886677; }
 }
 
+/* ALMIGHTY — rainbow spinning ring (bypasses all elements) */
+.elem-border-Almighty .char-avatar { border-color:#ffffff; animation:ring-almighty 2s ease-in-out infinite; }
+.elem-border-Almighty.char-avatar-wrap::before {
+  background:conic-gradient(#ff4422,#ffee00,#44ffaa,#44aaff,#aa44ff,#ffcc44,#ff4422);
+  opacity:1; animation:elem-spin 2s linear infinite;
+}
+@keyframes ring-almighty {
+  0%,100% { box-shadow:0 0 8px #ffffff88,0 0 18px #ffffff44; }
+  33%     { box-shadow:0 0 12px #aa44ffcc,0 0 24px #aa44ff55; }
+  66%     { box-shadow:0 0 12px #ffcc44cc,0 0 24px #ffcc4455; }
+}
+
 /* NO ELEMENT — subtle silver shimmer */
 .elem-border-none .char-avatar { border-color:#666688; animation:ring-none 3.5s ease-in-out infinite; }
 @keyframes ring-none {
@@ -314,6 +326,7 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .elem-Curse{background:#c040ff22;border:1px solid #c040ff;color:#d880ff;padding:2px 8px;border-radius:10px;font-size:0.62rem;font-weight:700;}
 .elem-Bless{background:#ffcc4022;border:1px solid #ffcc40;color:#ffe070;padding:2px 8px;border-radius:10px;font-size:0.62rem;font-weight:700;}
 .elem-Physical{background:#ff805022;border:1px solid #ff8050;color:#ffaa80;padding:2px 8px;border-radius:10px;font-size:0.62rem;font-weight:700;}
+.elem-Almighty{background:linear-gradient(135deg,#ff443322,#aa44ff22);border:1px solid #ffffff88;color:#ffffff;padding:2px 8px;border-radius:10px;font-size:0.62rem;font-weight:700;}
 .elem-dash{background:#2a2a3a;border:1px solid #555;color:#999;padding:2px 8px;border-radius:10px;font-size:0.62rem;font-weight:700;}
 .info-grid { display:flex; flex-direction:column; gap:8px; }
 .info-panel { background:#0a0618; border:1px solid var(--p5x-border); border-radius:10px; padding:10px 12px; }
