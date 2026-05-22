@@ -1,21 +1,36 @@
 import { useState } from 'react'
 
 const CARD_SETS = [
-  {name:'Courage',   bonus2:'Physical/Electric DMG +12%',        bonus4:'ถ้าเผชิญศัตรูเดี่ยว: Physical/Electric DMG +24% เพิ่ม'},
-  {name:'Valor',     bonus2:'Physical/Electric DMG +12%',        bonus4:'Physical/Electric DMG +12%; ศัตรูเดี่ยว: +24%'},
-  {name:'Power',     bonus2:'ATK พาร์ตี้ธาตุเดียวกัน +10%',     bonus4:'ATK พาร์ตี้ธาตุเดียวกัน +10% (ไม่สะสม)'},
-  {name:'Peace',     bonus2:'DEF +20%',                          bonus4:'Shield effectiveness +18%'},
-  {name:'Opulence',  bonus2:'HP +12%',                           bonus4:'Allies gain Life/Offense/Defense +8%'},
-  {name:'Strife',    bonus2:'Curse DMG +10%',                    bonus4:'ATK +8% ต่อศัตรู 1 ตัว (สูงสุด +40%)'},
-  {name:'Truth',     bonus2:'Nuclear DMG +10%',                  bonus4:'ATK +30% เมื่อโจมตีศัตรูที่ถูก debuff'},
-  {name:'Hindrance', bonus2:'Curse DMG +10%',                    bonus4:'Curse DMG +20% vs ศัตรูที่ถูก debuff'},
-  {name:'Victory',   bonus2:'ศัตรูรับ DMG +12% เป็น 2 เทิร์น',  bonus4:'เหมือน 2pc'},
-  {name:'Resolve',   bonus2:'CRIT Rate +10%',                    bonus4:'CRIT DMG +20% เมื่อ CRIT Rate >70%'},
-  {name:'Integrity', bonus2:'SPD +5%',                           bonus4:'ATK +15% หลังใช้ Support Skill'},
-  {name:'Virtue',    bonus2:'Bless DMG +10%',                    bonus4:'Bless CRIT Rate +12%'},
-  {name:'Abundance', bonus2:'Healing +15%',                      bonus4:'ทีม DMG +8% เป็น 2 เทิร์น เมื่อผู้ใส่ฮีล'},
-  {name:'Creation',  bonus2:'ATK +10%',                          bonus4:'Special conditions apply'},
-  {name:'Labor',     bonus2:'Physical DMG +10%',                 bonus4:'Additional Physical effects'},
+  {name:'Courage',   bonus2:'Physical/Electric DMG +12%',        bonus4:'ถ้าเผชิญศัตรูเดี่ยว: Physical/Electric DMG +24% เพิ่ม',
+    stats2:{edm:12}, stats4:{edm:24}},
+  {name:'Valor',     bonus2:'Physical/Electric DMG +12%',        bonus4:'Physical/Electric DMG +12%; ศัตรูเดี่ยว: +24%',
+    stats2:{edm:12}, stats4:{edm:12}},
+  {name:'Power',     bonus2:'ATK พาร์ตี้ธาตุเดียวกัน +10%',     bonus4:'ATK พาร์ตี้ธาตุเดียวกัน +10% (ไม่สะสม)',
+    stats2:{atk:10}, stats4:{atk:10}},
+  {name:'Peace',     bonus2:'DEF +20%',                          bonus4:'Shield effectiveness +18%',
+    stats2:{def:20}, stats4:{}},
+  {name:'Opulence',  bonus2:'HP +12%',                           bonus4:'Allies gain Life/Offense/Defense +8%',
+    stats2:{hp:12}, stats4:{hp:8,atk:8,def:8}},
+  {name:'Strife',    bonus2:'Curse DMG +10%',                    bonus4:'ATK +8% ต่อศัตรู 1 ตัว (สูงสุด +40%)',
+    stats2:{edm:10}, stats4:{atk:8}},
+  {name:'Truth',     bonus2:'Nuclear DMG +10%',                  bonus4:'ATK +30% เมื่อโจมตีศัตรูที่ถูก debuff',
+    stats2:{edm:10}, stats4:{atk:30}},
+  {name:'Hindrance', bonus2:'Curse DMG +10%',                    bonus4:'Curse DMG +20% vs ศัตรูที่ถูก debuff',
+    stats2:{edm:10}, stats4:{edm:20}},
+  {name:'Victory',   bonus2:'ศัตรูรับ DMG +12% เป็น 2 เทิร์น',  bonus4:'เหมือน 2pc',
+    stats2:{}, stats4:{}},
+  {name:'Resolve',   bonus2:'CRIT Rate +10%',                    bonus4:'CRIT DMG +20% เมื่อ CRIT Rate >70%',
+    stats2:{crit:10}, stats4:{cdmg:20}},
+  {name:'Integrity', bonus2:'SPD +5%',                           bonus4:'ATK +15% หลังใช้ Support Skill',
+    stats2:{spd:5}, stats4:{atk:15}},
+  {name:'Virtue',    bonus2:'Bless DMG +10%',                    bonus4:'Bless CRIT Rate +12%',
+    stats2:{edm:10}, stats4:{crit:12}},
+  {name:'Abundance', bonus2:'Healing +15%',                      bonus4:'ทีม DMG +8% เป็น 2 เทิร์น เมื่อผู้ใส่ฮีล',
+    stats2:{heal:15}, stats4:{}},
+  {name:'Creation',  bonus2:'ATK +10%',                          bonus4:'Special conditions apply',
+    stats2:{atk:10}, stats4:{}},
+  {name:'Labor',     bonus2:'Physical DMG +10%',                 bonus4:'Additional Physical effects',
+    stats2:{edm:10}, stats4:{}},
 ]
 
 const CHARACTERS = [
@@ -45,7 +60,7 @@ const CHARACTERS = [
   {name:'Marian',             codename:'Marian',         role:'Medic',      element:'Bless',          rarity:5, cards:['Courage 4pc','Valor 2pc'],      weapon:'Best Bless Healing weapon',                     statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],                 note:'Bless Medic with precise healing burst. Valor 2pc sustains high output.'},
   {name:'Makoto',             codename:'makoto',         role:'Assassin',   element:'Fire',           rarity:5, cards:['Courage 4pc','Resolve 2pc'],    weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','CRIT Rate%','CRIT DMG%','Fire DMG%'],     note:'Fire Assassin variant. Moon Phase stacks → Scarlet Hades burst. Dual Theurgy (Ardhanari + Cadenza). Strong with ally buff support.',
     realName:'Makoto Yuki', affiliation:'S.E.E.S.', persona:'Orpheus',
-    weakRes:{ Fire:'res', Ice:'normal', Electric:'normal', Wind:'normal', Nuclear:'normal', Curse:'wk', Bless:'normal', Physical:'normal', Almighty:'null', Psychokinesis:'normal' },
+    weakRes:{ Fire:'res', Ice:'normal', Electric:'normal', Wind:'normal', Nuclear:'normal', Curse:'wk', Bless:'normal', Physical:'normal', Almighty:'normal', Psychokinesis:'normal' },
     skills:[
       {name:'Melody of Flames',  type:'Skill',    element:'Fire', sp:20,
         desc:"Deal Fire damage to 1 foe equal to 59.8%/66.0%/63.5%/69.6% of Attack (3 hits). Also, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times.\nAlso, when spending Moon Phase to use Scarlet Hades, increase skill multiplier by 32.5%/35.8%/34.5%/37.8% for 2 turns.",
@@ -106,6 +121,29 @@ const CHARACTERS = [
       {hp:3623, atk:1319, def:657, spd:98},
     ],
     hiddenAbility: 'ATK +29%',
+    weapons: [
+      {
+        name: 'Deus Xiphos', rarity: 5, img: 'p5x/weapon/deus-xiphos.png',
+        hp: 2160, atk: 786, def: 392,
+        bonusStats: {atk:30},
+        abilityName: 'Hour of Reversal',
+        ability: [
+          'Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.',
+          'For every 3 Moon Phase or Full Moon stacks gained, increase critical rate by 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0% for 2 turns.',
+          'When Makoto deals 4 or more hits of damage with 1 skill or Theurgy, increase that skill or Theurgy\'s damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%.',
+        ],
+      },
+      {
+        name: 'Translucent Blade', rarity: 4, img: 'p5x/weapon/translucent-blade.png',
+        hp: 1729, atk: 629, def: 314,
+        bonusStats: {atk:12},
+        abilityName: 'Silent Resolve',
+        ability: [
+          'Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.',
+          'When Makoto grants a buff to an ally, increase party\'s damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2%, and also increase Makoto\'s damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% more for 2 turns.',
+        ],
+      },
+    ],
   },
   {name:'Closer (Tropical)',  codename:'closer-tropical',role:'Sweeper',    element:'Bless',          rarity:5, cards:['Courage 4pc','Virtue 2pc'],     weapon:'Best Bless ATK weapon',                         statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],                 note:'Bless Sweeper variant. Tropical-themed alternate version of Closer.'},
   {name:'Rin (Firecracker)',  codename:'rin-firecracker',role:'Sweeper',    element:'Fire',           rarity:5, cards:['Power 4pc','Courage 2pc'],      weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','Fire DMG%','CRIT Rate%','CRIT DMG%'],     note:'Fire Sweeper variant. Festive alternate version of Rin.'},
@@ -209,6 +247,16 @@ const ROLE_ICONS = {Sweeper:'🌊', Assassin:'⚔️', Medic:'💚', Guardian:'�
 const ELEM_COLORS = {Fire:'#ff4422',Ice:'#44aaff',Electric:'#ffee00',Wind:'#44ffaa',Nuclear:'#ff8800',Curse:'#aa44ff',Bless:'#ffcc44',Physical:'#ff8866',Almighty:'#ffffff',Psychokinesis:'#dd44ff','-':'#888888'}
 const ROLE_COLORS = {Sweeper:'#40c8ff', Assassin:'#ff6030', Medic:'#40ff80', Guardian:'#8080ff', Saboteur:'#ffcc40', Strategist:'#b060ff', Elucidator:'#40ffcc', Virtuoso:'#ff88ff'}
 
+const BOSS_PRESETS = [
+  { name: 'Custom',              def: null,   addDef: null  },
+  { name: 'Dominion (LV82)',     def: 363.2,  addDef: 158.4 },
+  { name: 'Atavaka (LV82)',      def: 1279.9, addDef: 158.4 },
+  { name: 'Vishnu (LV82)',       def: 820.7,  addDef: 158.4 },
+  { name: 'Mini Vishnu (LV82)', def: 363.2,  addDef: 158.4 },
+  { name: 'Yatsufusa (LV82)',    def: 1279.9, addDef: 205.9 },
+  { name: 'Sea of Souls 8★',    def: 400,    addDef: 163.2 },
+]
+
 const STAT_TARGETS = {
   dps:      {atk:[120,25], crit:[70,20], cdmg:[200,20], edm:[60,15], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0]},
   support:  {atk:[60,10],  crit:[30,5],  cdmg:[0,0],    edm:[0,0],   hp:[80,20],def:[0,0],heal:[0,0], spd:[80,25]},
@@ -226,12 +274,32 @@ function getRoleArchetype(role) {
 const statMap = {'ATK%':'atk','CRIT Rate%':'crit','CRIT DMG%':'cdmg','HP%':'hp','DEF%':'def','Healing Bonus%':'heal','SPD':'spd'}
 const statLabels = {atk:'ATK%',crit:'CRIT Rate%',cdmg:'CRIT DMG%',edm:'Elem DMG%',hp:'HP%',def:'DEF%',heal:'Healing%',spd:'SPD'}
 
+function computeStats(char, weaponIdx) {
+  const s = {atk:0, crit:0, cdmg:0, hp:0, def:0, edm:0, heal:0, spd:0}
+  if (!char) return s
+  char.cards.forEach(cardStr => {
+    const m = cardStr.match(/^(.+?)\s+(2|4)pc$/i)
+    if (!m) return
+    const setName = m[1].trim()
+    const pc = parseInt(m[2])
+    const setData = CARD_SETS.find(cs => cs.name.toLowerCase() === setName.toLowerCase())
+    if (!setData) return
+    if (setData.stats2) Object.entries(setData.stats2).forEach(([k,v]) => { s[k] = (s[k]||0)+v })
+    if (pc >= 4 && setData.stats4) Object.entries(setData.stats4).forEach(([k,v]) => { s[k] = (s[k]||0)+v })
+  })
+  const wIdx = weaponIdx ?? 0
+  if (char.weapons?.[wIdx]?.bonusStats) {
+    Object.entries(char.weapons[wIdx].bonusStats).forEach(([k,v]) => { s[k] = (s[k]||0)+v })
+  }
+  return s
+}
+
 export default function P5XPage() {
   const [filter, setFilter] = useState('all')
   const [elemFilter, setElemFilter] = useState('all')
   const [charName, setCharName] = useState('')
   const [legendOpen, setLegendOpen] = useState(false)
-  const [stats, setStats] = useState({atk:0,crit:0,cdmg:0,hp:0,def:0,edm:0,heal:0,spd:0})
+  const [selectedWeaponIdx, setSelectedWeaponIdx] = useState(null)
   const [showExport, setShowExport] = useState(false)
   const [showImport, setShowImport] = useState(false)
   const [importText, setImportText] = useState('')
@@ -240,9 +308,16 @@ export default function P5XPage() {
   const [charTab, setCharTab] = useState('build')
   const [ascension, setAscension] = useState(6)
   const [lang, setLang] = useState('en')
+  const [dmg, setDmg] = useState({
+    extraAtk:0, atkConst:0, extraCritRate:0, extraCritDmg:0,
+    dmgMult:0, extraEdm:0, dmgTaken:0,
+    enemyDef:363.2, addDefCoeff:158.4, pierce:0, defReduction:0, windswept:false,
+    skillCoeff:100, weakness:'normal', finalDmgBonus:0, otherCoeff:100,
+  })
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const currentEc = currentChar ? (ELEM_COLORS[currentChar.element] || '#888') : 'var(--persona)'
+  const stats = computeStats(currentChar, selectedWeaponIdx)
 
   const lv80arr = currentChar?.baseStatsLv80
   const lv80all = lv80arr ? (Array.isArray(lv80arr) ? lv80arr : [lv80arr]) : null
@@ -261,9 +336,35 @@ export default function P5XPage() {
   const grouped4 = filtered.filter(c => c.rarity === 4)
   const grouped3 = filtered.filter(c => c.rarity <= 3)
 
-  function setStat(key, val) {
-    setStats(prev => ({ ...prev, [key]: Number(val) || 0 }))
+  function setDmgField(key, val) {
+    setDmg(prev => ({ ...prev, [key]: key === 'windswept' ? Boolean(val) : (Number(val) || 0) }))
   }
+  function pickBossPreset(idx) {
+    const b = BOSS_PRESETS[idx]
+    if (b.def !== null) setDmg(prev => ({ ...prev, enemyDef: b.def, addDefCoeff: b.addDef }))
+  }
+
+  // Damage calc
+  const dmgCharAtk   = lv80?.atk ?? 0
+  const dmgWeaponAtk = currentChar?.weapons?.[selectedWeaponIdx ?? 0]?.atk ?? 0
+  const totalAtkPct  = stats.atk + dmg.extraAtk
+  const totalCritR   = Math.min((5 + stats.crit + dmg.extraCritRate) / 100, 1)
+  const totalCritD   = (150 + stats.cdmg + dmg.extraCritDmg) / 100
+  const dmgA = (dmgCharAtk + dmgWeaponAtk) * (1 + totalAtkPct / 100) + dmg.atkConst
+  const dmgB = 1 + dmg.dmgMult / 100 + (stats.edm + dmg.extraEdm) / 100 + dmg.dmgTaken / 100
+  const rawDefCoeff = (1 + dmg.addDefCoeff / 100) * (1 - dmg.pierce / 100) - dmg.defReduction / 100
+  const defCoeff = Math.max(rawDefCoeff, 0)
+  const windFactor = dmg.windswept ? 0.88 : 1
+  const defNum = dmg.enemyDef * defCoeff * windFactor
+  const dmgC = defNum > 0 ? 1 - defNum / (defNum + 1400) : 1
+  const dmgD = 1 + totalCritR * (totalCritD - 1)
+  const dmgE = dmg.skillCoeff / 100
+  const dmgF = { res: 0.5, normal: 1.0, weak: 1.2 }[dmg.weakness]
+  const dmgG = 1 + dmg.finalDmgBonus / 100
+  const dmgH = dmg.otherCoeff / 100
+  const dmgBase = dmgA * dmgB * dmgC * dmgD * dmgE * dmgF * dmgG * dmgH
+  const dmgMin = Math.round(dmgBase * 0.95)
+  const dmgMax = Math.round(dmgBase * 1.05)
 
   // Effective HP
   const effHp = ((1 + stats.hp / 100) * (1 + stats.def / 100) * 100 - 100).toFixed(1)
@@ -315,9 +416,6 @@ export default function P5XPage() {
   function doImport() {
     try {
       const d = JSON.parse(importText)
-      if (!d.stats) throw new Error('ไม่พบ stats')
-      const s = d.stats
-      setStats({ atk:s.atk||0, crit:s.crit||0, cdmg:s.cdmg||0, hp:s.hp||0, def:s.def||0, edm:s.edm||0, heal:s.heal||0, spd:s.spd||0 })
       if (d.character) setCharName(d.character)
       setShowImport(false)
       setImportError('')
@@ -340,7 +438,7 @@ export default function P5XPage() {
       : `0 0 10px ${ec}66, 0 0 20px ${ec}22`
     return (
       <div className={'char-card' + (isActive ? ' selected' : '')}
-        onClick={() => setCharName(isActive ? '' : c.name)}>
+        onClick={() => { setCharName(isActive ? '' : c.name); setSelectedWeaponIdx(null) }}>
         <div className="char-avatar-wrap">
           {ELEM_IMG[c.element] && (
             <div className={`char-elem-badge${c.element2 ? ' has-elem2' : ''}`}>
@@ -379,15 +477,16 @@ export default function P5XPage() {
     )
   }
 
-  function StatRow({ label, statKey, max, maxRange, unit = '%' }) {
+  function StatRow({ label, statKey, maxRange, unit = '%' }) {
+    const val = stats[statKey] || 0
+    const pct = Math.min(val / maxRange, 1) * 100
     return (
       <div className="p5x-stat-row">
         <label>{label}</label>
-        <input type="number" value={stats[statKey]} min="0" max={max} step={unit === '' ? 1 : 0.1}
-          onChange={e => setStat(statKey, e.target.value)} />
-        <input type="range" min="0" max={maxRange} step={unit === '' ? 1 : 0.5} value={stats[statKey]}
-          onChange={e => setStat(statKey, e.target.value)} />
-        <span className="stat-unit">{unit}</span>
+        <span className="stat-val-locked">{unit === '' ? Math.round(val) : val.toFixed(1)}{unit}</span>
+        <div className="stat-bar-track">
+          <div className="stat-bar-fill" style={{ width: pct + '%' }} />
+        </div>
       </div>
     )
   }
@@ -477,10 +576,13 @@ export default function P5XPage() {
                     : <span>{ROLE_ICONS[currentChar.role]||'❓'}</span>}
                 </div>
                 <div className="char-title">
-                  <div className="char-name">{currentChar.name}</div>
-                  <div className="char-codename" style={{ color: currentEc }}>{currentChar.realName || currentChar.codename}</div>
+                  <div className="char-name">{currentChar.realName || currentChar.name}</div>
+                  <div className="char-codename" style={{ color: currentEc }}>{currentChar.realName ? currentChar.name : currentChar.codename}</div>
                   <div className="char-badges">
-                    <span className={`cbadge rarity${currentChar.rarity}`}>{'★'.repeat(currentChar.rarity)} {currentChar.rarity}-Star</span>
+                    {RAINBOW_CHARS.has(currentChar.codename)
+                      ? <span className="cbadge stars-rainbow">{'★'.repeat(currentChar.rarity)} {currentChar.rarity}-Star</span>
+                      : <span className={`cbadge rarity${currentChar.rarity}`}>{'★'.repeat(currentChar.rarity)} {currentChar.rarity}-Star</span>
+                    }
                     <span className="cbadge role" style={{ borderColor: ROLE_COLORS[currentChar.role], color: ROLE_COLORS[currentChar.role] }}>{currentChar.role}</span>
                     <span className={`elem-${currentChar.element === '-' ? 'dash' : currentChar.element}`}>
                       {currentChar.element === '-' ? 'No Element' : currentChar.element}
@@ -514,6 +616,7 @@ export default function P5XPage() {
               <div className="char-tab-bar">
                 <button className={'char-tab-btn' + (charTab === 'build' ? ' active' : '')} onClick={() => setCharTab('build')}>🃏 Build</button>
                 <button className={'char-tab-btn' + (charTab === 'kit'   ? ' active' : '')} onClick={() => setCharTab('kit')}>⚔️ Kit</button>
+                <button className={'char-tab-btn' + (charTab === 'dmg'   ? ' active' : '')} onClick={() => setCharTab('dmg')}>💥 DMG</button>
                 <div className="lang-toggle">
                   <button className={'lang-btn' + (lang === 'en' ? ' active' : '')} onClick={() => setLang('en')}>EN</button>
                   <button className={'lang-btn' + (lang === 'th' ? ' active' : '')} onClick={() => setLang('th')}>TH</button>
@@ -543,10 +646,10 @@ export default function P5XPage() {
                                     <img src={ELEM_IMG[sk.element]} alt={sk.element} className="skill-elem-icon"
                                       style={{ filter: `drop-shadow(0 0 2px ${ELEM_COLORS[sk.element]||'#888'})` }} />
                                   )}
+                                  {sk.isBuff && <img src={import.meta.env.BASE_URL + 'p5x/elements/buff.webp'} alt="buff" className="skill-buff-icon" onError={e => e.target.style.display='none'} />}
                                 </div>
                                 <div className="skill-header-right">
                                   {sk.sp > 0 && <span className="skill-sp">SP {sk.sp}</span>}
-                                  {sk.isBuff && <img src={import.meta.env.BASE_URL + 'p5x/elements/buff.webp'} alt="buff" className="skill-buff-icon" onError={e => e.target.style.display='none'} />}
                                 </div>
                               </div>
                               <div className="skill-name">{sk.name}</div>
@@ -625,6 +728,105 @@ export default function P5XPage() {
                 </div>
               )}
 
+              {charTab === 'dmg' && (
+                <div className="dmg-calc">
+                  <div className="dmg-notice">⚠️ ค่าอ้างอิงจาก Lufelnet/AbsolRoot guide — ตัวเลข boss อาจต่างจากเกมจริง</div>
+
+                  {/* Auto section */}
+                  <div className="dmg-section">
+                    <div className="dmg-section-title">⚔️ Attack Power (จาก Build)</div>
+                    <div className="dmg-auto-grid">
+                      <div className="dmg-auto-row"><span>Char ATK</span><span className="dmg-auto-val">{dmgCharAtk.toLocaleString()}</span></div>
+                      <div className="dmg-auto-row"><span>Weapon ATK</span><span className="dmg-auto-val">{dmgWeaponAtk.toLocaleString()}</span></div>
+                      <div className="dmg-auto-row"><span>ATK% (Build)</span><span className="dmg-auto-val">{stats.atk.toFixed(1)}%</span></div>
+                      <div className="dmg-auto-row"><span>CRIT Rate (5+build)</span><span className="dmg-auto-val">{(5+stats.crit).toFixed(1)}%</span></div>
+                      <div className="dmg-auto-row"><span>CRIT DMG (150+build)</span><span className="dmg-auto-val">{(150+stats.cdmg).toFixed(1)}%</span></div>
+                      <div className="dmg-auto-row"><span>Elem DMG (Build)</span><span className="dmg-auto-val">{stats.edm.toFixed(1)}%</span></div>
+                    </div>
+                  </div>
+
+                  {/* Battle buffs */}
+                  <div className="dmg-section">
+                    <div className="dmg-section-title">💥 Battle Buffs (เพิ่มเติมในสนาม)</div>
+                    <div className="dmg-field-grid">
+                      <div className="dmg-field"><label>Extra ATK%</label><input className="dmg-input" type="number" value={dmg.extraAtk} min="0" onChange={e=>setDmgField('extraAtk',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>ATK Constant</label><input className="dmg-input" type="number" value={dmg.atkConst} min="0" onChange={e=>setDmgField('atkConst',e.target.value)}/></div>
+                      <div className="dmg-field"><label>Extra CRIT Rate%</label><input className="dmg-input" type="number" value={dmg.extraCritRate} min="0" onChange={e=>setDmgField('extraCritRate',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>Extra CRIT DMG%</label><input className="dmg-input" type="number" value={dmg.extraCritDmg} min="0" onChange={e=>setDmgField('extraCritDmg',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>DMG Mult%</label><input className="dmg-input" type="number" value={dmg.dmgMult} min="0" onChange={e=>setDmgField('dmgMult',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>Extra Elem DMG%</label><input className="dmg-input" type="number" value={dmg.extraEdm} min="0" onChange={e=>setDmgField('extraEdm',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>DMG Taken (Enemy)</label><input className="dmg-input" type="number" value={dmg.dmgTaken} min="0" onChange={e=>setDmgField('dmgTaken',e.target.value)}/><span className="dmg-unit">%</span></div>
+                    </div>
+                  </div>
+
+                  {/* Skill */}
+                  <div className="dmg-section">
+                    <div className="dmg-section-title">🃏 Skill Setup</div>
+                    <div className="dmg-field-grid">
+                      <div className="dmg-field"><label>Skill Coefficient%</label><input className="dmg-input" type="number" value={dmg.skillCoeff} min="0" onChange={e=>setDmgField('skillCoeff',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field dmg-field-wide">
+                        <label>Weakness</label>
+                        <div className="dmg-weakness-btns">
+                          {[['res','Res ×0.5'],['normal','Normal ×1.0'],['weak','Weak ×1.2']].map(([v,l])=>(
+                            <button key={v} className={'dmg-weakness-btn dmg-wk-'+v+(dmg.weakness===v?' active':'')} onClick={()=>setDmg(p=>({...p,weakness:v}))}>{l}</button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="dmg-field"><label>Final DMG Bonus%</label><input className="dmg-input" type="number" value={dmg.finalDmgBonus} min="0" onChange={e=>setDmgField('finalDmgBonus',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>Other Coefficients%</label><input className="dmg-input" type="number" value={dmg.otherCoeff} min="1" onChange={e=>setDmgField('otherCoeff',e.target.value)}/><span className="dmg-unit">%</span></div>
+                    </div>
+                  </div>
+
+                  {/* Enemy */}
+                  <div className="dmg-section">
+                    <div className="dmg-section-title">🛡️ Enemy Defense</div>
+                    <div className="dmg-field-grid">
+                      <div className="dmg-field dmg-field-wide">
+                        <label>Boss Preset</label>
+                        <select className="dmg-select" onChange={e=>pickBossPreset(Number(e.target.value))}>
+                          {BOSS_PRESETS.map((b,i)=><option key={i} value={i}>{b.name}</option>)}
+                        </select>
+                      </div>
+                      <div className="dmg-field"><label>Enemy DEF</label><input className="dmg-input" type="number" value={dmg.enemyDef} min="0" step="0.1" onChange={e=>setDmgField('enemyDef',e.target.value)}/></div>
+                      <div className="dmg-field"><label>Add. DEF Coeff%</label><input className="dmg-input" type="number" value={dmg.addDefCoeff} min="0" step="0.1" onChange={e=>setDmgField('addDefCoeff',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>Pierce%</label><input className="dmg-input" type="number" value={dmg.pierce} min="0" max="100" onChange={e=>setDmgField('pierce',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field"><label>DEF Reduction%</label><input className="dmg-input" type="number" value={dmg.defReduction} min="0" onChange={e=>setDmgField('defReduction',e.target.value)}/><span className="dmg-unit">%</span></div>
+                      <div className="dmg-field dmg-check-row">
+                        <label>Windswept ×0.88</label>
+                        <input type="checkbox" className="dmg-checkbox" checked={dmg.windswept} onChange={e=>setDmgField('windswept',e.target.checked)}/>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Formula breakdown */}
+                  <div className="dmg-section dmg-result-section">
+                    <div className="dmg-section-title">📈 Result</div>
+                    <div className="dmg-formula-rows">
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓐ ATK Power</span><span className="dmg-fr-val">{Math.round(dmgA).toLocaleString()}</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓑ DMG Bonus</span><span className="dmg-fr-val">×{dmgB.toFixed(3)}</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓒ DEF Factor</span><span className="dmg-fr-val">×{dmgC.toFixed(4)}</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓓ CRIT (Exp.)</span><span className="dmg-fr-val">×{dmgD.toFixed(3)} ({(totalCritR*100).toFixed(1)}% rate / {(totalCritD*100).toFixed(0)}% dmg)</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓔ Skill Coeff</span><span className="dmg-fr-val">×{dmgE.toFixed(2)}</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓕ Weakness</span><span className="dmg-fr-val">×{dmgF.toFixed(1)}</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓖ Final Bonus</span><span className="dmg-fr-val">×{dmgG.toFixed(2)}</span></div>
+                      <div className="dmg-fr"><span className="dmg-fr-label">ⓗ Others</span><span className="dmg-fr-val">×{dmgH.toFixed(2)}</span></div>
+                    </div>
+                    <div className="dmg-output">
+                      <div className="dmg-output-row">
+                        <span className="dmg-label-min">MIN</span>
+                        <span className="dmg-val-min">{dmgMin.toLocaleString()}</span>
+                      </div>
+                      <div className="dmg-output-sep">~</div>
+                      <div className="dmg-output-row">
+                        <span className="dmg-label-max">MAX</span>
+                        <span className="dmg-val-max">{dmgMax.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    <div className="dmg-avg">AVG: {Math.round(dmgBase).toLocaleString()}</div>
+                  </div>
+                </div>
+              )}
+
               {charTab === 'build' && <div className="info-grid">
                 <div className="info-panel">
                   <div className="info-label">🃏 Revelation Card Sets (แนะนำ)</div>
@@ -665,7 +867,38 @@ export default function P5XPage() {
 
                 <div className="info-panel">
                   <div className="info-label">⚔️ Recommended Weapon</div>
-                  <div className="weapon-box">{currentChar.weapon}</div>
+                  {currentChar.weapons ? (
+                    <div className="weapon-list">
+                      {currentChar.weapons.map((w, wi) => {
+                        const isWSelected = (selectedWeaponIdx ?? 0) === wi
+                        return (
+                        <div key={wi} className={`weapon-card rarity${w.rarity}${isWSelected ? ' weapon-selected' : ''}`}
+                          onClick={() => setSelectedWeaponIdx(wi)}
+                          style={{ cursor:'pointer' }}>
+                          <div className="weapon-card-top">
+                            <img src={import.meta.env.BASE_URL + w.img} alt={w.name} className="weapon-img" onError={e => e.target.style.display='none'} />
+                            <div className="weapon-card-info">
+                              <div className="weapon-name">{w.name}</div>
+                              <div className={`weapon-stars rarity${w.rarity}-star`}>{'★'.repeat(w.rarity)}</div>
+                              <div className="weapon-stats-row">
+                                <span className="wstat"><span className="wstat-label">HP</span>{w.hp}</span>
+                                <span className="wstat"><span className="wstat-label">ATK</span>{w.atk}</span>
+                                <span className="wstat"><span className="wstat-label">DEF</span>{w.def}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="weapon-ability-name">{w.abilityName}</div>
+                          {w.ability.map((line, li) => (
+                            <div key={li} className="weapon-ability-line">{line}</div>
+                          ))}
+                          {isWSelected && <div className="weapon-selected-badge">✓ Selected</div>}
+                        </div>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <div className="weapon-box">{currentChar.weapon}</div>
+                  )}
                 </div>
 
                 <div className="info-panel">
