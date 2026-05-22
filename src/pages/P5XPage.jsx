@@ -534,8 +534,11 @@ export default function P5XPage() {
                               <table className="stats-table">
                                 <thead>
                                   <tr>
-                                    <th>Stat</th>
-                                    <th>Base</th>
+                                    <th rowSpan={2}>Stat</th>
+                                    <th rowSpan={2}>Base</th>
+                                    {rows.length > 0 && <th colSpan={rows.length} className="stat-lv80-header">LV 80</th>}
+                                  </tr>
+                                  <tr>
                                     {rows.map((_, i) => <th key={i} className={i === rows.length-1 ? 'stat-lv80' : ''}>A{i}</th>)}
                                   </tr>
                                 </thead>
