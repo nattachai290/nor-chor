@@ -249,6 +249,10 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .char-tab-btn { background:none; border:1px solid transparent; border-radius:8px 8px 0 0; padding:5px 14px; font-size:0.75rem; color:var(--p5x-muted); cursor:pointer; font-family:'Exo 2',sans-serif; transition:all .15s; }
 .char-tab-btn:hover { color:var(--p5x-text); border-color:var(--p5x-border); }
 .char-tab-btn.active { color:var(--persona3); border-color:var(--persona); background:#110a1e; }
+.lang-toggle { margin-left:auto; display:flex; gap:2px; align-items:center; }
+.lang-btn { background:none; border:1px solid var(--p5x-border); border-radius:5px; padding:2px 8px; font-size:0.63rem; color:var(--p5x-muted); cursor:pointer; font-family:'Exo 2',sans-serif; font-weight:600; transition:all .12s; }
+.lang-btn:hover { border-color:var(--persona); color:var(--p5x-text); }
+.lang-btn.active { background:#110a1e; border-color:var(--persona); color:var(--persona3); }
 
 /* ── KIT SECTION ── */
 .kit-section { display:flex; flex-direction:column; gap:10px; }
