@@ -196,30 +196,58 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .char-avatar-wrap { position:relative; display:inline-flex; }
 
 /* ── ELEMENT BORDER GIMMICKS ── */
-.char-avatar-wrap::before {
+.char-avatar-wrap::before,
+.char-avatar-wrap::after {
   content:''; position:absolute; inset:-5px; border-radius:50%;
   z-index:0; pointer-events:none; opacity:0; transform-origin:center;
 }
 @keyframes elem-spin { to { transform:rotate(360deg); } }
+@keyframes elem-spin-rev { to { transform:rotate(-360deg); } }
 
-/* FIRE — flickering flame ring */
-.elem-border-Fire .char-avatar { border-color:#ff6600; animation:ring-fire 0.12s steps(4) infinite; }
+/* FIRE — two-layer organic flame ring */
+.elem-border-Fire .char-avatar { border-color:#ff6600; animation:ring-fire 0.15s steps(4) infinite; }
 .elem-border-Fire.char-avatar-wrap::before {
-  inset:-7px;
+  inset:-16px;
   background:conic-gradient(
-    #cc1100 0deg,#ff3300 15deg,#ff6600 30deg,#ffaa00 45deg,#ff4400 60deg,
-    #cc1100 75deg,#ff2200 90deg,#ff7700 105deg,#ffcc00 120deg,#ff5500 135deg,
-    #cc1100 150deg,#ff3300 165deg,#ff8800 180deg,#ffbb00 195deg,#ff4400 210deg,
-    #cc1100 225deg,#ff2200 240deg,#ff6600 255deg,#ffaa00 270deg,#ff3300 285deg,
-    #cc1100 300deg,#ff5500 315deg,#ff9900 330deg,#ffcc00 345deg,#cc1100 360deg
+    #ff1100 0deg,#ff4400 6deg,#ff8800 11deg,#ffcc00 15deg,#ff4400 18deg,transparent 26deg,
+    #ff2200 33deg,#ff6600 38deg,#ffaa00 42deg,transparent 51deg,
+    #ff3300 58deg,#ff7700 63deg,#ffbb00 67deg,#ff3300 70deg,transparent 78deg,
+    #ff1100 85deg,#ff5500 90deg,#ff9900 94deg,transparent 103deg,
+    #ff2200 110deg,#ff6600 115deg,#ffcc00 119deg,#ff4400 122deg,transparent 130deg,
+    #ff3300 137deg,#ff7700 142deg,#ffaa00 146deg,transparent 155deg,
+    #ff1100 162deg,#ff5500 167deg,#ff9900 171deg,#ff2200 174deg,transparent 182deg,
+    #ff4400 189deg,#ff8800 194deg,#ffcc00 198deg,transparent 206deg,
+    #ff2200 213deg,#ff6600 218deg,#ffaa00 222deg,#ff3300 225deg,transparent 233deg,
+    #ff1100 240deg,#ff5500 245deg,#ff8800 249deg,transparent 258deg,
+    #ff3300 265deg,#ff7700 270deg,#ffbb00 274deg,#ff4400 277deg,transparent 285deg,
+    #ff2200 292deg,#ff6600 297deg,#ff9900 301deg,transparent 310deg,
+    #ff1100 317deg,#ff4400 322deg,#ffcc00 326deg,#ff3300 329deg,transparent 337deg,
+    #ff3300 344deg,#ff7700 349deg,#ffaa00 353deg,transparent 360deg
   );
-  filter:blur(3px); opacity:1; animation:elem-spin 0.5s linear infinite;
+  filter:blur(7px); opacity:0.95; animation:elem-spin 0.8s linear infinite;
+}
+.elem-border-Fire.char-avatar-wrap::after {
+  inset:-9px;
+  background:conic-gradient(
+    transparent 0deg,#ff5500 12deg,#ffaa00 19deg,#ff2200 24deg,transparent 33deg,
+    #ff4400 47deg,#ffcc00 54deg,#ff3300 59deg,transparent 68deg,
+    #ff5500 82deg,#ffaa00 89deg,transparent 99deg,
+    #ff3300 113deg,#ff8800 120deg,#ffcc00 125deg,transparent 134deg,
+    #ff4400 148deg,#ffbb00 155deg,#ff2200 160deg,transparent 169deg,
+    #ff6600 182deg,#ffaa00 189deg,transparent 199deg,
+    #ff3300 213deg,#ff8800 220deg,#ffcc00 225deg,transparent 234deg,
+    #ff4400 248deg,#ffbb00 255deg,#ff3300 260deg,transparent 269deg,
+    #ff5500 283deg,#ffaa00 290deg,transparent 300deg,
+    #ff2200 314deg,#ff7700 321deg,#ffcc00 326deg,transparent 335deg,
+    #ff4400 349deg,#ffaa00 356deg,transparent 360deg
+  );
+  filter:blur(3px); opacity:0.85; animation:elem-spin-rev 0.45s linear infinite;
 }
 @keyframes ring-fire {
-  0%  { box-shadow:0 0 12px #ff4400cc,0 0 24px #ff660088,0 0 40px #ff220044; }
-  25% { box-shadow:0 0 20px #ff6600ff,0 0 38px #ff8800aa,0 0 60px #ff440066; }
-  50% { box-shadow:0 0 8px #ff2200bb,0 0 16px #ff440055,0 0 26px #cc110033; }
-  75% { box-shadow:0 0 22px #ff7700ff,0 0 42px #ff9900aa,0 0 66px #ff550055; }
+  0%  { box-shadow:0 0 14px #ff4400cc,0 0 28px #ff660088,0 0 48px #ff220044; }
+  25% { box-shadow:0 0 22px #ff6600ff,0 0 44px #ff8800aa,0 0 70px #ff440066; }
+  50% { box-shadow:0 0 10px #ff2200bb,0 0 20px #ff440055,0 0 34px #cc110033; }
+  75% { box-shadow:0 0 26px #ff7700ff,0 0 50px #ff9900aa,0 0 78px #ff550055; }
 }
 
 /* ICE — slow crystalline frost ring */
@@ -366,7 +394,10 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .char-role-badge { position:absolute; bottom:-5px; right:-5px; width:30px; height:30px; border-radius:50%; background:#0a0618; border:2px solid var(--p5x-border); display:flex; align-items:center; justify-content:center; overflow:hidden; z-index:2; }
 .char-role-badge img { width:22px; height:22px; object-fit:contain; mix-blend-mode:screen; }
 .char-elem-badge { position:absolute; top:-5px; left:-5px; width:26px; height:26px; border-radius:50%; background:#0a0618; border:2px solid var(--p5x-border); display:flex; align-items:center; justify-content:center; overflow:hidden; z-index:2; }
+.char-elem-badge.has-elem2 { left:-5px; }
 .char-elem-badge img { width:16px; height:16px; object-fit:contain; mix-blend-mode:screen; }
+.char-elem-badge2 { position:absolute; top:-5px; right:-5px; width:26px; height:26px; border-radius:50%; background:#0a0618; border:2px solid var(--p5x-border); display:flex; align-items:center; justify-content:center; overflow:hidden; z-index:2; }
+.char-elem-badge2 img { width:16px; height:16px; object-fit:contain; mix-blend-mode:screen; }
 .char-card-name { font-size:0.82rem; color:var(--p5x-text); text-align:center; line-height:1.2; word-break:break-word; font-weight:600; }
 .char-card-stars { font-size:0.68rem; letter-spacing:-1px; }
 .stars-rainbow {
