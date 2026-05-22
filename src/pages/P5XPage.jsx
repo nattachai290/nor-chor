@@ -91,7 +91,39 @@ const CHARACTERS = [
       {hp:3564, atk:1286, def:610, spd:102},
       {hp:3623, atk:1307, def:621, spd:102},
     ],
-    hiddenAbility: 'ATK% +29%', weapons:[],
+    hiddenAbility: 'ATK% +29%',
+    weapons: [
+      {
+        name: 'Phoenix Dagger', rarity: 5, img: 'p5x/weapon/phoenix-dagger.png',
+        hp: 2160, atk: 780, def: 370,
+        bonusStats: {atk:30},
+        abilityName: 'Phoenix Dagger',
+        ability: [
+          'Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.',
+          'After gaining Will of Rebellion, increase Ren\'s Curse damage by 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% for 2 turns. Stacks up to 3 times.',
+          'At 3 or more Will of Rebellion stacks, increase Ren\'s next damage by 23.0%/30.0%/30.0%/37.0%/37.0%/44.0%/44.0%.',
+        ],
+        abilityTh: [
+          'เพิ่ม Attack 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%',
+          'หลังจากได้รับ Will of Rebellion เพิ่มความเสียหาย Curse ของ Ren 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% เป็นเวลา 2 เทิร์น สะสมสูงสุด 3 ครั้ง',
+          'เมื่อมี Will of Rebellion 3 stack ขึ้นไป เพิ่มความเสียหายครั้งถัดไปของ Ren 23.0%/30.0%/30.0%/37.0%/37.0%/44.0%/44.0%',
+        ],
+      },
+      {
+        name: 'Machete', rarity: 4, img: 'p5x/weapon/machete.png',
+        hp: 1729, atk: 623, def: 296,
+        bonusStats: {atk:12},
+        abilityName: 'Machete',
+        ability: [
+          'Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.',
+          'When attacking a foe with an ailment, increase Attack by 19.1%/24.8%/24.8%/30.5%/30.5%/36.2%/36.2%.',
+        ],
+        abilityTh: [
+          'เพิ่ม Attack 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%',
+          'เมื่อโจมตีศัตรูที่มี ailment เพิ่ม Attack 19.1%/24.8%/24.8%/30.5%/30.5%/36.2%/36.2%',
+        ],
+      },
+    ],
   },
   {name:'Ann Takamaki',       codename:'Panther',        role:'Sweeper',    element:'Fire',           rarity:5, cards:['Power 4pc','Courage 2pc'],      weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','Fire DMG%','CRIT Rate%','CRIT DMG%'],     note:'Top Fire AoE DPS. Power 4pc boosts party ATK when stacked with Fire sub-DPS.',
     realName:'Ann Takamaki', persona:'Carmen',
