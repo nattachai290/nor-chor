@@ -971,7 +971,6 @@ export default function P5XPage() {
 
               {charTab === 'dmg' && (
                 <div className="dmg-calc">
-                  <div className="dmg-notice">⚠️ ค่าอ้างอิงจาก Lufelnet/AbsolRoot guide — ตัวเลข boss อาจต่างจากเกมจริง</div>
 
                   {/* Auto section */}
                   <div className="dmg-section">
