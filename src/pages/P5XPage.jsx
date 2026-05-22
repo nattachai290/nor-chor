@@ -63,25 +63,25 @@ const CHARACTERS = [
 
 const BASE = import.meta.env.BASE_URL + 'p5x/roles/'
 const ROLE_IMG = {
-  Sweeper:    BASE + 'sweeper.svg',
-  Assassin:   BASE + 'assassin.svg',
-  Strategist: BASE + 'strategist.svg',
-  Saboteur:   BASE + 'saboteur.svg',
-  Guardian:   BASE + 'guardian.svg',
-  Medic:      BASE + 'medic.svg',
-  Elucidator: BASE + 'elucidator.svg',
-  Virtuoso:   BASE + 'virtuoso.svg',
+  Sweeper:    BASE + 'sweeper.webp',
+  Assassin:   BASE + 'assassin.webp',
+  Strategist: BASE + 'strategist.webp',
+  Saboteur:   BASE + 'saboteur.webp',
+  Guardian:   BASE + 'guardian.webp',
+  Medic:      BASE + 'medic.webp',
+  Elucidator: BASE + 'elucidator.webp',
+  Virtuoso:   BASE + 'virtuoso.webp',
 }
 const BASE_ELEM = import.meta.env.BASE_URL + 'p5x/elements/'
 const ELEM_IMG = {
-  Fire:     BASE_ELEM + 'fire.svg',
-  Ice:      BASE_ELEM + 'ice.svg',
-  Electric: BASE_ELEM + 'electric.svg',
-  Wind:     BASE_ELEM + 'wind.svg',
-  Nuclear:  BASE_ELEM + 'nuclear.svg',
-  Curse:    BASE_ELEM + 'curse.svg',
-  Bless:    BASE_ELEM + 'bless.svg',
-  Physical: BASE_ELEM + 'physical.svg',
+  Fire:     BASE_ELEM + 'fire.webp',
+  Ice:      BASE_ELEM + 'ice.webp',
+  Electric: BASE_ELEM + 'electric.webp',
+  Wind:     BASE_ELEM + 'wind.webp',
+  Nuclear:  BASE_ELEM + 'nuclear.webp',
+  Curse:    BASE_ELEM + 'curse.webp',
+  Bless:    BASE_ELEM + 'bless.webp',
+  Physical: BASE_ELEM + 'physical.webp',
   '-':      BASE_ELEM + 'none.svg',
 }
 const BASE_PORTRAITS = import.meta.env.BASE_URL + 'p5x/portraits/'
