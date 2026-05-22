@@ -147,6 +147,7 @@ const CHARACTERS = [
   },
   {name:'Closer (Tropical)',  codename:'closer-tropical',role:'Sweeper',    element:'Bless',          rarity:5, cards:['Courage 4pc','Virtue 2pc'],     weapon:'Best Bless ATK weapon',                         statPrio:['ATK%','CRIT Rate%','CRIT DMG%'],                 note:'Bless Sweeper variant. Tropical-themed alternate version of Closer.'},
   {name:'Rin (Firecracker)',  codename:'rin-firecracker',role:'Sweeper',    element:'Fire',           rarity:5, cards:['Power 4pc','Courage 2pc'],      weapon:'Best Fire ATK weapon',                          statPrio:['ATK%','Fire DMG%','CRIT Rate%','CRIT DMG%'],     note:'Fire Sweeper variant. Festive alternate version of Rin.',
+    realName:'Yaoling Li', affiliation:'Phantom Thieves', persona:'Meng Po',
     weakRes:{ Fire:'res', Ice:'normal', Electric:'normal', Wind:'wk', Nuclear:'normal', Curse:'normal', Bless:'normal', Physical:'normal', Almighty:'normal', Psychokinesis:'normal' },
     skills:[
       {name:'Scarlet Surprise',     type:'Skill',   element:'Fire', sp:20,
