@@ -82,9 +82,17 @@ const CHARACTERS = [
         desc:"When attacking foes with Fire skills, 60% chance to gain 1 Passion stack.\nWhen La Vie en Rose is active, increase Fire damage by 11% per Passion stack spent (up to 110%).",
         descTh:"เมื่อโจมตีศัตรูด้วยสกิลธาตุไฟ โอกาส 60% รับ 1 Passion stack\nเมื่อ La Vie en Rose ทำงาน เพิ่มความเสียหายธาตุไฟ 11% ต่อ Passion stack ที่ใช้ (สูงสุด 110%)"},
     ],
-    baseStats:     {hp:0, atk:0, def:0, spd:0},
-    baseStatsLv80: null,
-    hiddenAbility: '',
+    baseStats:     {hp:288, atk:107, def:55, spd:94},
+    baseStatsLv80: [
+      {hp:3240, atk:1210, def:620, spd:94},
+      {hp:3298, atk:1232, def:631, spd:94},
+      {hp:3357, atk:1253, def:642, spd:94},
+      {hp:3415, atk:1276, def:654, spd:94},
+      {hp:3474, atk:1297, def:665, spd:94},
+      {hp:3532, atk:1319, def:676, spd:94},
+      {hp:3590, atk:1340, def:687, spd:94},
+    ],
+    hiddenAbility: 'ATK% +29%',
     weapons: [
       {
         name: 'Rosethorn', rarity: 5, img: 'p5x/weapon/rosethorn.png',
