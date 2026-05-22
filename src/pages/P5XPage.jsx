@@ -100,6 +100,9 @@ const CHARACTERS = [
   {name:'Okyann',             codename:'Okyann',         role:'Elucidator', element:'-',              rarity:4, cards:['Abundance 4pc','Opulence 2pc'],   weapon:'Best Support weapon',                           statPrio:['HP%','SPD','DEF%'],                              note:'4★ Elucidator. Provides elemental resonance and damage amplification.'},
 ]
 
+const BASE_SKILL_TYPES = import.meta.env.BASE_URL + 'p5x/skill-types/'
+const SKILL_TYPE_IMG = { Passive: BASE_SKILL_TYPES + 'passive.webp', Skill: BASE_SKILL_TYPES + 'skill.webp', Ultimate: BASE_SKILL_TYPES + 'ultimate.webp', Normal: BASE_SKILL_TYPES + 'normal.webp' }
+
 const BASE = import.meta.env.BASE_URL + 'p5x/roles/'
 const ROLE_IMG = {
   Sweeper:    BASE + 'sweeper.webp',
@@ -480,6 +483,10 @@ export default function P5XPage() {
                             <div key={i} className="skill-card">
                               <div className="skill-card-header">
                                 <span className={`skill-type skill-type-${sk.type.toLowerCase()}`}>{sk.type}</span>
+                                {SKILL_TYPE_IMG[sk.type] && (
+                                  <img src={SKILL_TYPE_IMG[sk.type]} alt={sk.type} className="skill-type-icon"
+                                    onError={e => e.target.style.display='none'} />
+                                )}
                                 {sk.element && sk.element !== '-' && ELEM_IMG[sk.element] && (
                                   <img src={ELEM_IMG[sk.element]} alt={sk.element} className="skill-elem-icon"
                                     style={{ filter: `drop-shadow(0 0 2px ${ELEM_COLORS[sk.element]||'#888'})` }} />

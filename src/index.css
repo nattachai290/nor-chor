@@ -266,6 +266,7 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .skill-type-skill    { background:#0a2040; color:#66aaff; border:1px solid #2255aa; }
 .skill-type-ultimate { background:#2a1000; color:#ffaa44; border:1px solid #aa5500; }
 .skill-type-passive  { background:#0a2010; color:#44cc88; border:1px solid #226644; }
+.skill-type-icon { width:14px; height:14px; object-fit:contain; mix-blend-mode:screen; margin-left:2px; }
 .skill-elem-icon { width:14px; height:14px; object-fit:contain; mix-blend-mode:screen; }
 .skill-sp { margin-left:auto; font-size:0.6rem; color:var(--p5x-cyan); background:#001a2a; border:1px solid #005577; border-radius:4px; padding:0 5px; }
 .skill-buff-tag { margin-left:auto; font-size:0.58rem; font-weight:700; color:#ffdd44; background:#2a2000; border:1px solid #aa8800; border-radius:4px; padding:0 5px; letter-spacing:0.3px; }
