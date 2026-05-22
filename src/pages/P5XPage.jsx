@@ -291,10 +291,17 @@ export default function P5XPage() {
   }
 
   function CharCard({ c }) {
-    const ec = ELEM_COLORS[c.element] || '#888'
+    const ec  = ELEM_COLORS[c.element]  || '#888'
+    const ec2 = c.element2 ? (ELEM_COLORS[c.element2] || '#888') : null
     const isActive = charName === c.name
     const isRainbow = RAINBOW_CHARS.has(c.codename)
     const starColor = c.rarity === 4 ? '#ccaa22' : c.rarity <= 3 ? '#aa8811' : '#ffcc44'
+    const avatarBg = ec2
+      ? `linear-gradient(to right, ${ec}55 0%, ${ec}44 46%, ${ec2}44 54%, ${ec2}55 100%)`
+      : `radial-gradient(circle at 50% 38%, ${ec}44, #0a0818)`
+    const avatarShadow = ec2
+      ? `0 0 10px ${ec}55, 0 0 10px ${ec2}55`
+      : `0 0 10px ${ec}66, 0 0 20px ${ec}22`
     return (
       <div className={'char-card' + (isActive ? ' selected' : '')}
         onClick={() => setCharName(isActive ? '' : c.name)}>
@@ -311,7 +318,7 @@ export default function P5XPage() {
                 style={{ filter: `drop-shadow(0 0 2px ${ELEM_COLORS[c.element2] || '#888'})` }} />
             </div>
           )}
-          <div className="char-avatar" style={{ background: `radial-gradient(circle at 50% 38%, ${ec}44, #0a0818)`, borderColor: ec, boxShadow: `0 0 10px ${ec}66, 0 0 20px ${ec}22` }}>
+          <div className="char-avatar" style={{ background: avatarBg, borderColor: ec, boxShadow: avatarShadow }}>
             {PORTRAITS[c.name]
               ? <img src={PORTRAITS[c.name]} alt={c.codename} className="portrait"
                   style={{ filter: 'brightness(1.1) contrast(1.05)', transform: 'scale(0.9)' }}

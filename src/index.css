@@ -4,7 +4,7 @@
   --card:#0a1f10; --border:#1a4d25; --text:#d4f5dc; --muted:#5a8c65;
   --green:#00ff88; --red:#ff4e6a; --orange:#aaff44; --blue:#88ffcc;
   --persona:#d040ff; --persona2:#9922dd; --persona3:#ffaaff;
-  --p5x-dark:#07071a; --p5x-card:#0f0f2a; --p5x-border:#5533aa;
+  --p5x-dark:#000000; --p5x-card:#0a0a18; --p5x-border:#5533aa;
   --p5x-text:#f0eaff; --p5x-muted:#aa99cc; --p5x-cyan:#00e8ff;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
