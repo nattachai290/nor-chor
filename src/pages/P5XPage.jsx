@@ -47,6 +47,16 @@ import { useState, useEffect } from 'react'
 //              HP%, HP, DEF%, Ailment Acc%, SP Recovery%, Speed
 // Other pool : same but + ATK(flat), DEF(flat) — lower tier values than Space
 //
+// ── CARD UPGRADE SYSTEM ────────────────────────────────────────────────────────
+// • Max upgrades per card : 5
+// • Cards start with 3 or 4 sub stats
+//   - 3 sub stats → 1st upgrade unlocks the 4th sub stat; remaining 4 upgrades
+//                   randomly add tiers to one of the 4 existing sub stats
+//   - 4 sub stats → all 5 upgrades randomly add tiers to existing sub stats
+// • Each upgrade rolls 1 tier onto 1 random sub stat (tier 1 = best, tier 5 = worst)
+// • Best case (4-stat card): 5 rolls all on your priority stat at tier 1
+// • Worst case (3-stat card): 4 rolls spread across unwanted stats at tier 5
+//
 // ── TODO ───────────────────────────────────────────────────────────────────────
 // • Add spr  (SP Recovery%)   to SUB_STAT_KEY, CHAR_STAT_TARGETS, CARD_SLOTS Sky
 // • Add ailm (Ailment Acc%)   to SUB_STAT_KEY, CHAR_STAT_TARGETS
