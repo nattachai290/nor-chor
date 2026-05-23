@@ -4012,10 +4012,65 @@ const BOSS_PRESETS = [
 ]
 
 const STAT_TARGETS = {
-  dps:      {atk:[120,25], crit:[70,20], cdmg:[200,20], edm:[60,15], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0]},
-  support:  {atk:[60,10],  crit:[30,5],  cdmg:[0,0],    edm:[0,0],   hp:[80,20],def:[0,0],heal:[0,0], spd:[80,25]},
+  dps:      {atk:[120,25], crit:[70,20], cdmg:[200,20], edm:[60,15], hp:[0,0],   def:[0,0],  heal:[0,0],  spd:[0,0]},
+  support:  {atk:[60,10],  crit:[30,5],  cdmg:[0,0],    edm:[0,0],   hp:[80,20], def:[0,0],  heal:[0,0],  spd:[80,25]},
   medic:    {atk:[20,5],   crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,30],def:[40,15],heal:[60,30],spd:[30,10]},
-  saboteur: {atk:[80,20],  crit:[30,10], cdmg:[0,0],    edm:[0,0],   hp:[0,0],  def:[20,5], heal:[0,0], spd:[70,25]},
+  saboteur: {atk:[80,20],  crit:[30,10], cdmg:[0,0],    edm:[0,0],   hp:[0,0],   def:[20,5], heal:[0,0],  spd:[70,25]},
+}
+
+// Endgame stat targets keyed by character codename
+const CHAR_STAT_TARGETS = {
+  // ── SWEEPER / ASSASSIN ──
+  'Joker':           {atk:[150,25], crit:[80,22], cdmg:[280,22], edm:[60,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Panther':         {atk:[120,20], crit:[75,20], cdmg:[180,18], edm:[80,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Skull':           {atk:[150,22], crit:[80,22], cdmg:[250,22], edm:[60,14], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Violet':          {atk:[150,25], crit:[90,25], cdmg:[280,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[70,22], hp:[80,18],  def:[100,25],heal:[0,0],  spd:[0,0]},
+  'Queen':           {atk:[120,25], crit:[70,18], cdmg:[0,0],    edm:[70,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Crow':            {atk:[150,25], crit:[85,22], cdmg:[300,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Howler':          {atk:[120,20], crit:[75,20], cdmg:[180,18], edm:[80,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'J&C':             {atk:[120,22], crit:[75,20], cdmg:[280,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Noir':            {atk:[120,22], crit:[75,20], cdmg:[250,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Messa':           {atk:[120,22], crit:[75,20], cdmg:[0,0],    edm:[60,20], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'makoto':          {atk:[150,25], crit:[80,22], cdmg:[280,22], edm:[70,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'closer-tropical': {atk:[80,15],  crit:[50,12], cdmg:[0,0],    edm:[0,0],   hp:[160,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'rin-firecracker': {atk:[120,20], crit:[75,20], cdmg:[180,18], edm:[80,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'KEY':             {atk:[60,12],  crit:[0,0],   cdmg:[0,0],    edm:[70,20], hp:[150,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'mont-frostgale':  {atk:[150,25], crit:[85,22], cdmg:[280,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Bui':             {atk:[120,22], crit:[85,25], cdmg:[200,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Closer':          {atk:[100,22], crit:[70,18], cdmg:[0,0],    edm:[60,15], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Mont':            {atk:[100,22], crit:[75,20], cdmg:[180,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Sepia':           {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[80,18]},
+  'Fleuret':         {atk:[100,22], crit:[75,20], cdmg:[200,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  // ── ELUCIDATOR ──
+  'Oracle':          {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
+  'Wind':            {atk:[100,18], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[120,25]},
+  'Ange':            {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
+  'Phoebe':          {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
+  'Okyann':          {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[80,20]},
+  'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,22],def:[100,25],heal:[0,0],  spd:[70,15]},
+  // ── STRATEGIST ──
+  'Chord':           {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
+  'wind-tempest':    {atk:[0,0],    crit:[70,20], cdmg:[250,25], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[80,18]},
+  'Turbo':           {atk:[80,15],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[120,25]},
+  'Riddle':          {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,22]},
+  'Luce':            {atk:[80,18],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[60,12], def:[0,0],   heal:[0,0],  spd:[80,20]},
+  // ── SABOTEUR ──
+  'Rin':             {atk:[100,20], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[0,0],   def:[50,15], heal:[0,0],  spd:[100,25]},
+  'Matoi':           {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[120,25],def:[80,20], heal:[0,0],  spd:[80,20]},
+  'Vino':            {atk:[80,18],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[60,12], def:[0,0],   heal:[0,0],  spd:[80,20]},
+  'Key':             {atk:[80,20],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[0,0],   def:[40,12], heal:[0,0],  spd:[80,20]},
+  // ── MEDIC ──
+  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[150,30],def:[60,15], heal:[70,25],spd:[0,0]},
+  'Moko':            {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[60,22],spd:[0,0]},
+  'moko-seaside':    {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[60,22],spd:[0,0]},
+  'Mona':            {atk:[100,22], crit:[50,12], cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Cattle':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[130,25],def:[50,15], heal:[70,25],spd:[0,0]},
+  // ── GUARDIAN ──
+  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[150,25],def:[80,20], heal:[50,15],spd:[0,0]},
+  'Leon':            {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,18],def:[50,15], heal:[0,0],  spd:[0,0]},
+  'Soy':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[130,25],def:[70,18], heal:[60,18],spd:[0,0]},
+  'Yuki':            {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,20],def:[120,25],heal:[0,0],  spd:[60,15]},
 }
 
 function getRoleArchetype(role) {
@@ -4137,8 +4192,9 @@ export default function P5XPage() {
   let scoreData = null
   if (currentChar) {
     const arch = getRoleArchetype(currentChar.role)
-    const targets = STAT_TARGETS[arch]
-    const prioKeys = currentChar.statPrio.map(p => {
+    const charTargets = CHAR_STAT_TARGETS[currentChar.codename]
+    const targets = charTargets || STAT_TARGETS[arch]
+    const prioKeys = charTargets ? [] : currentChar.statPrio.map(p => {
       if (p.includes('DMG%') && !p.includes('CRIT')) return 'edm'
       return statMap[p] || null
     }).filter(Boolean)
@@ -4749,8 +4805,21 @@ export default function P5XPage() {
                 <div className="sum-box"><div className="sum-val">{Math.round(stats.spd)}</div><div className="sum-lbl">SPD</div></div>
               </div>
 
+              {scoreData && (
+                <div className="stat-target-card">
+                  <div className="stat-target-title">🎯 Stats เป้าหมาย (Endgame)</div>
+                  <div className="stat-target-chips">
+                    {scoreData.breakdown.map((b, i) => (
+                      <div key={i} className={'stat-chip' + (b.ratio >= 1 ? ' met' : b.ratio >= 0.75 ? ' close' : ' missing')}>
+                        {b.label} ≥ {b.ideal}{b.ratio >= 1 ? ' ✓' : ''}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="score-wrap">
-                <div className="score-title">🎯 Build Score (เทียบกับ Build ที่แนะนำ)</div>
+                <div className="score-title">📊 Build Score</div>
                 {scoreData ? <>
                   <div className="score-number" style={{ color: scoreData.gradeColor }}>{scoreData.scorePct}%</div>
                   <div className="score-label" style={{ color: scoreData.gradeColor }}>เกรด {scoreData.grade} — {scoreData.gradeNote}</div>
