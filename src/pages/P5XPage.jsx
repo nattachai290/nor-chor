@@ -57,10 +57,12 @@ import { useState, useEffect } from 'react'
 // • Best case (4-stat card): 5 rolls all on your priority stat at tier 1
 // • Worst case (3-stat card): 4 rolls spread across unwanted stats at tier 5
 //
-// ── TODO ───────────────────────────────────────────────────────────────────────
-// • Add spr  (SP Recovery%)   to SUB_STAT_KEY, CHAR_STAT_TARGETS, CARD_SLOTS Sky
-// • Add ailm (Ailment Acc%)   to SUB_STAT_KEY, CHAR_STAT_TARGETS
-// • Add pierce (Pierce Rate%) to SUB_STAT_KEY, CHAR_STAT_TARGETS
+// ── TARGET CALIBRATION ─────────────────────────────────────────────────────────
+// Targets represent TOTAL build bonus (set+weapon base + card mains + subs + hidden ability)
+// Max achievable from cards alone (mains + realistic 2.5 rolls/card at tier 2):
+//   ATK%  ~105 | CRIT Rate%  ~43 | CRIT DMG%  ~86 | Elem DMG%  ~58
+//   HP%  ~138  | DEF%  ~202      | Speed  ~46
+// Plus set bonuses and weapon bonuses (handled by computeStats automatically)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Sun / Moon / Star / Sky sets (일월성진)
@@ -4257,57 +4259,59 @@ const STAT_TARGETS = {
 
 // Endgame stat targets keyed by character codename
 const CHAR_STAT_TARGETS = {
+  // Values = total bonus from ALL sources (computeStats set+weapon + userStats card mains+subs+hidden)
+  // Calibrated to realistic endgame: ~2.5 sub rolls/card at tier 2, good main stat choices
   // ── SWEEPER / ASSASSIN ──
-  'Joker':           {atk:[150,25], crit:[80,22], cdmg:[280,22], edm:[60,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Panther':         {atk:[120,20], crit:[75,20], cdmg:[180,18], edm:[80,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Skull':           {atk:[150,22], crit:[80,22], cdmg:[250,22], edm:[60,14], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Violet':          {atk:[150,25], crit:[90,25], cdmg:[280,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[70,22], hp:[80,18],  def:[100,25],heal:[0,0],  spd:[0,0]},
-  'Queen':           {atk:[120,25], crit:[70,18], cdmg:[0,0],    edm:[70,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Crow':            {atk:[150,25], crit:[85,22], cdmg:[300,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Howler':          {atk:[120,20], crit:[75,20], cdmg:[180,18], edm:[80,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'J&C':             {atk:[120,22], crit:[75,20], cdmg:[280,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Noir':            {atk:[120,22], crit:[75,20], cdmg:[250,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Messa':           {atk:[120,22], crit:[75,20], cdmg:[0,0],    edm:[60,20], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'makoto':          {atk:[150,25], crit:[80,22], cdmg:[280,22], edm:[70,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'closer-tropical': {atk:[80,15],  crit:[50,12], cdmg:[0,0],    edm:[0,0],   hp:[160,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'rin-firecracker': {atk:[120,20], crit:[75,20], cdmg:[180,18], edm:[80,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'KEY':             {atk:[60,12],  crit:[0,0],   cdmg:[0,0],    edm:[70,20], hp:[150,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'mont-frostgale':  {atk:[150,25], crit:[85,22], cdmg:[280,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Bui':             {atk:[120,22], crit:[85,25], cdmg:[200,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Closer':          {atk:[100,22], crit:[70,18], cdmg:[0,0],    edm:[60,15], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Mont':            {atk:[100,22], crit:[75,20], cdmg:[180,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Sepia':           {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[80,18]},
-  'Fleuret':         {atk:[100,22], crit:[75,20], cdmg:[200,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Joker':           {atk:[120,25], crit:[40,18], cdmg:[80,22], edm:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Panther':         {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Skull':           {atk:[110,22], crit:[42,20], cdmg:[85,22], edm:[30,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Violet':          {atk:[110,22], crit:[45,22], cdmg:[85,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[40,18], hp:[80,18], def:[100,25],heal:[0,0],  spd:[0,0]},
+  'Queen':           {atk:[110,25], crit:[38,15], cdmg:[0,0],   edm:[55,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Crow':            {atk:[110,22], crit:[42,20], cdmg:[90,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Howler':          {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'J&C':             {atk:[110,22], crit:[38,18], cdmg:[85,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Noir':            {atk:[110,22], crit:[38,18], cdmg:[80,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Messa':           {atk:[100,22], crit:[35,18], cdmg:[0,0],   edm:[50,20], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'makoto':          {atk:[110,22], crit:[42,20], cdmg:[80,22], edm:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'closer-tropical': {atk:[70,15],  crit:[25,12], cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'rin-firecracker': {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'KEY':             {atk:[50,12],  crit:[0,0],   cdmg:[0,0],   edm:[55,20], hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'mont-frostgale':  {atk:[110,22], crit:[42,20], cdmg:[80,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Bui':             {atk:[100,22], crit:[45,25], cdmg:[75,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Closer':          {atk:[85,22],  crit:[32,15], cdmg:[0,0],   edm:[45,15], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Mont':            {atk:[85,22],  crit:[38,18], cdmg:[70,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Sepia':           {atk:[80,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[30,18]},
+  'Fleuret':         {atk:[85,22],  crit:[38,18], cdmg:[75,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   // ── ELUCIDATOR ──
-  'Oracle':          {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
-  'Wind':            {atk:[100,18], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[120,25]},
-  'Ange':            {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
-  'Phoebe':          {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
-  'Okyann':          {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[80,20]},
-  'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,22],def:[100,25],heal:[0,0],  spd:[70,15]},
+  'Oracle':          {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Wind':            {atk:[75,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Ange':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Phoebe':          {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Okyann':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[28,20]},
+  'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
   // ── STRATEGIST ──
-  'Chord':           {atk:[120,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,25]},
-  'wind-tempest':    {atk:[0,0],    crit:[70,20], cdmg:[250,25], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[80,18]},
-  'Turbo':           {atk:[80,15],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[120,25]},
-  'Riddle':          {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[100,22]},
-  'Luce':            {atk:[80,18],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[60,12], def:[0,0],   heal:[0,0],  spd:[80,20]},
+  'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[80,25], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18]},
+  'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[38,25]},
+  'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
+  'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20]},
   // ── SABOTEUR ──
-  'Rin':             {atk:[100,20], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[0,0],   def:[50,15], heal:[0,0],  spd:[100,25]},
-  'Matoi':           {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[120,25],def:[80,20], heal:[0,0],  spd:[80,20]},
-  'Vino':            {atk:[80,18],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[60,12], def:[0,0],   heal:[0,0],  spd:[80,20]},
-  'Key':             {atk:[80,20],  crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[0,0],   def:[40,12], heal:[0,0],  spd:[80,20]},
+  'Rin':             {atk:[85,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[45,15], heal:[0,0],  spd:[32,25]},
+  'Matoi':           {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[75,20], heal:[0,0],  spd:[28,20]},
+  'Vino':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20]},
+  'Key':             {atk:[65,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[38,12], heal:[0,0],  spd:[28,20]},
   // ── MEDIC ──
-  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[150,30],def:[60,15], heal:[70,25],spd:[0,0]},
-  'Moko':            {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[60,22],spd:[0,0]},
-  'moko-seaside':    {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[60,22],spd:[0,0]},
-  'Mona':            {atk:[100,22], crit:[50,12], cdmg:[0,0],    edm:[0,0],   hp:[80,15], def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Cattle':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[130,25],def:[50,15], heal:[70,25],spd:[0,0]},
+  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,28],def:[55,15], heal:[26,25],spd:[0,0]},
+  'Moko':            {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
+  'moko-seaside':    {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
+  'Mona':            {atk:[85,22],  crit:[32,12], cdmg:[0,0],   edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Cattle':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[45,15], heal:[26,25],spd:[0,0]},
   // ── GUARDIAN ──
-  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[150,25],def:[80,20], heal:[50,15],spd:[0,0]},
-  'Leon':            {atk:[100,22], crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,18],def:[50,15], heal:[0,0],  spd:[0,0]},
-  'Soy':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[130,25],def:[70,18], heal:[60,18],spd:[0,0]},
-  'Yuki':            {atk:[0,0],    crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,20],def:[120,25],heal:[0,0],  spd:[60,15]},
+  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[75,20], heal:[23,15],spd:[0,0]},
+  'Leon':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[85,18], def:[45,15], heal:[0,0],  spd:[0,0]},
+  'Soy':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[65,18], heal:[23,18],spd:[0,0]},
+  'Yuki':            {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[85,20], def:[95,25], heal:[0,0],  spd:[28,15]},
 }
 
 // Maps a Space card's passive name → which stats it benefits and by how much
@@ -4340,7 +4344,7 @@ const PASSIVE_STAT_MAP = {
   'Worry':          {},
 }
 
-// Sub stat label → internal stat key
+// Sub stat label → internal stat key (null = not tracked in score yet)
 const SUB_STAT_KEY = {
   'CRIT Rate%':   'crit',
   'CRIT DMG%':    'cdmg',
@@ -4351,9 +4355,9 @@ const SUB_STAT_KEY = {
   'DEF%':         'def',
   'DEF':          'def',
   'Elem DMG%':    'edm',
-  'Ailment Acc%': null,
-  'Pierce Rate%': null,
-  'SP Recovery%': null,
+  'Ailment Acc%': 'ailm',
+  'Pierce Rate%': 'pierce',
+  'SP Recovery%': 'spr',
   'Speed':        'spd',
 }
 
@@ -4434,7 +4438,9 @@ export default function P5XPage() {
     skillCoeff:100, weakness:'normal', finalDmgBonus:0, otherCoeff:100,
   })
   const [mobileTab, setMobileTab] = useState('chars')
+  const [userStats, setUserStats] = useState({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0})
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const currentEc = currentChar ? (ELEM_COLORS[currentChar.element] || '#888') : 'var(--persona)'
@@ -4494,8 +4500,12 @@ export default function P5XPage() {
   const dmgMin = Math.round(dmgBase * 0.95)
   const dmgMax = Math.round(dmgBase * 1.05)
 
+  // Total stats (set+weapon base + user card/sub input)
+  const totalStats = Object.fromEntries(
+    Object.keys(stats).map(k => [k, (stats[k]||0) + (userStats[k]||0)])
+  )
   // Effective HP
-  const effHp = ((1 + stats.hp / 100) * (1 + stats.def / 100) * 100 - 100).toFixed(1)
+  const effHp = ((1 + totalStats.hp / 100) * (1 + totalStats.def / 100) * 100 - 100).toFixed(1)
 
   // Build score
   let scoreData = null
@@ -4516,7 +4526,7 @@ export default function P5XPage() {
       if (weight === 0) return
       if (prioKeys.includes(key)) weight = Math.round(weight * 1.4)
       totalWeight += weight
-      const val = stats[key]
+      const val = (stats[key] || 0) + (userStats[key] || 0)
       const ratio = ideal > 0 ? Math.min(val / ideal, 1.0) : 0
       earnedScore += ratio * weight
       breakdown.push({ label: statLabels[key], val: key==='spd'?Math.round(val):val.toFixed(1)+'%', ratio, ideal: key==='spd'?Math.round(ideal):ideal+'%' })
@@ -4607,13 +4617,26 @@ export default function P5XPage() {
   }
 
   function StatRow({ label, statKey, maxRange, unit = '%' }) {
-    const val = stats[statKey] || 0
-    const pct = Math.min(val / maxRange, 1) * 100
+    const base = stats[statKey] || 0
+    const extra = userStats[statKey] || 0
+    const total = base + extra
+    const pct = Math.min(total / maxRange, 1) * 100
+    const basePct = Math.min(base / maxRange, 1) * 100
+    const step = unit === '' ? 1 : 0.1
     return (
       <div className="p5x-stat-row">
-        <label>{label}</label>
-        <span className="stat-val-locked">{unit === '' ? Math.round(val) : val.toFixed(1)}{unit}</span>
+        <label className="sr-label">{label}</label>
+        <div className="sr-controls">
+          {base > 0 && <span className="sr-base">+{unit===''?Math.round(base):base.toFixed(1)}{unit} set</span>}
+          <input type="number" min={0} max={maxRange} step={step}
+            className="sr-input"
+            value={extra === 0 ? '' : extra}
+            onChange={e => setUserStats(p => ({...p, [statKey]: parseFloat(e.target.value)||0}))}
+            placeholder="0" />
+          <span className="sr-total">{unit===''?Math.round(total):total.toFixed(1)}{unit}</span>
+        </div>
         <div className="stat-bar-track">
+          <div className="stat-bar-base" style={{ width: basePct + '%' }} />
           <div className="stat-bar-fill" style={{ width: pct + '%' }} />
         </div>
       </div>
@@ -5172,6 +5195,9 @@ export default function P5XPage() {
           {/* STAT CALCULATOR — inside sticky panel to prevent overlap */}
           <div style={{ borderTop: '1px solid var(--p5x-border)', marginTop: 12, paddingTop: 12 }}>
             <div className="section-title">🧮 STAT CALCULATOR</div>
+            <div style={{fontSize:'0.62rem',color:'var(--p5x-muted)',marginBottom:8}}>
+              ใส่ค่า stat เพิ่มจากการ์ด (main stat + sub roll) + hidden ability — ค่าจาก set/weapon คำนวณอัตโนมัติ
+            </div>
 
             {lv80all && (
               <div className="asc-selector">
@@ -5185,14 +5211,14 @@ export default function P5XPage() {
             )}
 
             <div className="p5x-stat-grid">
-              <StatRow label="ATK%"           statKey="atk"  max={300} maxRange={150} />
-              <StatRow label="CRIT Rate%"     statKey="crit" max={100} maxRange={100} />
-              <StatRow label="CRIT DMG%"      statKey="cdmg" max={400} maxRange={250} />
-              <StatRow label="HP%"            statKey="hp"   max={200} maxRange={150} />
-              <StatRow label="DEF%"           statKey="def"  max={200} maxRange={150} />
-              <StatRow label="Element DMG%"   statKey="edm"  max={200} maxRange={120} />
-              <StatRow label="Healing Bonus%" statKey="heal" max={150} maxRange={100} />
-              <StatRow label="SPD (Speed)"    statKey="spd"  max={500} maxRange={400} unit="" />
+              <StatRow label="ATK%"           statKey="atk"  maxRange={160} />
+              <StatRow label="CRIT Rate%"     statKey="crit" maxRange={75} />
+              <StatRow label="CRIT DMG%"      statKey="cdmg" maxRange={150} />
+              <StatRow label="HP%"            statKey="hp"   maxRange={200} />
+              <StatRow label="DEF%"           statKey="def"  maxRange={220} />
+              <StatRow label="Element DMG%"   statKey="edm"  maxRange={100} />
+              <StatRow label="Healing Bonus%" statKey="heal" maxRange={35} />
+              <StatRow label="SPD (Speed)"    statKey="spd"  maxRange={50} unit="" />
             </div>
 
             <div style={{ marginTop: 12 }}>
@@ -5206,12 +5232,12 @@ export default function P5XPage() {
                 </div>
               )}
               <div className="summary-grid">
-                <div className="sum-box"><div className="sum-val">{stats.atk.toFixed(1)}%</div><div className="sum-lbl">ATK%</div></div>
-                <div className="sum-box"><div className="sum-val">{Math.min(stats.crit, 100).toFixed(1)}%</div><div className="sum-lbl">CRIT Rate</div></div>
-                <div className="sum-box"><div className="sum-val">{stats.cdmg.toFixed(1)}%</div><div className="sum-lbl">CRIT DMG</div></div>
-                <div className="sum-box"><div className="sum-val">{stats.edm.toFixed(1)}%</div><div className="sum-lbl">Elem DMG</div></div>
+                <div className="sum-box"><div className="sum-val">{totalStats.atk.toFixed(1)}%</div><div className="sum-lbl">ATK%</div></div>
+                <div className="sum-box"><div className="sum-val">{Math.min(totalStats.crit, 100).toFixed(1)}%</div><div className="sum-lbl">CRIT Rate</div></div>
+                <div className="sum-box"><div className="sum-val">{totalStats.cdmg.toFixed(1)}%</div><div className="sum-lbl">CRIT DMG</div></div>
+                <div className="sum-box"><div className="sum-val">{totalStats.edm.toFixed(1)}%</div><div className="sum-lbl">Elem DMG</div></div>
                 <div className="sum-box"><div className="sum-val">+{effHp}%</div><div className="sum-lbl">Eff.HP%</div></div>
-                <div className="sum-box"><div className="sum-val">{Math.round(stats.spd)}</div><div className="sum-lbl">SPD</div></div>
+                <div className="sum-box"><div className="sum-val">{Math.round(totalStats.spd)}</div><div className="sum-lbl">SPD</div></div>
               </div>
 
               {scoreData && (
