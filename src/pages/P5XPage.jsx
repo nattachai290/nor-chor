@@ -4571,6 +4571,7 @@ export default function P5XPage() {
   })
   const [mobileTab, setMobileTab] = useState('chars')
   const [userStats, setUserStats] = useState({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0})
+  const [skillLevel, setSkillLevel] = useState(3)
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
   useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}) }, [charName])
 
@@ -4598,6 +4599,16 @@ export default function P5XPage() {
   const grouped5gold    = filtered.filter(c => c.rarity === 5 && !RAINBOW_CHARS.has(c.codename))
   const grouped4 = filtered.filter(c => c.rarity === 4)
   const grouped3 = filtered.filter(c => c.rarity <= 3)
+
+  // Skill level labels: [LV10, LV10+Minds.5, LV13, LV13+Minds.5]
+  const SKILL_LEVEL_LABELS = ['LV10', 'LV10+M5', 'LV13', 'LV13+M5']
+  function resolveSkillLevel(text) {
+    if (!text) return text
+    return text.replace(/(\d+\.?\d*%?)(?:\/(\d+\.?\d*%?)){2,}/g, match => {
+      const parts = match.split('/')
+      return parts[Math.min(skillLevel, parts.length - 1)]
+    })
+  }
 
   function resolveRefine(text) {
     return text.replace(/([\d.]+%?)(?:\/([\d.]+%?)){6}/g, match => {
@@ -4924,11 +4935,21 @@ export default function P5XPage() {
                 <div className="kit-section">
                   {/* SKILLS */}
                   <div className="kit-block">
-                    <div className="kit-block-title">Skills</div>
+                    <div className="kit-block-title" style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:6}}>
+                      <span>Skills</span>
+                      <div className="slv-picker">
+                        {SKILL_LEVEL_LABELS.map((l, i) => (
+                          <button key={i} className={'slv-btn'+(skillLevel===i?' active':'')} onClick={()=>setSkillLevel(i)} title={['Skill LV10','LV10 + Mindscape 5','Skill LV13','LV13 + Mindscape 5'][i]}>{l}</button>
+                        ))}
+                      </div>
+                    </div>
                     {(currentChar.skills || []).length === 0
                       ? <div className="kit-empty">— ยังไม่มีข้อมูล</div>
                       : <div className="skill-grid">
-                          {(currentChar.skills || []).map((sk, i) => (
+                          {(currentChar.skills || []).map((sk, i) => {
+                            const rawDesc = lang === 'th' && sk.descTh ? sk.descTh : sk.desc
+                            const desc = resolveSkillLevel(rawDesc)
+                            return (
                             <div key={i} className="skill-card">
                               <div className="skill-card-header">
                                 <div className="skill-header-left">
@@ -4950,9 +4971,10 @@ export default function P5XPage() {
                                 </div>
                               </div>
                               <div className="skill-name">{sk.name}</div>
-                              <div className="skill-desc">{lang === 'th' && sk.descTh ? sk.descTh : sk.desc}</div>
+                              <div className="skill-desc">{desc}</div>
                             </div>
-                          ))}
+                            )
+                          })}
                         </div>
                     }
                   </div>
@@ -5014,7 +5036,7 @@ export default function P5XPage() {
                                 <span className="aw-stage">{aw.stage ?? i}</span>
                                 <span className="aw-name">{aw.name || aw.bonus || ''}</span>
                               </div>
-                              {aw.desc && <div className="aw-desc">{lang === 'th' && aw.descTh ? aw.descTh : aw.desc}</div>}
+                              {aw.desc && <div className="aw-desc">{resolveSkillLevel(lang === 'th' && aw.descTh ? aw.descTh : aw.desc)}</div>}
                             </div>
                           ))}
                         </div>

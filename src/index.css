@@ -384,6 +384,9 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .refine-picker { display:flex; gap:3px; flex-wrap:wrap; }
 .refine-btn { font-size:0.6rem; padding:1px 5px; border-radius:4px; border:1px solid #333; background:#111; color:#888; cursor:pointer; }
 .refine-btn.active { background:var(--persona3); color:#000; border-color:var(--persona3); font-weight:700; }
+.slv-picker { display:flex; gap:3px; flex-wrap:wrap; }
+.slv-btn { font-size:0.58rem; padding:2px 6px; border-radius:4px; border:1px solid #333; background:#111; color:#888; cursor:pointer; white-space:nowrap; }
+.slv-btn.active { background:var(--p5x-cyan); color:#000; border-color:var(--p5x-cyan); font-weight:700; }
 .note-box { background:#0d0d0d; border-left:3px solid var(--green); border-radius:6px; padding:7px 10px; font-size:0.78rem; color:var(--gem); line-height:1.5; }
 .mech-text { border-left-color: var(--persona2); color: var(--p5x-text); }
 .rotation-list { margin:0; padding:0 0 0 18px; display:flex; flex-direction:column; gap:5px; }
