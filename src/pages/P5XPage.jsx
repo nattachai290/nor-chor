@@ -4264,9 +4264,9 @@ const CHAR_STAT_TARGETS = {
   // ── SWEEPER / ASSASSIN ──
   'Joker':           {atk:[120,25], crit:[40,18], cdmg:[80,22], edm:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Panther':         {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Skull':           {atk:[110,22], crit:[42,20], cdmg:[85,22], edm:[30,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Skull':           {atk:[110,22], crit:[42,20], cdmg:[260,22], edm:[30,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Violet':          {atk:[110,22], crit:[45,22], cdmg:[85,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[40,18], hp:[80,18], def:[100,25],heal:[0,0],  spd:[0,0]},
+  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[40,18], hp:[80,18], def:[160,25],heal:[0,0],  spd:[0,0]},
   'Queen':           {atk:[110,25], crit:[38,15], cdmg:[0,0],   edm:[55,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Crow':            {atk:[110,22], crit:[42,20], cdmg:[90,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Howler':          {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
@@ -4277,7 +4277,7 @@ const CHAR_STAT_TARGETS = {
   'closer-tropical': {atk:[70,15],  crit:[25,12], cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
   'rin-firecracker': {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'KEY':             {atk:[50,12],  crit:[0,0],   cdmg:[0,0],   edm:[55,20], hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'mont-frostgale':  {atk:[110,22], crit:[42,20], cdmg:[80,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'mont-frostgale':  {atk:[110,22], crit:[42,20], cdmg:[260,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Bui':             {atk:[100,22], crit:[45,25], cdmg:[75,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Closer':          {atk:[85,22],  crit:[32,15], cdmg:[0,0],   edm:[45,15], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Mont':            {atk:[85,22],  crit:[38,18], cdmg:[70,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
@@ -4293,22 +4293,22 @@ const CHAR_STAT_TARGETS = {
   // ── STRATEGIST ──
   'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
   'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[80,25], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18]},
-  'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[38,25]},
+  'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
   'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
   'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20]},
   // ── SABOTEUR ──
-  'Rin':             {atk:[85,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[45,15], heal:[0,0],  spd:[32,25]},
+  'Rin':             {atk:[85,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[45,15], heal:[0,0],  spd:[155,25]},
   'Matoi':           {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[75,20], heal:[0,0],  spd:[28,20]},
   'Vino':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20]},
   'Key':             {atk:[65,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[38,12], heal:[0,0],  spd:[28,20]},
   // ── MEDIC ──
-  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,28],def:[55,15], heal:[26,25],spd:[0,0]},
+  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,28],def:[55,15], heal:[47,25],spd:[0,0]},
   'Moko':            {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
   'moko-seaside':    {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
   'Mona':            {atk:[85,22],  crit:[32,12], cdmg:[0,0],   edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[0,0]},
   'Cattle':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[45,15], heal:[26,25],spd:[0,0]},
   // ── GUARDIAN ──
-  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[75,20], heal:[23,15],spd:[0,0]},
+  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[140,20],heal:[23,15],spd:[0,0]},
   'Leon':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[85,18], def:[45,15], heal:[0,0],  spd:[0,0]},
   'Soy':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[65,18], heal:[23,18],spd:[0,0]},
   'Yuki':            {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[85,20], def:[95,25], heal:[0,0],  spd:[28,15]},
@@ -4396,6 +4396,27 @@ function getRoleArchetype(role) {
 const statMap = {'ATK%':'atk','CRIT Rate%':'crit','CRIT DMG%':'cdmg','HP%':'hp','DEF%':'def','Healing Bonus%':'heal','SPD':'spd'}
 const statLabels = {atk:'ATK%',crit:'CRIT Rate%',cdmg:'CRIT DMG%',edm:'Elem DMG%',hp:'HP%',def:'DEF%',heal:'Healing%',spd:'SPD'}
 
+function parseHiddenAbility(str) {
+  if (!str) return {}
+  const s = {}
+  const n = (re) => { const m = str.match(re); return m ? parseFloat(m[1]) : 0 }
+  const atk  = n(/ATK%?\s*\+(\d+\.?\d*)/)
+  const crit  = n(/CRIT\s*Rate\s*\+(\d+\.?\d*)/i)
+  const cdmg  = n(/CRIT\s*(?:DMG|Multiplier)\s*\+(\d+\.?\d*)/i)
+  const hp    = n(/HP%\s*\+(\d+\.?\d*)/)
+  const def   = n(/DEF%\s*\+(\d+\.?\d*)/)
+  const heal  = n(/Healing\s*Effect\s*\+(\d+\.?\d*)/i)
+  const spd   = n(/SPD?\s*\+(\d+\.?\d*)/)
+  if (atk)  s.atk  = atk
+  if (crit) s.crit = crit
+  if (cdmg) s.cdmg = cdmg
+  if (hp)   s.hp   = hp
+  if (def)  s.def  = def
+  if (heal) s.heal = heal
+  if (spd)  s.spd  = spd
+  return s
+}
+
 function computeStats(char, weaponIdx) {
   const s = {atk:0, crit:0, cdmg:0, hp:0, def:0, edm:0, heal:0, spd:0}
   if (!char) return s
@@ -4413,6 +4434,9 @@ function computeStats(char, weaponIdx) {
   if (char.weapons?.[wIdx]?.bonusStats) {
     Object.entries(char.weapons[wIdx].bonusStats).forEach(([k,v]) => { s[k] = (s[k]||0)+v })
   }
+  // Hidden ability (character-level passive stat bonus)
+  const hidden = parseHiddenAbility(char.hiddenAbility)
+  Object.entries(hidden).forEach(([k,v]) => { s[k] = (s[k]||0)+v })
   return s
 }
 
@@ -4449,9 +4473,13 @@ export default function P5XPage() {
   const lv80arr = currentChar?.baseStatsLv80
   const lv80all = lv80arr ? (Array.isArray(lv80arr) ? lv80arr : [lv80arr]) : null
   const lv80 = lv80all ? lv80all[Math.min(ascension, lv80all.length - 1)] : null
-  const finalAtk = lv80 ? Math.round(lv80.atk * (1 + stats.atk / 100)) : null
-  const finalHp  = lv80 ? Math.round(lv80.hp  * (1 + stats.hp  / 100)) : null
-  const finalDef = lv80 ? Math.round(lv80.def * (1 + stats.def / 100)) : null
+  const selWeapon = currentChar?.weapons?.[selectedWeaponIdx ?? 0]
+  const wAtk = selWeapon?.atk || 0
+  const wHp  = selWeapon?.hp  || 0
+  const wDef = selWeapon?.def || 0
+  const finalAtk = lv80 ? Math.round((lv80.atk + wAtk) * (1 + totalStats.atk / 100)) : null
+  const finalHp  = lv80 ? Math.round((lv80.hp  + wHp)  * (1 + totalStats.hp  / 100)) : null
+  const finalDef = lv80 ? Math.round((lv80.def + wDef)  * (1 + totalStats.def / 100)) : null
 
   const filtered = CHARACTERS.filter(c =>
     (filter === 'all' || c.role === filter) &&
