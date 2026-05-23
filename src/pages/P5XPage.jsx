@@ -4061,7 +4061,7 @@ export default function P5XPage() {
   const [copyOk, setCopyOk] = useState(false)
   const [charTab, setCharTab] = useState('build')
   const [ascension, setAscension] = useState(6)
-  const [lang, setLang] = useState('en')
+  const [lang, setLang] = useState('th')
   const [dmg, setDmg] = useState({
     extraAtk:0, atkConst:0, extraCritRate:0, extraCritDmg:0,
     dmgMult:0, extraEdm:0, dmgTaken:0,
