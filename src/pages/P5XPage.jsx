@@ -4884,6 +4884,10 @@ export default function P5XPage() {
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const currentEc = currentChar ? (ELEM_COLORS[currentChar.element] || '#888') : 'var(--persona)'
   const stats = computeStats(currentChar, selectedWeaponIdx, weaponRefine)
+  const totalStats = Object.fromEntries(
+    Object.keys(stats).map(k => [k, (stats[k]||0) + (userStats[k]||0)])
+  )
+  const effHp = ((1 + totalStats.hp / 100) * (1 + totalStats.def / 100) * 100 - 100).toFixed(1)
 
   const lv80arr = currentChar?.baseStatsLv80
   const lv80all = lv80arr ? (Array.isArray(lv80arr) ? lv80arr : [lv80arr]) : null
@@ -4953,12 +4957,6 @@ export default function P5XPage() {
   const dmgMin = Math.round(dmgBase * 0.95)
   const dmgMax = Math.round(dmgBase * 1.05)
 
-  // Total stats (set+weapon base + user card/sub input)
-  const totalStats = Object.fromEntries(
-    Object.keys(stats).map(k => [k, (stats[k]||0) + (userStats[k]||0)])
-  )
-  // Effective HP
-  const effHp = ((1 + totalStats.hp / 100) * (1 + totalStats.def / 100) * 100 - 100).toFixed(1)
 
   // Build score
   let scoreData = null
