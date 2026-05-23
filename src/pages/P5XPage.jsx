@@ -1,5 +1,58 @@
 import { useState, useEffect } from 'react'
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// P5X STAT SYSTEM REFERENCE
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// ── OFFENSIVE ──────────────────────────────────────────────────────────────────
+// Crit Rate              — how often you hit a critical
+// Crit Multiplier        — damage of a critical hit               (code: cdmg)
+// Attack Multiplier      — overall attack boost                   (code: atk)
+// Physical Multiplier    — extra damage on Physical attacks
+// Gun Multiplier         — extra damage on Gun attacks
+// Fire Multiplier        — extra damage on Fire attacks
+// Ice Multiplier         — extra damage on Ice attacks
+// Electric Multiplier    — extra damage on Electric attacks
+// Wind Multiplier        — extra damage on Wind attacks
+// Psy Multiplier         — extra damage on Psy attacks
+// Nuclear Multiplier     — extra damage on Nuclear attacks
+// Bless Multiplier       — extra damage on Bless attacks
+// Curse Multiplier       — extra damage on Curse attacks
+// Almighty Multiplier    — extra damage on Almighty attacks
+//   → all element multipliers stored as generic (code: edm); per-element
+//     handled at set-bonus level (Strife=Fire, Opulence=Ice, Courage=Physical…)
+//
+// ── UTILITY ────────────────────────────────────────────────────────────────────
+// SP Recovery            — SP recovered per turn                  (code: spr) [TODO]
+// Down Points            — how fast you knock down an enemy
+// Ailment Accuracy       — chance to apply Status Ailment         (code: ailm) [TODO]
+// Resistance Pierce Rate — chance to pierce enemy resistance      (code: pierce) [TODO]
+// Damage Down            — bonus damage when enemy is downed
+// Weakness Multiplier    — bonus damage vs element weakness
+// Weak Attack Down       — damage vs weak enemy while downed
+// Strong Attack Down     — damage vs resistant enemy while downed
+//
+// ── DEFENSIVE / SUPPORT ────────────────────────────────────────────────────────
+// HP Recovery            — HP given to others (Healing Effect)    (code: heal)
+// HP Recovery Taken      — HP received by self
+// Shield                 — shield strength produced
+// Shield Received        — shield strength received
+//
+// ── MELEE / RANGED BASE ────────────────────────────────────────────────────────
+// Melee Attack           — Physical damage base (90% by default)
+// Ranged Attack          — Gun damage; has own Damage Mult / Rounds / Accuracy / Crit Rate
+//
+// ── CARD SUB STAT POOLS ────────────────────────────────────────────────────────
+// Space pool : CRIT Rate%, Crit Multi%, Pierce Rate%, Elem DMG%, ATK%,
+//              HP%, HP, DEF%, Ailment Acc%, SP Recovery%, Speed
+// Other pool : same but + ATK(flat), DEF(flat) — lower tier values than Space
+//
+// ── TODO ───────────────────────────────────────────────────────────────────────
+// • Add spr  (SP Recovery%)   to SUB_STAT_KEY, CHAR_STAT_TARGETS, CARD_SLOTS Sky
+// • Add ailm (Ailment Acc%)   to SUB_STAT_KEY, CHAR_STAT_TARGETS
+// • Add pierce (Pierce Rate%) to SUB_STAT_KEY, CHAR_STAT_TARGETS
+// ═══════════════════════════════════════════════════════════════════════════════
+
 // Sun / Moon / Star / Sky sets (일월성진)
 const CARD_SETS = [
   {name:'Prudence',       bonus2:'SPD -3, ATK +18%',                                     bonus4:'DMG Dealt +16%',
