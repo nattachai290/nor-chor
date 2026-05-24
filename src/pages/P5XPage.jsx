@@ -3211,7 +3211,7 @@ const CHARACTERS = [
       {hp:3922, atk:1208, def:642, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {spr:125, atk:20},
+    mindscapeBonus: {spr:125, atk:20, cdmg:24},
     weapons:[
       {name:'Bubble Babies', stars:5,
         hp:2339, atk:720, def:383,
@@ -4893,7 +4893,7 @@ function getSpacePassiveBonus(char, stats) {
 }
 
 function computeStats(char, weaponIdx, refine = 0) {
-  const s = {atk:0, crit:0, cdmg:0, hp:0, def:0, edm:0, heal:0, spd: char?.baseStats?.spd || 0}
+  const s = {atk:0, crit:0, cdmg:150, hp:0, def:0, edm:0, heal:0, spd: char?.baseStats?.spd || 0}
   if (!char) return s
   char.cards.forEach(cardStr => {
     const m = cardStr.match(/^(.+?)\s+(2|4)pc$/i)
