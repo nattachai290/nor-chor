@@ -5661,47 +5661,30 @@ export default function P5XPage() {
                   })
                   return (
                     <div className="info-panel">
-                      <div className="info-label">📊 Card Requirements (need from cards)</div>
+                      <div className="info-label">📊 Card Requirements</div>
                       <div className="req-table">
                         <div className="req-row req-hdr">
                           <span>Stat</span>
-                          <span>Target</span>
-                          <span>Base</span>
-                          <span>Need 0★</span>
-                          {scalesDiff && <span>Need 6★</span>}
+                          <span>เป้าหมาย</span>
+                          <span>มีแล้ว</span>
+                          <span>ต้องการจาก card</span>
                         </div>
                         {entries.map(([k,[ideal]]) => {
                           const b0 = base0[k] || 0
-                          const b6 = base6[k] || 0
-                          const need0 = Math.max(0, ideal - b0)
-                          const need6 = Math.max(0, ideal - b6)
-                          const isFlat = ['atk','hp','def'].includes(k)
+                          const need = Math.max(0, ideal - b0)
                           const fmt = v => k === 'spd' ? Math.round(v) : v.toFixed(0) + '%'
-                          // Per-ascension note for ATK/HP/DEF
-                          let a6Tgt = null
-                          if (isFlat && lv80_A0 && lv80_A6 && lv80_A0[k] !== lv80_A6[k]) {
-                            const wFlat = k==='atk'?(selW?.atk||0):k==='hp'?(selW?.hp||0):(selW?.def||0)
-                            const idealFinal = (lv80_A0[k] + wFlat) * (1 + ideal / 100)
-                            const pctA6 = Math.max(0, (idealFinal / (lv80_A6[k] + wFlat) - 1) * 100)
-                            if (ideal - pctA6 > 3) a6Tgt = pctA6.toFixed(0) + '%'
-                          }
-                          const cls0 = need0===0?'req-met':need0<30?'req-close':'req-far'
-                          const cls6 = need6===0?'req-met':need6<30?'req-close':'req-far'
+                          const cls = need===0?'req-met':need<30?'req-close':'req-far'
                           return (
                             <div key={k} className="req-row">
                               <span className="req-c-stat">{STAT_LABELS[k]||k}</span>
-                              <span className="req-c-tgt">
-                                {fmt(ideal)}
-                                {a6Tgt && <span className="req-a6-tgt">A6:{a6Tgt}</span>}
-                              </span>
+                              <span className="req-c-tgt">{fmt(ideal)}</span>
                               <span className="req-c-base">{fmt(b0)}</span>
-                              <span className={`req-c-need ${cls0}`}>{fmt(need0)}</span>
-                              {scalesDiff && <span className={`req-c-need ${cls6}`}>{fmt(need6)}</span>}
+                              <span className={`req-c-need ${cls}`}>{fmt(need)}</span>
                             </div>
                           )
                         })}
                       </div>
-                      <div className="req-note">Base = set bonuses + hidden ability. Need = target − base. 0★/6★ = weapon refine scaling.</div>
+                      <div className="req-note">มีแล้ว = set + weapon (0★) + hidden ability{charStage?.includes('M5') ? ' + Mindscape bonus' : ''}.</div>
                     </div>
                   )
                 })()}
