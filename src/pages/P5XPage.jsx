@@ -5748,7 +5748,7 @@ export default function P5XPage() {
                         })
                         return (
                           <div className="req-sources">
-                            <div className="req-sources-title">แหล่งที่มาของ "มีแล้ว"</div>
+                            <div className="req-sources-title">แหล่งที่มาของ "มีแล้ว" (set bonus + weapon + hidden — ไม่รวม base stat)</div>
                             {entries.filter(([k]) => byKey[k]).map(([k]) => (
                               <div key={k} className="req-source-row">
                                 <span className="req-source-label">{STAT_LABELS[k]||k}</span>
