@@ -1010,7 +1010,7 @@ const CHARACTERS = [
         desc:"When spending Meng Po Soup, increase party's Curse damage by 20% for 1 turn. Also, 60% chance to gain 1 Meng Po Soup stack. This effect won't activate again on the next turn.",
         descTh:"เมื่อใช้ Meng Po Soup เพิ่มความเสียหาย Curse ของปาร์ตี้ 20% เป็นเวลา 1 เทิร์น นอกจากนี้ โอกาส 60% รับ Meng Po Soup 1 stack เอฟเฟกต์นี้จะไม่ทำงานอีกในเทิร์นถัดไป"},
     ],
-    baseStats:     {hp:283, atk:97, def:56, spd:106},
+    baseStats:     {hp:283, atk:97, def:56, spd:124.8, crit:5, cdmg:150, meleeMulti:115, rangedMulti:14.8, rangedAcc:78, rangedCrit:5.13},
     baseStatsLv80: [
       {hp:3180, atk:1090, def:633, spd:106},
       {hp:3238, atk:1110, def:645, spd:106},
