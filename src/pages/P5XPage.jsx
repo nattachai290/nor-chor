@@ -5702,7 +5702,7 @@ export default function P5XPage() {
                         {entries.map(([k,[ideal]]) => {
                           const b0 = base0[k] || 0
                           const need = Math.max(0, ideal - b0)
-                          const fmt = v => k === 'spd' ? Math.round(v) : v.toFixed(0) + '%'
+                          const fmt = v => k === 'spd' ? Math.round(v) : Math.floor(v) + '%'
                           const cls = need===0?'req-met':need<30?'req-close':'req-far'
                           return (
                             <div key={k} className="req-row">
@@ -5715,7 +5715,7 @@ export default function P5XPage() {
                         })}
                       </div>
                       {(() => {
-                        const fmtStat = (k, v) => k === 'spd' ? `+${Math.round(v)}` : `+${v.toFixed(1)}%`
+                        const fmtStat = (k, v) => k === 'spd' ? `+${Math.round(v)}` : `+${(Math.floor(v*10)/10).toFixed(1)}%`
                         const trackedKeys = new Set(entries.map(([k]) => k))
                         const sources = []
                         currentChar.cards.forEach(cardStr => {
@@ -5812,8 +5812,8 @@ export default function P5XPage() {
                     return all
                   })()
 
-                  const fmt = (k, v) => k === 'spd' ? Math.round(v) : v.toFixed(0) + '%'
-                  const fmtD = (k, v) => k === 'spd' ? `+${Math.round(v)}` : `+${v.toFixed(0)}%`
+                  const fmt = (k, v) => k === 'spd' ? Math.round(v) : Math.floor(v) + '%'
+                  const fmtD = (k, v) => k === 'spd' ? `+${Math.round(v)}` : `+${Math.floor(v)}%`
 
                   return (
                     <div className="info-panel">
@@ -5844,9 +5844,9 @@ export default function P5XPage() {
                                   <span style={{display:'block'}}>{fmtD(k,sub)}</span>
                                   <span style={{display:'block', fontSize:'0.58rem', color:'#555'}}>
                                     {'S '}
-                                    {k==='spd' ? subDetail[k].spaceVal.toFixed(1) : subDetail[k].spaceVal.toFixed(1)+'%'}
+                                    {k==='spd' ? subDetail[k].spaceVal.toFixed(1) : (Math.floor(subDetail[k].spaceVal*10)/10).toFixed(1)+'%'}
                                     {' · '}
-                                    {k==='spd' ? subDetail[k].otherVal.toFixed(1) : subDetail[k].otherVal.toFixed(1)+'%'}
+                                    {k==='spd' ? subDetail[k].otherVal.toFixed(1) : (Math.floor(subDetail[k].otherVal*10)/10).toFixed(1)+'%'}
                                     {'×4'}
                                   </span>
                                 </> : '—'}
