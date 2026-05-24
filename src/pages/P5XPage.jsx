@@ -5588,9 +5588,18 @@ export default function P5XPage() {
                                     const elementOk = !pElements || charElements.length === 0 || pElements.some(e => charElements.includes(e))
                                     const relevant = charTgt && elementOk && (Object.keys(pStatWeights).some(k => charTgt[k]?.[1] > 0) || usedSets.includes(p.name))
                                     const setData = CARD_SETS.find(cs => cs.name.toLowerCase() === p.name.toLowerCase())
+                                    const whyReasons = []
+                                    if (usedSets.includes(p.name)) whyReasons.push(`มี ${p.name} ${usedSetsPc[p.name]}pc ในบิลด์`)
+                                    if (charTgt && elementOk) {
+                                      const matchedStats = Object.keys(pStatWeights).filter(k => charTgt[k]?.[1] > 0)
+                                      if (matchedStats.length) whyReasons.push(`เพิ่ม ${matchedStats.map(k => statLabels[k]||k).join(', ')}`)
+                                    }
                                     return (
                                       <div key={p.name} className={'rec-detail-row' + (relevant ? ' rec-detail-hit' : '')}>
                                         <span className="rec-detail-name">{p.name}</span>
+                                        {relevant && whyReasons.length > 0 && (
+                                          <span className="rec-detail-why">{whyReasons.join(' · ')}</span>
+                                        )}
                                         <span className="rec-detail-desc">{p.desc}</span>
                                         {setData && (
                                           <div className="rec-detail-set">
