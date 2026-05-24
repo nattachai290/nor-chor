@@ -3116,7 +3116,7 @@ const CHARACTERS = [
       'LV13':    {atk:[0,0], crit:[42,20], cdmg:[318,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,15], ailm:[0,0]},
       'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[348,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,20], ailm:[0,0]},
     },
-    mindscapeBonus: {atk:20, cdmg:24, spr:60},
+    mindscapeBonus: {atk:20, cdmg:24},
   },
   {name:'Moko (Seaside)', codename:'moko-seaside', role:'Medic', element:'Psychokinesis', rarity:5,
     cards:['Love 4pc','Opulence 2pc'], weapon:'Best Healing/Psy weapon (Bubble Babies)',
@@ -5349,6 +5349,18 @@ export default function P5XPage() {
                       : <div className="hidden-ability-box">{currentChar.hiddenAbility}</div>
                     }
                   </div>
+
+                  {/* MINDSCAPE LV5 */}
+                  {currentChar.mindscapeBonus && (
+                    <div className="kit-block">
+                      <div className="kit-block-title">Mindscape <span className="ha-lv">LV 5</span></div>
+                      <div className="hidden-ability-box">
+                        {Object.entries(currentChar.mindscapeBonus).map(([key, val]) => (
+                          <div key={key}>{statLabels[key] || key} +{val}%</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* AWARENESS */}
                   <div className="kit-block">
