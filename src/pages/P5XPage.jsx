@@ -3112,10 +3112,10 @@ const CHARACTERS = [
         ]},
     ],
     statTargets: {
-      'LV10':    {atk:[0,0], crit:[42,18], cdmg:[120,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[450,12], ailm:[0,0]},
-      'LV10+M5': {atk:[0,0], crit:[42,18], cdmg:[120,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[450,18], ailm:[0,0]},
-      'LV13':    {atk:[0,0], crit:[42,20], cdmg:[150,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,15], ailm:[0,0]},
-      'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[150,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,20], ailm:[0,0]},
+      'LV10':    {atk:[0,0], crit:[42,18], cdmg:[288,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[450,12], ailm:[0,0]},
+      'LV10+M5': {atk:[0,0], crit:[42,18], cdmg:[318,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[450,18], ailm:[0,0]},
+      'LV13':    {atk:[0,0], crit:[42,20], cdmg:[318,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,15], ailm:[0,0]},
+      'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[348,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,20], ailm:[0,0]},
     },
     mindscapeBonus: {atk:20, cdmg:24, spr:60},
   },
@@ -4691,7 +4691,7 @@ const CHAR_STAT_TARGETS = {
   'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
   // ── STRATEGIST ──
   'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[120,25], edm:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18], spr:[0,0],   ailm:[0,0]},
+  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[288,25], edm:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18], spr:[450,12], ailm:[0,0]},
   'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
   'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
   'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
