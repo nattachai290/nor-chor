@@ -3111,6 +3111,12 @@ const CHARACTERS = [
           'เมื่อ Riko คืน SP ด้วยสกิล เพิ่ม CRIT DMG 8.7%/11.3%/11.3%/13.9%/13.9%/16.5%/16.5% เป็นเวลา 2 เทิร์น สะสมสูงสุด 2 ครั้ง',
         ]},
     ],
+    statTargets: {
+      'LV10':    {atk:[0,0], crit:[42,18], cdmg:[120,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[0,0],    ailm:[0,0]},
+      'LV10+M5': {atk:[0,0], crit:[42,18], cdmg:[120,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[100,15], ailm:[0,0]},
+      'LV13':    {atk:[0,0], crit:[42,20], cdmg:[150,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[0,0],    ailm:[0,0]},
+      'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[150,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[100,18], ailm:[0,0]},
+    },
   },
   {name:'Moko (Seaside)', codename:'moko-seaside', role:'Medic', element:'Psychokinesis', rarity:5,
     cards:['Love 4pc','Opulence 2pc'], weapon:'Best Healing/Psy weapon (Bubble Babies)',
@@ -4684,7 +4690,7 @@ const CHAR_STAT_TARGETS = {
   'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
   // ── STRATEGIST ──
   'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[80,25], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18]},
+  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[120,25], edm:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18], spr:[0,0],   ailm:[0,0]},
   'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
   'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
   'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
@@ -4791,7 +4797,7 @@ function getRoleArchetype(role) {
 }
 
 const statMap = {'Attack %':'atk','Crit Rate':'crit','Crit Mult.':'cdmg','HP %':'hp','Defense %':'def','Healing Effect':'heal','Speed':'spd','Damage Mult':'edm','Ailment Accuracy':'ailm'}
-const statLabels = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',edm:'Damage Mult',hp:'HP %',def:'Defense %',heal:'Healing Effect',spd:'Speed'}
+const statLabels = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',edm:'Damage Mult',hp:'HP %',def:'Defense %',heal:'Healing Effect',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy'}
 
 function parseHiddenAbility(str) {
   if (!str) return {}
@@ -4887,10 +4893,16 @@ export default function P5XPage() {
   const [mobileTab, setMobileTab] = useState('chars')
   const [userStats, setUserStats] = useState({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0})
   const [skillLevel, setSkillLevel] = useState(3)
+  const [charStage, setCharStage] = useState(null)
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
-  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}) }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
+  const charTgt = (() => {
+    if (!currentChar) return null
+    if (charStage && currentChar.statTargets?.[charStage]) return currentChar.statTargets[charStage]
+    return CHAR_STAT_TARGETS[currentChar.codename] || null
+  })()
   const currentEc = currentChar ? (ELEM_COLORS[currentChar.element] || '#888') : 'var(--persona)'
   const stats = computeStats(currentChar, selectedWeaponIdx, weaponRefine)
   const totalStats = Object.fromEntries(
@@ -4971,7 +4983,7 @@ export default function P5XPage() {
   let scoreData = null
   if (currentChar) {
     const arch = getRoleArchetype(currentChar.role)
-    const charTargets = CHAR_STAT_TARGETS[currentChar.codename]
+    const charTargets = charTgt
     const targets = charTargets || STAT_TARGETS[arch]
     const prioKeys = charTargets ? [] : currentChar.statPrio.map(p => {
       if (p.includes('DMG%') && !p.includes('CRIT')) return 'edm'
@@ -4980,9 +4992,10 @@ export default function P5XPage() {
 
     let totalWeight = 0, earnedScore = 0
     const breakdown = []
-    const statKeys = ['atk','crit','cdmg','edm','hp','def','heal','spd']
+    const statKeys = ['atk','crit','cdmg','edm','hp','def','heal','spd','spr','ailm']
     statKeys.forEach(key => {
-      let [ideal, weight] = targets[key]
+      const entry = targets[key]; if (!entry) return
+      let [ideal, weight] = entry
       if (weight === 0) return
       if (prioKeys.includes(key)) weight = Math.round(weight * 1.4)
       totalWeight += weight
@@ -5505,11 +5518,22 @@ export default function P5XPage() {
                   </div>
                 </div>
 
+                {currentChar.statTargets && (
+                  <div className="info-panel">
+                    <div className="info-label">📐 Recommended Stats Stage</div>
+                    <div className="refine-picker" style={{flexWrap:'wrap',gap:4}}>
+                      <button className={'refine-btn'+(!charStage?' active':'')} onClick={() => setCharStage(null)}>Default</button>
+                      {Object.keys(currentChar.statTargets).map(stage => (
+                        <button key={stage} className={'refine-btn'+(charStage===stage?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="info-panel">
                   <div className="info-label">🎴 Revelation Card — Main Stats แนะนำ</div>
                   <div className="slot-guide">
                     {CARD_SLOTS.map(slot => {
-                      const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                       let bestLabel = null, bestWeight = -1
                       slot.mainStats.forEach(({label, key}) => {
                         if (!key || !charTgt) return
@@ -5539,7 +5563,6 @@ export default function P5XPage() {
                 <div className="info-panel">
                   <div className="info-label">🃏 Space Card แนะนำ (จาก Passive)</div>
                   {(() => {
-                    const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                     const ranked = REVELATION_CARDS.Space
                       .map(card => ({ card, score: scoreSpaceCard(card, charTgt, currentChar.cards) }))
                       .sort((a, b) => b.score - a.score)
@@ -5579,7 +5602,6 @@ export default function P5XPage() {
                 <div className="info-panel">
                   <div className="info-label">📋 Sub Stat Priority (Space / Sun·Moon·Star·Sky)</div>
                   {(() => {
-                    const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                     const spaceRanked = getSubStatPriority(charTgt, 'Space')
                     const otherRanked = getSubStatPriority(charTgt, 'Sun')
                     if (!spaceRanked.length && !otherRanked.length) return (
@@ -5609,7 +5631,6 @@ export default function P5XPage() {
 
                 {/* ── STAT REQUIREMENTS FROM CARDS ─────────────────────────── */}
                 {(() => {
-                  const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                   if (!charTgt) return null
                   const entries = Object.entries(charTgt).filter(([,[,w]]) => w > 0)
                   if (!entries.length) return null
