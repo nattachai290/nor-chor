@@ -80,7 +80,7 @@ const CARD_SETS = [
   {name:'Defeat',         bonus2:'Ailment Accuracy +15%',                                 bonus4:'Fire DMG to enemies with ailments +20%',
     stats2:{},              stats4:{edm:20}},
   {name:'Worry',          bonus2:'SP Recovery +80%',                                      bonus4:'Enter battle with +25% Highlight charge',
-    stats2:{},              stats4:{}},
+    stats2:{spr:80},        stats4:{}},
   {name:'Reconciliation', bonus2:'SPD +6',                                                bonus4:'In combat: HP, ATK, DEF +15%',
     stats2:{spd:6},         stats4:{hp:15,atk:15,def:15}},
   {name:'Virtue',         bonus2:'Bless DMG +10%',                                        bonus4:'Bless CRIT Rate +12% when HP ≥ 50%',
@@ -339,6 +339,7 @@ const CHARACTERS = [
       {hp:3623, atk:1307, def:621, spd:102},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {edm:16, crit:12},
     weapons:[
       {
         name: 'Phoenix Dagger', stars:5,
@@ -436,6 +437,7 @@ const CHARACTERS = [
       {hp:3590, atk:1340, def:687, spd:94},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {edm:16, crit:12},
     weapons:[
       {
         name: 'Rosethorn', stars:5,
@@ -536,6 +538,7 @@ const CHARACTERS = [
       {hp:4388, atk:1219, def:591, spd:0},
     ],
     hiddenAbility: 'Crit Mult. +184.9%',
+    mindscapeBonus: {edm:16, cdmg:24},
     weapons:[
       {name:'Revenge Axe', stars:5,
         hp:2616, atk:727, def:352,
@@ -633,6 +636,7 @@ const CHARACTERS = [
       {hp:3756, atk:1286, def:621, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {edm:16, crit:12},
     weapons:[
       {name:'Royal Étoile', stars:5,
         hp:2240, atk:766, def:370,
@@ -729,6 +733,7 @@ const CHARACTERS = [
       {hp:3756, atk:1263, def:665, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:'Technomage Ultra FS', stars:5,
         hp:2240, atk:753, def:396,
@@ -826,6 +831,7 @@ const CHARACTERS = [
       {hp:3823, atk:1197, def:650, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {dmgred:16, atk:20},
     weapons:[
       {name:'Superstar', stars:5,
         hp:2279, atk:714, def:388,
@@ -925,6 +931,7 @@ const CHARACTERS = [
       {hp:2791, atk:834, def:487, spd:0},
     ],
     hiddenAbility:'SPD +119.1',
+    mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:"Kunoichi: Sky's Edge", stars:5, hp:2299, atk:687, def:401, bonusStats:{spd:15},
         abilityName:'Shadow Dance',
@@ -1116,6 +1123,7 @@ const CHARACTERS = [
       {hp:2647, atk:906, def:497, spd:0},
     ],
     hiddenAbility: 'Crit Rate +18%',
+    mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {name:'Venus Sunrise', stars:5,
         hp:2180, atk:747, def:410,
@@ -1213,6 +1221,7 @@ const CHARACTERS = [
       {hp:3723, atk:1274, def:665, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:"Angel's Hymn", stars:5,
         hp:2220, atk:760, def:396,
@@ -1305,6 +1314,7 @@ const CHARACTERS = [
       {hp:4122, atk:909, def:886, spd:102},
     ],
     hiddenAbility: 'Defense % +43.6%',
+    mindscapeBonus: {edm:16, crit:12},
     weapons:[
       {
         name: 'Shadowkiller', stars:5,
@@ -1406,6 +1416,7 @@ const CHARACTERS = [
       {hp:3457, atk:1286, def:754, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {name:'Nuclear Finisher', stars:5,
         hp:2061, atk:766, def:449,
@@ -1505,6 +1516,7 @@ const CHARACTERS = [
       {hp:3922, atk:1241, def:687, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {edm:16, crit:12},
     weapons:[
       {name:'Gordian Kopis', stars:5,
         hp:2339, atk:740, def:410,
@@ -1602,6 +1614,7 @@ const CHARACTERS = [
       {hp:2767, atk:818, def:530, spd:0},
     ],
     hiddenAbility: 'Ailment Accuracy +26.1%',
+    mindscapeBonus: {atk:20, ailm:24},
     weapons:[
       {name:'Ribalta', stars:5,
         hp:2279, atk:674, def:436,
@@ -1711,6 +1724,7 @@ const CHARACTERS = [
       {hp:3756, atk:1164, def:687, spd:107},
     ],
     hiddenAbility: 'SPD +125.8',
+    mindscapeBonus: {spd:10, crit:12},
     weapons:[
       {name:'Nebula Pennant', stars:5,
         hp:2240, atk:694, def:410,
@@ -1805,6 +1819,7 @@ const CHARACTERS = [
       {hp:3922, atk:1130, def:695, spd:104},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
+    mindscapeBonus: {edm:16, ailm:24},
     weapons:[
       {
         name: 'Entropy', stars:5,
@@ -1903,6 +1918,7 @@ const CHARACTERS = [
       {hp:3590, atk:1174, def:724, spd:105},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
+    mindscapeBonus: {edm:16, ailm:24},
     weapons:[
       {
         name: 'Cerberus Claws', stars:5,
@@ -2012,6 +2028,7 @@ const CHARACTERS = [
       {hp:3989, atk:1108, def:739, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {edm:16, cdmg:24},
     weapons:[
       {name:"Warden's Judgement", stars:5,
         hp:2378, atk:661, def:440,
@@ -2109,6 +2126,7 @@ const CHARACTERS = [
       {hp:3590, atk:1274, def:716, spd:0},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
+    mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Last Quarter', stars:5,
         hp:2141, atk:760, def:427,
@@ -2304,6 +2322,7 @@ const CHARACTERS = [
       {hp:4122, atk:1252, def:606, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {atk:20, pierce:7.5},
     weapons:[
       {name:'Bloodletter', stars:5,
         hp:2458, atk:747, def:361,
@@ -2403,6 +2422,7 @@ const CHARACTERS = [
       {hp:3823, atk:1230, def:672, spd:0},
     ],
     hiddenAbility:'Attack % +29%',
+    mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:'Moonlit Feather', stars:5, hp:2279, atk:733, def:401, bonusStats:{atk:30},
         abilityName:'Wine & Revelry',
@@ -2590,6 +2610,7 @@ const CHARACTERS = [
       {hp:3623, atk:1319, def:657, spd:98},
     ],
     hiddenAbility: 'ATK +29%',
+    mindscapeBonus: {edm:16, pierce:7.5},
     weapons:[
       {
         name: 'Deus Xiphos', stars:5,
@@ -2691,6 +2712,7 @@ const CHARACTERS = [
       {hp:4388, atk:1185, def:606, spd:0},
     ],
     hiddenAbility: 'HP % +29%',
+    mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Colorful Coast', stars:5,
         hp:2616, atk:707, def:361,
@@ -2787,6 +2809,7 @@ const CHARACTERS = [
       {hp:3756, atk:1330, def:657, spd:95},
     ],
     hiddenAbility: 'ATK +29%',
+    mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {
         name: "New Year's Light", stars:5,
@@ -2983,6 +3006,7 @@ const CHARACTERS = [
       {hp:3856, atk:1274, def:628, spd:98},
     ],
     hiddenAbility: 'Crit Mult. +184.9%',
+    mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {
         name: "Lame de l'Amour", stars:5,
@@ -3016,16 +3040,15 @@ const CHARACTERS = [
     ],
   },
   {name:'Wind (Tempest)', codename:'wind-tempest', role:'Strategist', element:'Wind', rarity:5,
-    cards:['Opulence 4pc','Reconciliation 2pc'], weapon:'Best CRIT DMG/Support weapon (Windplum Dance)',
-    statPrio:['Crit Mult.','Crit Rate','Speed'], note:'Wind Strategist. CRIT DMG-scaling buffs — all party ATK/CRIT DMG buffs scale with her own CRIT multiplier. SP management unlocks full Blossoming Season potential.',
-    mechanics: "ATK buff และ CRIT DMG buff ทั้งหมดของ Riko สเกลตาม CRIT multiplier ของตัวเองที่เกิน 100% — ทุก 10% CRIT DMG ที่เกิน คูณค่าบัฟทุกอย่าง Blossoming Season ใช้ SP ทั้งหมด (ต่ำสุด 50, สูงสุด 200+) เพื่อผล tier: SP 50+ ให้ ATK buff, SP 100+ เพิ่ม CRIT DMG buff, SP 150+ เพิ่ม CRIT DMG อีก — ยิ่งใช้ SP มากยิ่งแรง SP ฟื้นจาก Storm of Petals (+16 SP) และ passive ของ Arrival of Spring (+12 SP ต่อ ally damage action ขณะ active) สะสม Crit Mult. ในทุก slot เพื่อเพิ่มทุก buff",
+    cards:['Worry 4pc'], weapon:'Best CRIT DMG/Support weapon (Windplum Dance)',
+    statPrio:['Crit Mult.','Crit Rate','Speed'], note:'Wind Strategist. CRIT DMG-scaling buffs — all party ATK/CRIT DMG buffs scale with her own CRIT multiplier. SP starts full each battle — open with Blossoming Season immediately.',
+    mechanics: "ATK buff และ CRIT DMG buff ทั้งหมดของ Riko สเกลตาม CRIT multiplier ของตัวเองที่เกิน 100% — ทุก 10% CRIT DMG ที่เกิน คูณค่าบัฟทุกอย่าง Blossoming Season ใช้ SP ทั้งหมด (ต่ำสุด 50, สูงสุด 200+) เพื่อผล tier: SP 50+ ให้ ATK buff, SP 100+ เพิ่ม CRIT DMG buff, SP 150+ เพิ่ม CRIT DMG อีก — ยิ่งใช้ SP มากยิ่งแรง SP เต็มตั้งแต่เริ่มเกม, Storm of Petals ฟื้น SP ตามสูตร 16 + SP Recovery% สะสม Crit Mult. ในทุก slot เพื่อเพิ่มทุก buff",
     rotation: [
-      "เทิร์น 1 → Arrival of Spring (ATK up ปาร์ตี้สเกลตาม CRIT DMG; ฟื้น SP ของ Riko ขณะ active)",
-      "เทิร์น 2 → Storm of Petals (Wind DMG + Windswept/Falling Petals; ฟื้น SP ของ Riko 16)",
-      "สะสม SP ถึง 150+ → Blossoming Season สำหรับ ATK+CRIT DMG buff tier สูงสุดให้ DPS หลัก",
-      "ทำวงจรฟื้น SP ซ้ำระหว่างการใช้ Blossoming Season",
-      "ใช้ Highlight → CRIT Rate buff ปาร์ตี้ (สเกลตาม CRIT DMG multiplier); ใช้ก่อนช่วง burst ของ DPS",
-      "เป้าหมาย CRIT DMG: 400%+ เพื่อ scaling สูงสุด — ทุก 10% CRIT DMG เกิน 100% คูณค่าบัฟทั้งหมด",
+      "R1: Blossoming Season → SP เต็ม 200 (tier 150+) buff DPS หลัก ATK+CRIT DMG+CRIT Rate ทันที",
+      "R2: Storm of Petals → สะสม SP (16 + SP Recovery%)",
+      "R3: Storm of Petals → SP รวม ~176 (150+ tier พร้อม)",
+      "R4: Blossoming Season → dump SP buff DPS หลักอีกรอบ",
+      "วน R2–R4 ซ้ำ",
     ],
     realName:'Tempest Riko', persona:'Chiyome',
     weakRes:{ Fire:'normal', Ice:'normal', Electric:'normal', Wind:'res', Nuclear:'normal',
@@ -3087,7 +3110,7 @@ const CHARACTERS = [
     weapons:[
       {name:'Windplum Dance', stars:5,
         hp:2398, atk:647, def:423,
-        bonusStats:{},
+        bonusStats:{cdmg:36.3},
         abilityName:'Windplum Dance',
         ability:[
           'Increase critical damage by 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0%.',
@@ -3111,6 +3134,13 @@ const CHARACTERS = [
           'เมื่อ Riko คืน SP ด้วยสกิล เพิ่ม CRIT DMG 8.7%/11.3%/11.3%/13.9%/13.9%/16.5%/16.5% เป็นเวลา 2 เทิร์น สะสมสูงสุด 2 ครั้ง',
         ]},
     ],
+    statTargets: {
+      'LV10':    {atk:[0,0], crit:[42,18], cdmg:[288,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[450,12], ailm:[0,0]},
+      'LV10+M5': {atk:[0,0], crit:[42,18], cdmg:[318,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,15], spr:[450,18], ailm:[0,0]},
+      'LV13':    {atk:[0,0], crit:[42,20], cdmg:[318,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,15], ailm:[0,0]},
+      'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[348,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[28,18], spr:[450,20], ailm:[0,0]},
+    },
+    mindscapeBonus: {atk:20, cdmg:24},
   },
   {name:'Moko (Seaside)', codename:'moko-seaside', role:'Medic', element:'Psychokinesis', rarity:5,
     cards:['Love 4pc','Opulence 2pc'], weapon:'Best Healing/Psy weapon (Bubble Babies)',
@@ -3181,6 +3211,7 @@ const CHARACTERS = [
       {hp:3922, atk:1208, def:642, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {spr:125, atk:20},
     weapons:[
       {name:'Bubble Babies', stars:5,
         hp:2339, atk:720, def:383,
@@ -3392,6 +3423,7 @@ const CHARACTERS = [
       {hp:3790, atk:1274, def:628, spd:0},
     ],
     hiddenAbility: 'Crit Rate +22.4%',
+    mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Cyber Jammers', stars:5,
         hp:2259, atk:760, def:374,
@@ -3489,6 +3521,7 @@ const CHARACTERS = [
       {hp:2647, atk:842, def:541, spd:0},
     ],
     hiddenAbility: 'Ailment Accuracy +26.1%',
+    mindscapeBonus: {ailm:24, atk:20},
     weapons:[
       {name:'Jolting Pulse', stars:5,
         hp:2180, atk:694, def:445,
@@ -3586,6 +3619,7 @@ const CHARACTERS = [
       {hp:3922, atk:1119, def:731, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    mindscapeBonus: {edm:16, atk:20},
     weapons:[
       {name:'Sweet Pickaxe', stars:5,
         hp:2339, atk:667, def:436,
@@ -4533,6 +4567,7 @@ const CHARACTERS = [
       {hp:2839, atk:842, def:514, spd:0},
     ],
     hiddenAbility:'Attack % +21.8%',
+    mindscapeBonus: {ailm:28, atk:20},
     weapons:[
       {name:'Retro Disco Style', stars:5, hp:2339, atk:694, def:423, bonusStats:{atk:30},
         abilityName:'Retro Disco Style',
@@ -4684,7 +4719,7 @@ const CHAR_STAT_TARGETS = {
   'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
   // ── STRATEGIST ──
   'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[80,25], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18]},
+  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[288,25], edm:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[28,18], spr:[450,12], ailm:[0,0]},
   'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
   'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
   'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
@@ -4791,7 +4826,8 @@ function getRoleArchetype(role) {
 }
 
 const statMap = {'Attack %':'atk','Crit Rate':'crit','Crit Mult.':'cdmg','HP %':'hp','Defense %':'def','Healing Effect':'heal','Speed':'spd','Damage Mult':'edm','Ailment Accuracy':'ailm'}
-const statLabels = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',edm:'Damage Mult',hp:'HP %',def:'Defense %',heal:'Healing Effect',spd:'Speed'}
+const statLabels = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',edm:'Damage Mult',hp:'HP %',def:'Defense %',heal:'Healing Effect',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy',pierce:'Pierce Rate',dmgred:'Damage Reduction'}
+const statFlat = new Set(['spd'])
 
 function parseHiddenAbility(str) {
   if (!str) return {}
@@ -4887,10 +4923,16 @@ export default function P5XPage() {
   const [mobileTab, setMobileTab] = useState('chars')
   const [userStats, setUserStats] = useState({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0})
   const [skillLevel, setSkillLevel] = useState(3)
+  const [charStage, setCharStage] = useState(null)
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
-  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}) }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
+  const charTgt = (() => {
+    if (!currentChar) return null
+    if (charStage && currentChar.statTargets?.[charStage]) return currentChar.statTargets[charStage]
+    return CHAR_STAT_TARGETS[currentChar.codename] || null
+  })()
   const currentEc = currentChar ? (ELEM_COLORS[currentChar.element] || '#888') : 'var(--persona)'
   const stats = computeStats(currentChar, selectedWeaponIdx, weaponRefine)
   const totalStats = Object.fromEntries(
@@ -4971,7 +5013,7 @@ export default function P5XPage() {
   let scoreData = null
   if (currentChar) {
     const arch = getRoleArchetype(currentChar.role)
-    const charTargets = CHAR_STAT_TARGETS[currentChar.codename]
+    const charTargets = charTgt
     const targets = charTargets || STAT_TARGETS[arch]
     const prioKeys = charTargets ? [] : currentChar.statPrio.map(p => {
       if (p.includes('DMG%') && !p.includes('CRIT')) return 'edm'
@@ -4980,9 +5022,10 @@ export default function P5XPage() {
 
     let totalWeight = 0, earnedScore = 0
     const breakdown = []
-    const statKeys = ['atk','crit','cdmg','edm','hp','def','heal','spd']
+    const statKeys = ['atk','crit','cdmg','edm','hp','def','heal','spd','spr','ailm']
     statKeys.forEach(key => {
-      let [ideal, weight] = targets[key]
+      const entry = targets[key]; if (!entry) return
+      let [ideal, weight] = entry
       if (weight === 0) return
       if (prioKeys.includes(key)) weight = Math.round(weight * 1.4)
       totalWeight += weight
@@ -5337,6 +5380,18 @@ export default function P5XPage() {
                     }
                   </div>
 
+                  {/* MINDSCAPE LV5 */}
+                  {currentChar.mindscapeBonus && (
+                    <div className="kit-block">
+                      <div className="kit-block-title">Mindscape <span className="ha-lv">LV 5</span></div>
+                      <div className="hidden-ability-box">
+                        {Object.entries(currentChar.mindscapeBonus).map(([key, val]) => (
+                          <div key={key}>{statLabels[key] || key} +{val}{statFlat.has(key) ? '' : '%'}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* AWARENESS */}
                   <div className="kit-block">
                     <div className="kit-block-title">Awareness</div>
@@ -5505,11 +5560,22 @@ export default function P5XPage() {
                   </div>
                 </div>
 
+                {currentChar.statTargets && (
+                  <div className="info-panel">
+                    <div className="info-label">📐 Recommended Stats Stage</div>
+                    <div className="refine-picker" style={{flexWrap:'wrap',gap:4}}>
+                      <button className={'refine-btn'+(!charStage?' active':'')} onClick={() => setCharStage(null)}>Default</button>
+                      {Object.keys(currentChar.statTargets).map(stage => (
+                        <button key={stage} className={'refine-btn'+(charStage===stage?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="info-panel">
                   <div className="info-label">🎴 Revelation Card — Main Stats แนะนำ</div>
                   <div className="slot-guide">
                     {CARD_SLOTS.map(slot => {
-                      const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                       let bestLabel = null, bestWeight = -1
                       slot.mainStats.forEach(({label, key}) => {
                         if (!key || !charTgt) return
@@ -5539,7 +5605,6 @@ export default function P5XPage() {
                 <div className="info-panel">
                   <div className="info-label">🃏 Space Card แนะนำ (จาก Passive)</div>
                   {(() => {
-                    const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                     const ranked = REVELATION_CARDS.Space
                       .map(card => ({ card, score: scoreSpaceCard(card, charTgt, currentChar.cards) }))
                       .sort((a, b) => b.score - a.score)
@@ -5579,7 +5644,6 @@ export default function P5XPage() {
                 <div className="info-panel">
                   <div className="info-label">📋 Sub Stat Priority (Space / Sun·Moon·Star·Sky)</div>
                   {(() => {
-                    const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                     const spaceRanked = getSubStatPriority(charTgt, 'Space')
                     const otherRanked = getSubStatPriority(charTgt, 'Sun')
                     if (!spaceRanked.length && !otherRanked.length) return (
@@ -5609,7 +5673,6 @@ export default function P5XPage() {
 
                 {/* ── STAT REQUIREMENTS FROM CARDS ─────────────────────────── */}
                 {(() => {
-                  const charTgt = CHAR_STAT_TARGETS[currentChar.codename]
                   if (!charTgt) return null
                   const entries = Object.entries(charTgt).filter(([,[,w]]) => w > 0)
                   if (!entries.length) return null
@@ -5620,8 +5683,14 @@ export default function P5XPage() {
                     ailm:'Ailment Accuracy', pierce:'Pierce Rate'
                   }
                   const selW = currentChar.weapons?.[selectedWeaponIdx ?? 0]
-                  const base0 = computeStats(currentChar, selectedWeaponIdx ?? 0, 0)
-                  const base6 = computeStats(currentChar, selectedWeaponIdx ?? 0, 6)
+                  const msBonus = (charStage?.includes('M5') && currentChar.mindscapeBonus) ? currentChar.mindscapeBonus : {}
+                  const applyMs = (raw) => {
+                    const all = {...raw}
+                    Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
+                    return all
+                  }
+                  const base0 = applyMs(computeStats(currentChar, selectedWeaponIdx ?? 0, 0))
+                  const base6 = applyMs(computeStats(currentChar, selectedWeaponIdx ?? 0, 6))
                   const lv80all2 = Array.isArray(currentChar.baseStatsLv80)
                     ? currentChar.baseStatsLv80
                     : currentChar.baseStatsLv80 ? [currentChar.baseStatsLv80] : []
@@ -5633,47 +5702,30 @@ export default function P5XPage() {
                   })
                   return (
                     <div className="info-panel">
-                      <div className="info-label">📊 Card Requirements (need from cards)</div>
+                      <div className="info-label">📊 Card Requirements</div>
                       <div className="req-table">
                         <div className="req-row req-hdr">
                           <span>Stat</span>
-                          <span>Target</span>
-                          <span>Base</span>
-                          <span>Need 0★</span>
-                          {scalesDiff && <span>Need 6★</span>}
+                          <span>เป้าหมาย</span>
+                          <span>มีแล้ว</span>
+                          <span>ต้องการจาก card</span>
                         </div>
                         {entries.map(([k,[ideal]]) => {
                           const b0 = base0[k] || 0
-                          const b6 = base6[k] || 0
-                          const need0 = Math.max(0, ideal - b0)
-                          const need6 = Math.max(0, ideal - b6)
-                          const isFlat = ['atk','hp','def'].includes(k)
+                          const need = Math.max(0, ideal - b0)
                           const fmt = v => k === 'spd' ? Math.round(v) : v.toFixed(0) + '%'
-                          // Per-ascension note for ATK/HP/DEF
-                          let a6Tgt = null
-                          if (isFlat && lv80_A0 && lv80_A6 && lv80_A0[k] !== lv80_A6[k]) {
-                            const wFlat = k==='atk'?(selW?.atk||0):k==='hp'?(selW?.hp||0):(selW?.def||0)
-                            const idealFinal = (lv80_A0[k] + wFlat) * (1 + ideal / 100)
-                            const pctA6 = Math.max(0, (idealFinal / (lv80_A6[k] + wFlat) - 1) * 100)
-                            if (ideal - pctA6 > 3) a6Tgt = pctA6.toFixed(0) + '%'
-                          }
-                          const cls0 = need0===0?'req-met':need0<30?'req-close':'req-far'
-                          const cls6 = need6===0?'req-met':need6<30?'req-close':'req-far'
+                          const cls = need===0?'req-met':need<30?'req-close':'req-far'
                           return (
                             <div key={k} className="req-row">
                               <span className="req-c-stat">{STAT_LABELS[k]||k}</span>
-                              <span className="req-c-tgt">
-                                {fmt(ideal)}
-                                {a6Tgt && <span className="req-a6-tgt">A6:{a6Tgt}</span>}
-                              </span>
+                              <span className="req-c-tgt">{fmt(ideal)}</span>
                               <span className="req-c-base">{fmt(b0)}</span>
-                              <span className={`req-c-need ${cls0}`}>{fmt(need0)}</span>
-                              {scalesDiff && <span className={`req-c-need ${cls6}`}>{fmt(need6)}</span>}
+                              <span className={`req-c-need ${cls}`}>{fmt(need)}</span>
                             </div>
                           )
                         })}
                       </div>
-                      <div className="req-note">Base = set bonuses + hidden ability. Need = target − base. 0★/6★ = weapon refine scaling.</div>
+                      <div className="req-note">มีแล้ว = set + weapon (0★) + hidden ability{charStage?.includes('M5') ? ' + Mindscape bonus' : ''}.</div>
                     </div>
                   )
                 })()}
