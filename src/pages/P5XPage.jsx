@@ -5518,53 +5518,6 @@ export default function P5XPage() {
 
               {charTab === 'build' && <div className="info-grid">
                 <div className="info-panel">
-                  <div className="info-label">🃏 Revelation Card Sets (แนะนำ)</div>
-                  <span className="cs-toggle" onClick={() => setLegendOpen(v => !v)}>
-                    📋 ดู Card Set Bonuses ทั้งหมด {legendOpen ? '▴' : '▾'}
-                  </span>
-                  {legendOpen && (
-                    <div className="cs-legend open">
-                      {CARD_SETS.map(cs => (
-                        <div key={cs.name} className="csl-row">
-                          <div className="csl-name">{cs.name}</div>
-                          <div className="csl-bonuses">
-                            <span style={{ color: 'var(--persona)' }}>2pc:</span> {cs.bonus2}
-                            &nbsp;|&nbsp;
-                            <span style={{ color: 'var(--persona3)' }}>4pc:</span> {cs.bonus4}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="card-set-row">
-                    {currentChar.cards.map((cs, idx) => {
-                      const match = cs.match(/^(.+?)\s+(2|4)pc$/i)
-                      if (!match) return <div key={idx} className="card-set-item"><span className="cs-pc">?pc</span><div className="cs-name">{cs}</div></div>
-                      const setName = match[1].trim()
-                      const pc = match[2]
-                      const setData = CARD_SETS.find(s => s.name.toLowerCase() === setName.toLowerCase())
-                      return (
-                        <div key={idx} className="card-set-item">
-                          <span className="cs-pc">{pc}pc</span>
-                          <div>
-                            <div className="cs-name">{setName}</div>
-                            {setData && pc === '4' ? (
-                              <>
-                                <div className="cs-bonus"><span style={{color:'var(--p5x-muted)',fontSize:11}}>2pc</span> {setData.bonus2}</div>
-                                <div className="cs-bonus"><span style={{color:'var(--persona3)',fontSize:11}}>4pc</span> {setData.bonus4}</div>
-                              </>
-                            ) : (
-                              <div className="cs-bonus">{setData ? setData.bonus2 : '?'}</div>
-                            )}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-
-
-                <div className="info-panel">
                   <div className="info-label">🎴 Revelation Card — Main Stats แนะนำ</div>
                   <div className="slot-guide">
                     {CARD_SLOTS.map(slot => {
@@ -5633,10 +5586,17 @@ export default function P5XPage() {
                                     const { elements: pElements, ...pStatWeights } = PASSIVE_STAT_MAP[p.name] || {}
                                     const elementOk = !pElements || charElements.length === 0 || pElements.some(e => charElements.includes(e))
                                     const relevant = charTgt && elementOk && (Object.keys(pStatWeights).some(k => charTgt[k]?.[1] > 0) || usedSets.includes(p.name))
+                                    const setData = CARD_SETS.find(cs => cs.name.toLowerCase() === p.name.toLowerCase())
                                     return (
                                       <div key={p.name} className={'rec-detail-row' + (relevant ? ' rec-detail-hit' : '')}>
                                         <span className="rec-detail-name">{p.name}</span>
                                         <span className="rec-detail-desc">{p.desc}</span>
+                                        {setData && (
+                                          <div className="rec-detail-set">
+                                            <span className="rec-detail-set-badge">2pc</span>{setData.bonus2}
+                                            {setData.bonus4 && <><span className="rec-detail-set-badge rec-detail-set-4pc">4pc</span>{setData.bonus4}</>}
+                                          </div>
+                                        )}
                                       </div>
                                     )
                                   })}

@@ -442,6 +442,9 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .rec-detail-name { font-size:0.68rem; font-weight:700; color:#888; }
 .rec-detail-row.rec-detail-hit .rec-detail-name { color:var(--persona3); }
 .rec-detail-desc { font-size:0.67rem; color:#999; line-height:1.5; }
+.rec-detail-set { margin-top:4px; font-size:0.64rem; color:#777; line-height:1.6; }
+.rec-detail-set-badge { display:inline-block; font-size:0.58rem; font-weight:700; padding:0 5px; border-radius:3px; margin-right:4px; background:#1a1a1a; border:1px solid #333; color:var(--p5x-muted); }
+.rec-detail-set-badge.rec-detail-set-4pc { color:var(--persona3); border-color:var(--persona2); background:#170a26; margin-left:8px; }
 
 /* ── SUB STAT PRIORITY ── */
 .sub-prio-wrap { display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
