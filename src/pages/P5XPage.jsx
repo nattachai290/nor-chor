@@ -5481,11 +5481,20 @@ export default function P5XPage() {
                       const setName = match[1].trim()
                       const pc = match[2]
                       const setData = CARD_SETS.find(s => s.name.toLowerCase() === setName.toLowerCase())
-                      const bonus = setData ? (pc === '4' ? setData.bonus4 : setData.bonus2) : '?'
                       return (
                         <div key={idx} className="card-set-item">
                           <span className="cs-pc">{pc}pc</span>
-                          <div><div className="cs-name">{setName}</div><div className="cs-bonus">{bonus}</div></div>
+                          <div>
+                            <div className="cs-name">{setName}</div>
+                            {setData && pc === '4' ? (
+                              <>
+                                <div className="cs-bonus"><span style={{color:'var(--p5x-muted)',fontSize:11}}>2pc</span> {setData.bonus2}</div>
+                                <div className="cs-bonus"><span style={{color:'var(--persona3)',fontSize:11}}>4pc</span> {setData.bonus4}</div>
+                              </>
+                            ) : (
+                              <div className="cs-bonus">{setData ? setData.bonus2 : '?'}</div>
+                            )}
+                          </div>
                         </div>
                       )
                     })}
