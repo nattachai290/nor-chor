@@ -4879,6 +4879,19 @@ function parseWeaponBonusAtRefine(weapon, refine) {
   return result
 }
 
+// Space card conditional passives — return stat bonus object given current stats
+const SPACE_PASSIVE_RULES = {
+  'Worry': ({spr=0}={}) => ({ cdmg: spr>=200?45 : spr>=150?30 : spr>=100?15 : 0 }),
+}
+
+function getSpacePassiveBonus(char, stats) {
+  const fourPc = (char?.cards||[]).map(c => { const m=c.match(/^(.+?)\s+4pc$/i); return m?m[1].trim():null }).find(Boolean)
+  const fn = SPACE_PASSIVE_RULES[fourPc]
+  if (!fn) return {}
+  const raw = fn(stats)
+  return Object.fromEntries(Object.entries(raw).filter(([,v]) => v > 0))
+}
+
 function computeStats(char, weaponIdx, refine = 0) {
   const s = {atk:0, crit:0, cdmg:0, hp:0, def:0, edm:0, heal:0, spd: char?.baseStats?.spd || 0}
   if (!char) return s
@@ -5750,6 +5763,12 @@ export default function P5XPage() {
                           const mContrib = Object.fromEntries(Object.entries(msBonus).filter(([k]) => trackedKeys.has(k)))
                           if (Object.keys(mContrib).length) sources.push({ label:'Mindscape (M5)', contrib:mContrib })
                         }
+                        const spacePassive = getSpacePassiveBonus(currentChar, base0)
+                        const spContrib = Object.fromEntries(Object.entries(spacePassive).filter(([k]) => trackedKeys.has(k)))
+                        if (Object.keys(spContrib).length) {
+                          const fourPcName = (currentChar.cards||[]).map(c=>{const m=c.match(/^(.+?)\s+4pc$/i);return m?m[1].trim():null}).find(Boolean)
+                          sources.push({ label:`${fourPcName} Space passive`, contrib:spContrib })
+                        }
                         if (!sources.length) return null
                         // Group by stat key
                         const byKey = {}
@@ -5917,12 +5936,13 @@ export default function P5XPage() {
 
                   const fmt = (k, v) => k === 'spd' ? Math.floor(v) : Math.floor(v) + '%'
 
-                  // SPR & Sun-kissed Blooms
+                  // SPR & passives
                   const totalSpr = (base0.spr||0) + (mainFromSel.spr||0) + (subFromAlloc.spr||0)
                   const spPerCast = 16 * (1 + totalSpr / 100)
                   const sp2Round = spPerCast * 2
                   const hasSunKissed = currentChar?.skills?.some(s => s.name === 'Sun-kissed Blooms')
                   const sunKissedCdmg = hasSunKissed ? parseFloat((84 * Math.min(totalSpr, 450) / 450).toFixed(1)) : 0
+                  const simSpacePassive = getSpacePassiveBonus(currentChar, {spr: totalSpr})
 
                   return (
                     <div className="info-panel">
@@ -5958,7 +5978,9 @@ export default function P5XPage() {
                         const sv1 = getSubTier1(k, 'Space')
                         const ov1 = getSubTier1(k, 'Other')
                         const subVal = subFromAlloc[k] || 0
-                        const passiveVal = (k === 'cdmg' && hasSunKissed) ? sunKissedCdmg : 0
+                        const spacePassiveVal = simSpacePassive[k] || 0
+                        const sunKissedVal = (k === 'cdmg' && hasSunKissed) ? sunKissedCdmg : 0
+                        const passiveVal = spacePassiveVal + sunKissedVal
                         const total = (base0[k]||0) + (mainFromSel[k]||0) + subVal + passiveVal
                         const reach = total >= ideal
                         return (
@@ -5968,7 +5990,8 @@ export default function P5XPage() {
                               <span style={{color:'#555', fontSize:'0.62rem'}}>
                                 base {fmt(k, base0[k]||0)}
                                 {mainFromSel[k] ? ` + main +${fmt(k, mainFromSel[k])}` : ''}
-                                {passiveVal > 0 ? ` + passive +${fmt(k, passiveVal)}` : ''}
+                                {spacePassiveVal > 0 ? ` + Space passive +${fmt(k, spacePassiveVal)}` : ''}
+                                {sunKissedVal > 0 ? ` + Sun-kissed +${fmt(k, sunKissedVal)}` : ''}
                               </span>
                               <span style={{flex:1}}/>
                               <span style={{color: subVal>0?'#7a9':'#444', fontSize:'0.7rem'}}>{subVal>0?`sub +${fmt(k,subVal)}`:'sub —'}</span>
