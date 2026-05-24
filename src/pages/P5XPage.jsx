@@ -820,7 +820,7 @@ const CHARACTERS = [
         desc:"At the start of battle, Catchy Hook can be used immediately. Its cooldown is permanently 1 turn (no longer increases). Each use of Catchy Hook increases party's damage by 20% (up to 2 stacks).",
         descTh:"เมื่อเริ่มต้นการต่อสู้ สามารถใช้ Catchy Hook ได้ทันที Cooldown จะเป็น 1 เทิร์นถาวร (ไม่เพิ่มอีก) ทุกการใช้ Catchy Hook เพิ่มดาเมจของปาร์ตี้ 20% (สูงสุด 2 stack)"},
     ],
-    baseStats: {hp:307, atk:96, def:52, spd:100},
+    baseStats: {hp:307, atk:96, def:52, spd:100, crit:5, cdmg:150, dmgred:6.4, meleeMulti:125, rangedMulti:25.3, rangedAcc:88, rangedCrit:7.58},
     baseStatsLv80: [
       {hp:3450, atk:1080, def:587, spd:0},
       {hp:3512, atk:1099, def:597, spd:0},
@@ -4893,7 +4893,7 @@ function getSpacePassiveBonus(char, stats) {
 }
 
 function computeStats(char, weaponIdx, refine = 0) {
-  const s = {atk:0, crit: char?.baseStats?.crit || 0, cdmg: char?.baseStats?.cdmg || 0, hp:0, def:0, edm: char?.baseStats?.edm || 0, heal:0, spd: char?.baseStats?.spd || 0, ailm: char?.baseStats?.ailm || 0}
+  const s = {atk:0, crit: char?.baseStats?.crit || 0, cdmg: char?.baseStats?.cdmg || 0, hp:0, def:0, edm: char?.baseStats?.edm || 0, heal:0, spd: char?.baseStats?.spd || 0, ailm: char?.baseStats?.ailm || 0, dmgred: char?.baseStats?.dmgred || 0}
   if (!char) return s
   char.cards.forEach(cardStr => {
     const m = cardStr.match(/^(.+?)\s+(2|4)pc$/i)
