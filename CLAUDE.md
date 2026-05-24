@@ -42,6 +42,14 @@
 - SP เต็มตั้งแต่เริ่มเกม
 - สูตร SP จากสกิล: base SP + SP Recovery%
 
+### Speed และ Turn Order
+- ลำดับ action กำหนดโดย Speed — ยิ่งสูงยิ่งออกก่อน
+- Dealer (Assassin/Sweeper) มี base Speed < 100, Buffer/Debuffer (Strategist/Saboteur) มี base Speed > 100 → dealer ออกหลัง buffer ตามธรรมชาติ
+- **ควรให้ dealer อยู่ลำดับที่ 4** เพื่อรับ buff จากทุกคนก่อน action
+- Speed จาก Revelation Card (card bonus) เป็น flat ค่า — target speed ที่ถูกต้องคือ **total = base + card** ไม่ใช่แค่ card contribution
+- สูตรใน UI: `computeStats.spd` เริ่มจาก `char.baseStats.spd` + card bonus → "มีแล้ว" แสดง total
+- ปรับ Speed ผ่าน: Revelation Card, Wonder Persona skill (Speed Master / Ironclad Resolve, ปรับได้ทีละ 3)
+
 ### Team Composition
 - ทีม: Wonder + Buff + Buff/Debuff + Main Dealer + Elucidator
 - ดู enemy จำนวน/weakness → เลือก Sweeper (AoE) หรือ Assassin (single)
