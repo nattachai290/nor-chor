@@ -587,8 +587,8 @@ export default function P5XPage() {
                         </select>
                         {(selectedWeaponIdx ?? 0) >= 0 && (
                           <div style={{display:'flex', gap:4, flexWrap:'wrap', marginTop:4}}>
-                            {[1,2,3,4,5,6].map(r => (
-                              <button key={r} className={'refine-btn'+(weaponRefine===r?' active':'')} onClick={() => setWeaponRefine(r)}>★{r}</button>
+                            {[0,1,2,3,4,5,6].map(r => (
+                              <button key={r} className={'refine-btn'+(weaponRefine===r?' active':'')} onClick={() => setWeaponRefine(r)}>{r}★</button>
                             ))}
                           </div>
                         )}
