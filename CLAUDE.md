@@ -177,12 +177,41 @@ sub stat option: [rolls × tier1 = ค่า โดยใช้กี่ roll]
 - skill/passive ระบุ scaling จาก HP หรือ DEF โดยตรง
 - ตัวละครนั้นเป็น Guardian หรือ Medic ที่ต้องรับ damage แทนทีม และ kit scale จาก DEF/HP
 
+### กฎเลือก Sky slot
+
+Sky มี 5 ตัวเลือก: ATK% / DEF% / HP% / Speed / SP Recovery
+
+**ATK%** — default สำหรับ Assassin/Sweeper/Saboteur ที่ personal damage มีความหมาย และไม่มี speed problem
+
+**Speed** — ใส่ได้เฉพาะเมื่อ base speed ไม่รับประกัน turn order ที่ถูกต้อง
+- Saboteur/Strategist มี base speed > 100, Dealer มี base speed < 100 → ออกก่อน dealer ตามธรรมชาติ → **Speed บน Sky ไม่จำเป็นสำหรับ Saboteur/Strategist ส่วนใหญ่**
+- Speed main บน Sky (20.3) มีความหมายเมื่อต้องการ outspeed ตัวละคร support คนอื่นในทีมเท่านั้น
+- ถ้าต้องการ speed แค่นิดเดียว → ใส่ใน sub stat แทน ไม่ต้องเสีย Sky slot
+
+**SP Recovery** — ใส่เมื่อ SPR อยู่ใน stat target จาก skill เท่านั้น (ตัวละครที่มี SP engine mechanic เช่น wind-tempest)
+
+**DEF% / HP%** — ตาม rule เดิม: skill ต้อง scale จาก DEF/HP โดยตรง
+
+### กฎเลือก Moon slot (ATK% vs DMG Mult)
+
+สมการดาเมจ: `BaseATK × (1+ATK%) × skill% × (1+DMGMult%) × ...`
+
+**marginal return เท่ากันเมื่อ (1+ATK%) = (1+DMGMult%)** → เลือก stat ที่ต่ำกว่าเสมอ
+
+**ขั้นตอน:**
+1. รวม ATK% ทั้งหมดที่มีอยู่แล้ว (base stat + weapon + set + **Sky**)
+2. รวม DMGMult% ทั้งหมดที่มีอยู่แล้ว
+3. เปรียบ (1+ATK%) vs (1+DMGMult%) → Moon → stat ที่ต่ำกว่า
+
+**กรณีทั่วไป:** Sky บังคับ ATK% (+31.4%) อยู่แล้ว → ATK% ฝั่งสูงขึ้น → **Moon → DMG Mult** มักจะดีกว่า ATK% ซ้ำ
+
 ### ลำดับความสำคัญ slot ตามประเภทตัวละคร
 
-- **DPS (Assassin/Sweeper):** Star → Crit Mult, Sky → ATK% หรือ SPR ตามสกิล, Moon → ATK% หรือ DMG Mult
+- **DPS (Assassin/Sweeper):** Star → Crit Mult, Sky → ATK% (หรือ SPR ถ้า skill target), Moon → DMG Mult (ดูสูตรก่อน)
 - **Buffer (Strategist):** Star → Crit Mult (ถ้า scale buff), Sky → SPR, Moon → ATK% หรือตามสกิล
+- **Saboteur:** Star → Ailment Acc (ถ้า target), Sky → ATK%, Moon → DMG Mult (ดูสูตรก่อน)
 - **Medic:** Moon → Heal Effect, Star → ATK% หรือ Ailment Acc, Sky → HP% หรือ SPR
-- **Speed สำหรับทุกบทบาท:** ใส่ใน sub stat ถ้าต้องการแค่ turn order — ไม่ต้องเสีย Sky slot ยกเว้นต้องการมาก
+- **Speed สำหรับทุกบทบาท:** ใส่ใน sub stat ถ้าต้องการแค่ turn order — ไม่ต้องเสีย Sky slot
 
 ## ระบบ P5X ที่ต้องรู้
 
