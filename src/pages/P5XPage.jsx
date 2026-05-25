@@ -413,7 +413,7 @@ export default function P5XPage() {
               <div className="char-tab-bar">
                 <button className={'char-tab-btn' + (charTab === 'build' ? ' active' : '')} onClick={() => setCharTab('build')}>🃏 Build</button>
                 <button className={'char-tab-btn' + (charTab === 'kit'   ? ' active' : '')} onClick={() => setCharTab('kit')}>⚔️ Kit</button>
-                <button className={'char-tab-btn' + (charTab === 'dmg'   ? ' active' : '')} onClick={() => setCharTab('dmg')}>💥 DMG</button>
+
                 <div className="lang-toggle">
                   <button className={'lang-btn' + (lang === 'en' ? ' active' : '')} onClick={() => setLang('en')}>EN</button>
                   <button className={'lang-btn' + (lang === 'th' ? ' active' : '')} onClick={() => setLang('th')}>TH</button>
@@ -548,103 +548,6 @@ export default function P5XPage() {
                 </div>
               )}
 
-              {charTab === 'dmg' && (
-                <div className="dmg-calc">
-
-                  {/* Auto section */}
-                  <div className="dmg-section">
-                    <div className="dmg-section-title">⚔️ Attack Power (จาก Build)</div>
-                    <div className="dmg-auto-grid">
-                      <div className="dmg-auto-row"><span>Char ATK</span><span className="dmg-auto-val">{dmgCharAtk.toLocaleString()}</span></div>
-                      <div className="dmg-auto-row"><span>Weapon ATK</span><span className="dmg-auto-val">{dmgWeaponAtk.toLocaleString()}</span></div>
-                      <div className="dmg-auto-row"><span>Attack % (Build)</span><span className="dmg-auto-val">{stats.atk.toFixed(1)}%</span></div>
-                      <div className="dmg-auto-row"><span>CRIT Rate (5+build)</span><span className="dmg-auto-val">{(5+stats.crit).toFixed(1)}%</span></div>
-                      <div className="dmg-auto-row"><span>CRIT DMG (150+build)</span><span className="dmg-auto-val">{(150+stats.cdmg).toFixed(1)}%</span></div>
-                      <div className="dmg-auto-row"><span>Elem DMG (Build)</span><span className="dmg-auto-val">{stats.dmgMulti.toFixed(1)}%</span></div>
-                    </div>
-                  </div>
-
-                  {/* Battle buffs */}
-                  <div className="dmg-section">
-                    <div className="dmg-section-title">💥 Battle Buffs (เพิ่มเติมในสนาม)</div>
-                    <div className="dmg-field-grid">
-                      <div className="dmg-field"><label>Extra Attack %</label><input className="dmg-input" type="number" value={dmg.extraAtk} min="0" onChange={e=>setDmgField('extraAtk',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>ATK Constant</label><input className="dmg-input" type="number" value={dmg.atkConst} min="0" onChange={e=>setDmgField('atkConst',e.target.value)}/></div>
-                      <div className="dmg-field"><label>Extra Crit Rate</label><input className="dmg-input" type="number" value={dmg.extraCritRate} min="0" onChange={e=>setDmgField('extraCritRate',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>Extra Crit Mult.</label><input className="dmg-input" type="number" value={dmg.extraCritDmg} min="0" onChange={e=>setDmgField('extraCritDmg',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>DMG Mult%</label><input className="dmg-input" type="number" value={dmg.dmgMult} min="0" onChange={e=>setDmgField('dmgMult',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>Extra Damage Mult</label><input className="dmg-input" type="number" value={dmg.extraEdm} min="0" onChange={e=>setDmgField('extraEdm',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>DMG Taken (Enemy)</label><input className="dmg-input" type="number" value={dmg.dmgTaken} min="0" onChange={e=>setDmgField('dmgTaken',e.target.value)}/><span className="dmg-unit">%</span></div>
-                    </div>
-                  </div>
-
-                  {/* Skill */}
-                  <div className="dmg-section">
-                    <div className="dmg-section-title">🃏 Skill Setup</div>
-                    <div className="dmg-field-grid">
-                      <div className="dmg-field"><label>Skill Coefficient%</label><input className="dmg-input" type="number" value={dmg.skillCoeff} min="0" onChange={e=>setDmgField('skillCoeff',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field dmg-field-wide">
-                        <label>Weakness</label>
-                        <div className="dmg-weakness-btns">
-                          {[['res','Res ×0.5'],['normal','Normal ×1.0'],['weak','Weak ×1.2']].map(([v,l])=>(
-                            <button key={v} className={'dmg-weakness-btn dmg-wk-'+v+(dmg.weakness===v?' active':'')} onClick={()=>setDmg(p=>({...p,weakness:v}))}>{l}</button>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="dmg-field"><label>Final DMG Bonus%</label><input className="dmg-input" type="number" value={dmg.finalDmgBonus} min="0" onChange={e=>setDmgField('finalDmgBonus',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>Other Coefficients%</label><input className="dmg-input" type="number" value={dmg.otherCoeff} min="1" onChange={e=>setDmgField('otherCoeff',e.target.value)}/><span className="dmg-unit">%</span></div>
-                    </div>
-                  </div>
-
-                  {/* Enemy */}
-                  <div className="dmg-section">
-                    <div className="dmg-section-title">🛡️ Enemy Defense</div>
-                    <div className="dmg-field-grid">
-                      <div className="dmg-field dmg-field-wide">
-                        <label>Boss Preset</label>
-                        <select className="dmg-select" onChange={e=>pickBossPreset(Number(e.target.value))}>
-                          {BOSS_PRESETS.map((b,i)=><option key={i} value={i}>{b.name}</option>)}
-                        </select>
-                      </div>
-                      <div className="dmg-field"><label>Enemy DEF</label><input className="dmg-input" type="number" value={dmg.enemyDef} min="0" step="0.1" onChange={e=>setDmgField('enemyDef',e.target.value)}/></div>
-                      <div className="dmg-field"><label>Add. DEF Coeff%</label><input className="dmg-input" type="number" value={dmg.addDefCoeff} min="0" step="0.1" onChange={e=>setDmgField('addDefCoeff',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>Pierce%</label><input className="dmg-input" type="number" value={dmg.pierce} min="0" max="100" onChange={e=>setDmgField('pierce',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field"><label>DEF Reduction%</label><input className="dmg-input" type="number" value={dmg.defReduction} min="0" onChange={e=>setDmgField('defReduction',e.target.value)}/><span className="dmg-unit">%</span></div>
-                      <div className="dmg-field dmg-check-row">
-                        <label>Windswept ×0.88</label>
-                        <input type="checkbox" className="dmg-checkbox" checked={dmg.windswept} onChange={e=>setDmgField('windswept',e.target.checked)}/>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Formula breakdown */}
-                  <div className="dmg-section dmg-result-section">
-                    <div className="dmg-section-title">📈 Result</div>
-                    <div className="dmg-formula-rows">
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓐ ATK Power</span><span className="dmg-fr-val">{Math.round(dmgA).toLocaleString()}</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓑ DMG Bonus</span><span className="dmg-fr-val">×{dmgB.toFixed(3)}</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓒ DEF Factor</span><span className="dmg-fr-val">×{dmgC.toFixed(4)}</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓓ CRIT (Exp.)</span><span className="dmg-fr-val">×{dmgD.toFixed(3)} ({(totalCritR*100).toFixed(1)}% rate / {(totalCritD*100).toFixed(0)}% dmg)</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓔ Skill Coeff</span><span className="dmg-fr-val">×{dmgE.toFixed(2)}</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓕ Weakness</span><span className="dmg-fr-val">×{dmgF.toFixed(1)}</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓖ Final Bonus</span><span className="dmg-fr-val">×{dmgG.toFixed(2)}</span></div>
-                      <div className="dmg-fr"><span className="dmg-fr-label">ⓗ Others</span><span className="dmg-fr-val">×{dmgH.toFixed(2)}</span></div>
-                    </div>
-                    <div className="dmg-output">
-                      <div className="dmg-output-row">
-                        <span className="dmg-label-min">MIN</span>
-                        <span className="dmg-val-min">{dmgMin.toLocaleString()}</span>
-                      </div>
-                      <div className="dmg-output-sep">~</div>
-                      <div className="dmg-output-row">
-                        <span className="dmg-label-max">MAX</span>
-                        <span className="dmg-val-max">{dmgMax.toLocaleString()}</span>
-                      </div>
-                    </div>
-                    <div className="dmg-avg">AVG: {Math.round(dmgBase).toLocaleString()}</div>
-                  </div>
-                </div>
-              )}
 
               {charTab === 'build' && <div className="info-grid">
                 <div className="info-panel">
