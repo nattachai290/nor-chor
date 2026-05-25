@@ -1405,7 +1405,7 @@ const CHARACTERS = [
         desc:"When Crash Out is active, Makoto can gain an extra action. (Extra actions do not affect the duration of effects with turn limits.) Also decrease the SP cost of Thermonuclear Fury by 33%.",
         descTh:"เมื่อ Crash Out ใช้งานอยู่ Makoto สามารถได้รับแอ็คชันพิเศษ (แอ็คชันพิเศษไม่ส่งผลต่อระยะเวลาของเอฟเฟกต์ที่จำกัดด้วยเทิร์น) นอกจากนี้ลดค่า SP ของ Thermonuclear Fury 33%"},
     ],
-    baseStats: {hp:277, atk:103, def:60, spd:96},
+    baseStats: {hp:277, atk:103, def:60, spd:96, crit:5, cdmg:150, meleeMulti:125, rangedMulti:36.2, rangedAcc:90, rangedCrit:7.41},
     baseStatsLv80: [
       {hp:3120, atk:1160, def:680, spd:0},
       {hp:3176, atk:1181, def:692, spd:0},
