@@ -1303,7 +1303,7 @@ const CHARACTERS = [
         desc:"Evolve the effects of Inspiration and Imagination to Vision & Emotion and Creation.\nEach counterattack becomes 2 consecutive attacks, each dealing 90% of the original attack's damage. Also increase counterattack pierce rate by 30%.",
         descTh:"พัฒนาเอฟเฟกต์ Inspiration และ Imagination เป็น Vision & Emotion และ Creation\nแต่ละ counterattack กลายเป็นการโจมตีต่อเนื่อง 2 ครั้ง โดยแต่ละครั้งสร้างความเสียหาย 90% ของต้นฉบับ นอกจากนี้เพิ่ม pierce rate ของ counterattack 30%"},
     ],
-    baseStats:     {hp:331, atk:72, def:71, spd:102, crit:12.2, cdmg:150, dmgMulti:6.4, meleeMulti:125, rangedMulti:21, rangedAcc:80, rangedCrit:4.5},
+    baseStats:     {hp:331, atk:72, def:71, spd:102, crit:5, cdmg:150, meleeMulti:125, rangedMulti:21, rangedAcc:80, rangedCrit:4.5},
     baseStatsLv80: [
       {hp:3720, atk:820, def:800, spd:102},
       {hp:3787, atk:834, def:814, spd:102},
