@@ -25,6 +25,31 @@
 3. Stage = skill level (LV10/LV13) + Mindscape level (M5 = Mindscape LV5)
 4. Mindscape bonus คิดแยกต่างหาก ไม่รวมในค่า base
 
+## หลักการ Min vs Max ของ stat target
+
+stat target แต่ละตัวมีสองขอบ — ต้องระบุทั้งคู่:
+
+**Min (floor)** = ค่าต่ำสุดที่ทำให้ passive/mechanic ทำงานเต็มที่
+- ดูจาก: passive cap, buff tier threshold, condition ที่สกิลระบุไว้
+- ตัวอย่าง: Sun-kissed Blooms cap 450% → SPR 450% คือ min ที่ CRIT DMG passive เต็ม
+
+**Max (ceiling)** = ค่าสูงสุดที่ยังมีประโยชน์ — เกินนี้ไม่เพิ่มอะไร
+- ดูจาก: resource cap (SP cap, stack cap, turn cap) ที่ mechanic ถูกจำกัดด้วย
+- ตัวอย่าง: SP cap 200 + Storm of Petals 2 casts → SPR 525% คือ max ที่ยังได้ SP เต็ม
+
+**วิธีหา max จาก SP engine:**
+```
+max SPR = (SP ที่ต้องการต่อ cycle / จำนวน cast × base SP per cast - 1) × 100
+ตัวอย่าง: (200 / 2×16 - 1) × 100 = 525%
+หมายเหตุ: ถ้ามี SP recovery หลัง skill (เช่น A2 +50 SP) ให้หักออกจาก SP ที่ต้องการก่อน
+```
+
+**กฎ:**
+- ต่ำกว่า min → mechanic ทำงานไม่เต็ม → ลงทุนก่อน
+- ระหว่าง min–max → เพิ่มได้ถ้า budget เหลือหลัง stat อื่นครบ
+- เกิน max → ไม่มีประโยชน์เพิ่ม → ย้าย budget ไป stat อื่น
+- **อย่าเรียก passive cap ว่า "max"** — มันคือ min ของ passive นั้น; max คือ mechanic ceiling ของทั้งระบบ
+
 ## วิธีเลือก Main Stat vs Sub Stat
 
 ### ค่า Main Stat (LV25 max) ต่อ slot
