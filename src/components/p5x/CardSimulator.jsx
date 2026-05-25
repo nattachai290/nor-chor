@@ -35,6 +35,13 @@ export default function CardSimulator({
     Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
     return all
   })()
+  // weapon-only contribution (for split display)
+  const baseNoWeapon = (() => {
+    const s = computeStats(charForSim, -1, 0)
+    const all = {...s}
+    Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
+    return all
+  })()
 
   const SLOT_IDS = ['Space','Sun','Moon','Star','Sky']
   const subUnit = (lbl) => (lbl==='HP'||lbl==='Attack'||lbl==='Defense'||lbl==='Speed') ? '' : '%'
@@ -214,12 +221,15 @@ export default function CardSimulator({
           const total = baseVal + mainVal + subVal + spacePassiveVal + sunKissedVal
           const reach = total >= ideal
 
+          const charVal   = baseNoWeapon[k] || 0
+          const weaponVal = baseVal - charVal
           const parts = [
-            {label: 'ตัวละคร+อาวุธ', val: baseVal,    color: '#fff'},
-            {label: 'main stat',    val: mainVal,    color: '#8888ff', show: mainVal > 0},
-            {label: 'sub stat',     val: subVal,     color: '#88ccff', show: subVal > 0},
+            {label: 'ตัวละคร',   val: charVal,         color: '#fff',    show: charVal !== 0},
+            {label: 'อาวุธ',     val: weaponVal,       color: '#ffaa66', show: weaponVal !== 0},
+            {label: 'main stat', val: mainVal,         color: '#8888ff', show: mainVal > 0},
+            {label: 'sub stat',  val: subVal,          color: '#88ccff', show: subVal > 0},
             {label: spacePassiveName, val: spacePassiveVal, color: '#88ffcc', show: spacePassiveVal > 0},
-            {label: 'Sun-kissed',     val: sunKissedVal,   color: '#ffcc44', show: sunKissedVal > 0},
+            {label: 'Sun-kissed',    val: sunKissedVal,    color: '#ffcc44', show: sunKissedVal > 0},
           ]
 
           return (
