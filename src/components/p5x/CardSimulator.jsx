@@ -130,7 +130,7 @@ export default function CardSimulator({
               {/* Card Set selector — Space only */}
               {slot.id === 'Space' && (
                 <div style={{marginBottom:8}}>
-                  <div style={{fontSize:'0.6rem', color:'#555', marginBottom:3}}>Set (4pc)</div>
+                  <div style={{fontSize:'0.6rem', color:'#fff', marginBottom:3}}>Set (4pc)</div>
                   <div style={{display:'flex', flexWrap:'wrap', gap:3}}>
                     {charDefaultSet && (
                       <button className={'refine-btn' + (!simCardSet ? ' active' : '')}
@@ -212,7 +212,7 @@ export default function CardSimulator({
           const reach = total >= ideal
 
           const parts = [
-            {label: 'base',    val: baseVal,       color: '#666'},
+            {label: 'base',    val: baseVal,       color: '#fff'},
             {label: 'main',    val: mainVal,        color: '#8888ff', show: mainVal > 0},
             {label: 'sub',     val: subVal,         color: '#88ccff', show: subVal > 0},
             {label: 'passive', val: spacePassiveVal, color: '#88ffcc', show: spacePassiveVal > 0},
@@ -224,12 +224,12 @@ export default function CardSimulator({
               <div style={{display:'flex', alignItems:'center', gap:4}}>
                 <span className="alloc-stat" style={{minWidth:80}}>{statLabels[k]||k}</span>
                 <span style={{color: reach?'#00ff88':'#ff7a8a', fontWeight:700, fontSize:'0.85rem', marginLeft:'auto'}}>{fmt(k,total)}</span>
-                <span style={{color:'#444', fontSize:'0.68rem', minWidth:44, textAlign:'right'}}>/{fmt(k,ideal)}</span>
+                <span style={{color:'#fff', fontSize:'0.68rem', minWidth:44, textAlign:'right'}}>/{fmt(k,ideal)}</span>
               </div>
               <div style={{display:'flex', gap:6, flexWrap:'wrap', paddingLeft:2, marginTop:2}}>
                 {parts.filter(p => p.show !== false).map(p => (
                   <span key={p.label} style={{fontSize:'0.6rem', color: p.color}}>
-                    <span style={{color:'#444'}}>{p.label} </span>{fmt(k, p.val)}
+                    <span style={{color:'#fff'}}>{p.label} </span>{fmt(k, p.val)}
                   </span>
                 ))}
               </div>

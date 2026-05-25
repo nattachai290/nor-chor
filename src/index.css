@@ -471,10 +471,10 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .alloc-cards-row { display:flex; gap:6px; flex-wrap:wrap; }
 .alloc-card-ctrl { display:flex; align-items:center; gap:3px; background:#111; border-radius:3px; padding:3px 5px; }
 .alloc-card-id { font-size:0.58rem; color:#666; min-width:30px; font-weight:700; text-transform:uppercase; }
-.alloc-btn { background:#1a1a1a; border:1px solid #333; color:#aaa; border-radius:3px; width:18px; height:18px; font-size:0.75rem; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; }
+.alloc-btn { background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:3px; width:18px; height:18px; font-size:0.75rem; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; }
 .alloc-btn:hover { background:#2a2a2a; color:#fff; }
 .alloc-num { font-size:0.72rem; color:var(--p5x-text); min-width:14px; text-align:center; }
-.alloc-hint { font-size:0.6rem; color:#555; min-width:28px; }
+.alloc-hint { font-size:0.6rem; color:#fff; min-width:28px; }
 .alloc-spr-summary { display:flex; align-items:center; flex-wrap:wrap; gap:6px; padding:6px 8px; background:#0d1f10; border-radius:4px; font-size:0.72rem; }
 .alloc-spr-arrow { color:#444; }
 .alloc-spr-ok   { color:#00ff88; font-weight:700; }
@@ -485,14 +485,14 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .sim-card-block { border:1px solid #222; border-radius:6px; padding:8px 10px; background:#080808; }
 .sim-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
 .sim-card-name { font-size:0.72rem; font-weight:700; color:var(--p5x-cyan); text-transform:uppercase; letter-spacing:1px; }
-.sim-card-sub-count { font-size:0.6rem; color:var(--p5x-muted); background:#111; border-radius:3px; padding:1px 5px; }
+.sim-card-sub-count { font-size:0.6rem; color:#fff; background:#111; border-radius:3px; padding:1px 5px; }
 .sim-card-sub-count.full { color:#00ff88; font-weight:700; background:#021a0a; }
 .sim-sub-row { display:flex; align-items:center; gap:5px; padding:2px 0; border-radius:3px; }
 .sim-sub-row.locked { background:#0d1a0d; padding:2px 4px; }
-.sim-sub-select { background:#111; border:1px solid #2a2a2a; color:#555; border-radius:3px; font-size:0.65rem; padding:2px 4px; flex:1; min-width:0; cursor:pointer; }
+.sim-sub-select { background:#111; border:1px solid #2a2a2a; color:#fff; border-radius:3px; font-size:0.65rem; padding:2px 4px; flex:1; min-width:0; cursor:pointer; }
 .sim-sub-select:focus { outline:none; border-color:#444; }
-.sim-sub-row.locked .sim-sub-select { color:var(--p5x-text); border-color:#1a3a1a; background:#0a1a0a; }
-.sim-sub-label { font-size:0.68rem; color:#aaa; flex:1; }
+.sim-sub-row.locked .sim-sub-select { color:#fff; border-color:#1a3a1a; background:#0a1a0a; }
+.sim-sub-label { font-size:0.68rem; color:#fff; flex:1; }
 .sim-sub-row.locked .sim-sub-label { color:var(--p5x-text); }
 
 /* ── CARD REQUIREMENTS TABLE ── */
