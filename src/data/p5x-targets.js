@@ -55,7 +55,7 @@ export const CHAR_STAT_TARGETS = {
   'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
   // ── STRATEGIST ──
   'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[388,25], dmgMulti:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[132,18], spr:[450,12], ailm:[0,0]},
+  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[388,25], dmgMulti:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[132,8],  spr:[525,22], ailm:[0,0]},
   'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
   'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
   'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
