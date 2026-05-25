@@ -820,7 +820,7 @@ const CHARACTERS = [
         desc:"At the start of battle, Catchy Hook can be used immediately. Its cooldown is permanently 1 turn (no longer increases). Each use of Catchy Hook increases party's damage by 20% (up to 2 stacks).",
         descTh:"เมื่อเริ่มต้นการต่อสู้ สามารถใช้ Catchy Hook ได้ทันที Cooldown จะเป็น 1 เทิร์นถาวร (ไม่เพิ่มอีก) ทุกการใช้ Catchy Hook เพิ่มดาเมจของปาร์ตี้ 20% (สูงสุด 2 stack)"},
     ],
-    baseStats: {hp:307, atk:96, def:52, spd:100, crit:5, cdmg:150, dmgDown:6.4, meleeMulti:125, rangedMulti:25.3, rangedAcc:88, rangedCrit:7.58},
+    baseStats: {hp:307, atk:96, def:52, spd:100, crit:5, cdmg:150, meleeMulti:125, rangedMulti:25.3, rangedAcc:88, rangedCrit:7.58},
     baseStatsLv80: [
       {hp:3450, atk:1080, def:587, spd:0},
       {hp:3512, atk:1099, def:597, spd:0},
