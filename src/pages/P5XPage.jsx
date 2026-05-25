@@ -598,12 +598,8 @@ export default function P5XPage() {
                     <div style={{marginBottom: currentChar.awareness?.length ? 10 : 0}}>
                       <div style={{fontSize:'0.7rem', color:'#aaa', marginBottom:4}}>📊 Skill Level</div>
                       <div style={{display:'flex', gap:4, flexWrap:'wrap'}}>
-                        <button className={'refine-btn'+(!charStage?' active':'')} onClick={() => setCharStage(null)}>Default</button>
-                        {currentChar.statTargets && Object.keys(currentChar.statTargets).map(stage => (
-                          <button key={stage} className={'refine-btn'+(charStage===stage?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
-                        ))}
-                        {!currentChar.statTargets && SKILL_LEVEL_LABELS.map((l, i) => (
-                          <button key={l} className={'refine-btn'+(charStage===l?' active':'')} onClick={() => setCharStage(l)}>{l}</button>
+                        {(currentChar.statTargets ? Object.keys(currentChar.statTargets) : SKILL_LEVEL_LABELS).map((stage, i) => (
+                          <button key={stage} className={'refine-btn'+((charStage===stage || (!charStage && i===0)) ? ' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
                         ))}
                       </div>
                     </div>
