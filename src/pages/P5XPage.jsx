@@ -855,31 +855,44 @@ export default function P5XPage() {
                           <span>มีแล้ว</span>
                           <span>ต้องการจาก card</span>
                         </div>
-                        {entries.map(([k,[ideal]]) => {
-                          const b0 = base0[k] || 0
-                          const need = Math.max(0, ideal - b0)
-                          const fmt = v => k === 'spd' ? Math.round(v) : Math.floor(v) + '%'
-                          const cls = need===0?'req-met':need<30?'req-close':'req-far'
-                          const floor = currentChar.statFloor?.[k]
+                        {(() => {
                           const SUB_LABEL_MAP = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',dmgMulti:'Damage Mult',hp:'HP %',def:'Defense %',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy'}
-                          const subLabel = SUB_LABEL_MAP[k]
-                          const subT1 = subLabel ? CARD_SUB_STATS._other[subLabel]?.[0] : null
-                          const rolls = (need > 0 && subT1) ? Math.ceil(need / subT1) : null
-                          const rollCls = rolls == null ? '' : rolls <= 5 ? 'rolls-easy' : rolls <= 12 ? 'rolls-mid' : 'rolls-hard'
-                          return (
-                            <div key={k} className="req-row">
-                              <span className="req-c-stat">{STAT_LABELS[k]||k}</span>
-                              <span className="req-c-tgt">
-                                {floor ? <>{fmt(floor)}<span style={{color:'#666',margin:'0 2px'}}>→</span>{fmt(ideal)}</> : fmt(ideal)}
-                              </span>
-                              <span className="req-c-base">{fmt(b0)}</span>
-                              <span className={`req-c-need ${cls}`}>
-                                {fmt(need)}
-                                {rolls != null && need > 0 && <span className={`sub-rolls ${rollCls}`}>{rolls > 20 ? '>20r' : `~${rolls}r`}/20</span>}
-                              </span>
-                            </div>
-                          )
-                        })}
+                          const rows = entries.map(([k,[ideal]]) => {
+                            const b0 = base0[k] || 0
+                            const need = Math.max(0, ideal - b0)
+                            const subT1 = CARD_SUB_STATS._other[SUB_LABEL_MAP[k]]?.[0] ?? null
+                            const rolls = (need > 0 && subT1) ? Math.ceil(need / subT1) : null
+                            return { k, ideal, b0, need, rolls }
+                          })
+                          const totalRolls = rows.reduce((s, r) => s + (r.rolls || 0), 0)
+                          return (<>
+                            {rows.map(({ k, ideal, b0, need, rolls }) => {
+                              const fmt = v => k === 'spd' ? Math.round(v) : Math.floor(v) + '%'
+                              const cls = need===0?'req-met':need<30?'req-close':'req-far'
+                              const floor = currentChar.statFloor?.[k]
+                              const rollCls = rolls == null ? '' : rolls <= 5 ? 'rolls-easy' : rolls <= 12 ? 'rolls-mid' : 'rolls-hard'
+                              return (
+                                <div key={k} className="req-row">
+                                  <span className="req-c-stat">{STAT_LABELS[k]||k}</span>
+                                  <span className="req-c-tgt">
+                                    {floor ? <>{fmt(floor)}<span style={{color:'#666',margin:'0 2px'}}>→</span>{fmt(ideal)}</> : fmt(ideal)}
+                                  </span>
+                                  <span className="req-c-base">{fmt(b0)}</span>
+                                  <span className={`req-c-need ${cls}`}>
+                                    {fmt(need)}
+                                    {rolls != null && need > 0 && <span className={`sub-rolls ${rollCls}`}>~{rolls}r</span>}
+                                  </span>
+                                </div>
+                              )
+                            })}
+                            {totalRolls > 0 && (
+                              <div className={`req-roll-total ${totalRolls > 20 ? 'rolls-hard' : totalRolls > 12 ? 'rolls-mid' : 'rolls-easy'}`}>
+                                รวม sub rolls ที่ต้องการ: <strong>{totalRolls}r / 20r</strong>
+                                {totalRolls > 20 && <span> — เกิน cap, ต้องอาศัย main stat ด้วย</span>}
+                              </div>
+                            )}
+                          </>)
+                        })()}
                       </div>
                       {(() => {
                         const fmtStat = (k, v) => k === 'spd' ? `+${Math.round(v)}` : `+${(Math.floor(v*10)/10).toFixed(1)}%`
