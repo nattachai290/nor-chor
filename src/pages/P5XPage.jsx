@@ -58,9 +58,10 @@ export default function P5XPage() {
   const [mainStatSel, setMainStatSel] = useState({})
   const [simCardSet, setSimCardSet] = useState(null)
   const [simAwarenessLevel, setSimAwarenessLevel] = useState(0)
+  const [inclMain, setInclMain] = useState(false)
 
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
-  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}); setSimCardSet(null); setSimAwarenessLevel(0) }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}); setSimCardSet(null); setSimAwarenessLevel(0); setInclMain(false) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const charTgt = (() => {
@@ -850,6 +851,29 @@ export default function P5XPage() {
                   const base0 = {...base0raw}
                   Object.entries(spacePassiveB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
                   Object.entries(sunKissedB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                  // Compute recommended main stat bonus (same exclusivity logic as the recommender)
+                  const recMainBonus = (() => {
+                    const bonus = {}
+                    if (!charTgt) return bonus
+                    const statSlotCount = {}
+                    CARD_SLOTS.forEach(s => s.mainStats.forEach(({key}) => {
+                      if (key) statSlotCount[key] = (statSlotCount[key] || 0) + 1
+                    }))
+                    CARD_SLOTS.filter(s => s.mainStats.some(({key}) => key !== null)).forEach(slot => {
+                      let bestKey = null, bestScore = 0, bestMax = 0
+                      slot.mainStats.forEach(({key, max}) => {
+                        if (!key) return
+                        const [ideal, w] = charTgt[key] || [0, 0]
+                        if (!w) return
+                        const need = Math.max(0, ideal - (base0raw[key] || 0))
+                        if (need <= 0) return
+                        const score = w / (statSlotCount[key] || 1)
+                        if (score > bestScore) { bestScore = score; bestKey = key; bestMax = max }
+                      })
+                      if (bestKey) bonus[bestKey] = (bonus[bestKey] || 0) + bestMax
+                    })
+                    return bonus
+                  })()
                   return (
                     <div className="info-panel">
                       <div className="info-label" style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}}>
@@ -860,6 +884,11 @@ export default function P5XPage() {
                               <button key={stage} className={'refine-btn'+((charStage===stage||(!charStage&&Object.keys(currentChar.statTargets)[0]===stage))?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
                             ))}
                           </div>
+                        )}
+                        {Object.keys(recMainBonus).length > 0 && (
+                          <button className={'refine-btn'+(inclMain?' active':'')} onClick={() => setInclMain(v => !v)} style={{fontSize:'0.6rem'}}>
+                            + Main Stat
+                          </button>
                         )}
                       </div>
                       <div className="req-table">
@@ -873,14 +902,15 @@ export default function P5XPage() {
                           const SUB_LABEL_MAP = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',dmgMulti:'Damage Mult',hp:'HP %',def:'Defense %',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy'}
                           const rows = entries.map(([k,[ideal]]) => {
                             const b0 = base0[k] || 0
-                            const need = Math.max(0, ideal - b0)
+                            const mainBonus = inclMain ? (recMainBonus[k] || 0) : 0
+                            const need = Math.max(0, ideal - b0 - mainBonus)
                             const subT1 = CARD_SUB_STATS._other[SUB_LABEL_MAP[k]]?.[0] ?? null
                             const rolls = (need > 0 && subT1) ? Math.ceil(need / subT1) : null
-                            return { k, ideal, b0, need, rolls }
+                            return { k, ideal, b0, mainBonus, need, rolls }
                           })
                           const totalRolls = rows.reduce((s, r) => s + (r.rolls || 0), 0)
                           return (<>
-                            {rows.map(({ k, ideal, b0, need, rolls }) => {
+                            {rows.map(({ k, ideal, b0, mainBonus, need, rolls }) => {
                               const fmt = v => k === 'spd' ? Math.round(v) : Math.floor(v) + '%'
                               const cls = need===0?'req-met':need<30?'req-close':'req-far'
                               const floor = currentChar.statFloor?.[k]
@@ -891,7 +921,9 @@ export default function P5XPage() {
                                   <span className="req-c-tgt">
                                     {floor ? <>{fmt(floor)}<span style={{color:'#666',margin:'0 2px'}}>→</span>{fmt(ideal)}</> : fmt(ideal)}
                                   </span>
-                                  <span className="req-c-base">{fmt(b0)}</span>
+                                  <span className="req-c-base">
+                                    {fmt(b0)}{mainBonus > 0 && <span style={{color:'#8888ff',fontSize:'0.6rem',marginLeft:3}}>+{fmt(mainBonus)}</span>}
+                                  </span>
                                   <span className={`req-c-need ${cls}`}>
                                     {fmt(need)}
                                     {rolls != null && need > 0 && <span className={`sub-rolls ${rollCls}`}>~{rolls}r</span>}
