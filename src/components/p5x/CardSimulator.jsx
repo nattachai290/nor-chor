@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CARD_SETS, CARD_SLOTS, CARD_SUB_STATS } from '../../data/p5x-cards.js'
+import { CARD_SETS, CARD_SLOTS, CARD_SUB_STATS, REVELATION_CARDS } from '../../data/p5x-cards.js'
 import { SUB_STAT_KEY } from '../../data/p5x-targets.js'
 import { computeStats, getSpacePassiveBonus, statLabels } from '../../utils/p5x-stats.js'
 
@@ -19,6 +19,7 @@ export default function CardSimulator({
   // subSlots[cardSlotId] = [statKey|null, statKey|null, statKey|null, statKey|null]
   const [subSlots, setSubSlots] = useState({})
   const [expandedStats, setExpandedStats] = useState({})
+  const [simSpaceCard, setSimSpaceCard] = useState(null)
 
   if (!charTgt) return null
   const simEntries = Object.entries(charTgt).filter(([,[,w]]) => w > 0)
@@ -139,26 +140,50 @@ export default function CardSimulator({
               </div>
 
               {/* Card Set selector — Space only */}
-              {slot.id === 'Space' && (
-                <div style={{marginBottom:8}}>
-                  <div style={{fontSize:'0.6rem', color:'#fff', marginBottom:3}}>Set (4pc)</div>
-                  <div style={{display:'flex', flexWrap:'wrap', gap:3}}>
-                    {charDefaultSet && (
-                      <button className={'refine-btn' + (!simCardSet ? ' active' : '')}
-                        onClick={() => setSimCardSet(null)}>
-                        {charDefaultSet} (default)
-                      </button>
+              {slot.id === 'Space' && (() => {
+                const defaultSpaceCard = REVELATION_CARDS.Space.find(sc =>
+                  sc.passives.some(p => p.name === charDefaultSet)
+                )?.name || null
+                const activeSpaceCardName = simSpaceCard || defaultSpaceCard
+                const activeSpaceCard = REVELATION_CARDS.Space.find(sc => sc.name === activeSpaceCardName)
+                return (
+                  <div style={{marginBottom:8, display:'flex', flexDirection:'column', gap:4}}>
+                    <div>
+                      <div style={{fontSize:'0.6rem', color:'#fff', marginBottom:3}}>Space Card</div>
+                      <select className="sim-sub-select"
+                        value={activeSpaceCardName || ''}
+                        onChange={e => {
+                          setSimSpaceCard(e.target.value || null)
+                          setSimCardSet(null)
+                        }}
+                      >
+                        <option value="">— เลือก Space Card —</option>
+                        {REVELATION_CARDS.Space.map(sc => (
+                          <option key={sc.name} value={sc.name}>
+                            {sc.name}{sc.name === defaultSpaceCard ? ' (default)' : ''}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {activeSpaceCard && (
+                      <div>
+                        <div style={{fontSize:'0.6rem', color:'#fff', marginBottom:3}}>Passive (4pc)</div>
+                        <select className="sim-sub-select"
+                          value={simCardSet || (activeSpaceCard.passives.some(p => p.name === charDefaultSet) ? charDefaultSet : '') || ''}
+                          onChange={e => setSimCardSet(e.target.value || null)}
+                        >
+                          <option value="">— เลือก passive —</option>
+                          {activeSpaceCard.passives.map(p => (
+                            <option key={p.name} value={p.name}>
+                              {p.name}{p.name === charDefaultSet ? ' (default)' : ''}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     )}
-                    {CARD_SETS.filter(cs => cs.name !== charDefaultSet).map(cs => (
-                      <button key={cs.name}
-                        className={'refine-btn' + (simCardSet === cs.name ? ' active' : '')}
-                        onClick={() => setSimCardSet(cs.name)}>
-                        {cs.name}
-                      </button>
-                    ))}
                   </div>
-                </div>
-              )}
+                )
+              })()}
 
               {/* Main stat */}
               <div style={{display:'flex', gap:4, flexWrap:'wrap', marginBottom:8}}>
