@@ -65,7 +65,11 @@ export default function P5XPage() {
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const charTgt = (() => {
     if (!currentChar) return null
-    if (charStage && currentChar.statTargets?.[charStage]) return currentChar.statTargets[charStage]
+    const tgts = currentChar.statTargets
+    if (tgts) {
+      const key = (charStage && tgts[charStage]) ? charStage : Object.keys(tgts)[0]
+      return tgts[key]
+    }
     return CHAR_STAT_TARGETS[currentChar.codename] || null
   })()
   const currentEc = currentChar ? (ELEM_COLORS[currentChar.element] || '#888') : 'var(--persona)'
@@ -838,9 +842,8 @@ export default function P5XPage() {
                         <span>📊 Stat Requirements</span>
                         {currentChar.statTargets && (
                           <div className="refine-picker" style={{flexWrap:'wrap',gap:4}}>
-                            <button className={'refine-btn'+(!charStage?' active':'')} onClick={() => setCharStage(null)}>Default</button>
                             {Object.keys(currentChar.statTargets).map(stage => (
-                              <button key={stage} className={'refine-btn'+(charStage===stage?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
+                              <button key={stage} className={'refine-btn'+((charStage===stage||(!charStage&&Object.keys(currentChar.statTargets)[0]===stage))?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
                             ))}
                           </div>
                         )}
