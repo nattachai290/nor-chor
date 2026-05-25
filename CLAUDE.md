@@ -25,6 +25,65 @@
 3. Stage = skill level (LV10/LV13) + Mindscape level (M5 = Mindscape LV5)
 4. Mindscape bonus คิดแยกต่างหาก ไม่รวมในค่า base
 
+## วิธีเลือก Main Stat vs Sub Stat
+
+### ค่า Main Stat (LV25 max) ต่อ slot
+
+| Slot  | ตัวเลือก                                    | Max value |
+|-------|---------------------------------------------|-----------|
+| Space | Attack (flat) / Defense (flat)              | 359       |
+| Sun   | HP (flat)                                   | 1080      |
+| Moon  | ATK% / DMG Mult / HP% / DEF% / Heal Effect | 31.4% / 25.1% / 31.5% / 47.1% / 22.6% |
+| Star  | Crit Rate / Crit Mult / ATK% / HP% / DEF% / Ailment Acc | 18.8% / 37.6% / 31.4% / 31.5% / 47.1% / 37.6% |
+| Sky   | ATK% / DEF% / HP% / Speed / SP Recovery    | 31.4% / 47.1% / 31.5% / 20.3 / 90.4% |
+
+### ค่า Sub Stat (tier 1 ต่อ 1 roll, max 4 rolls ต่อ card)
+
+| Stat           | Space (tier 1) | Sun/Moon/Star/Sky (tier 1) | 4 rolls (Space) | 4 rolls (other) |
+|----------------|---------------|---------------------------|----------------|----------------|
+| Crit Rate      | 2.6%          | 2.0%                      | 10.4%          | 8.0%           |
+| Crit Mult      | 5.2%          | 4.1%                      | 20.8%          | 16.4%          |
+| ATK%           | 4.3%          | 3.5%                      | 17.2%          | 14.0%          |
+| DMG Mult       | 3.5%          | 2.8%                      | 14.0%          | 11.2%          |
+| SP Recovery    | 12.5%         | 10.0%                     | 50.0%          | 40.0%          |
+| Ailment Acc    | 5.2%          | 4.1%                      | 20.8%          | 16.4%          |
+| Speed (flat)   | 2.8           | 2.2                       | 11.2           | 8.8            |
+| HP%            | 4.4%          | 3.6%                      | 17.6%          | 14.4%          |
+
+### กฎการเลือก Main vs Sub
+
+**ใช้ Main stat เมื่อ:**
+- stat นั้นมี slot รองรับ และค่า main >> sub อย่างชัดเจน
+- Crit Mult: main Star = 37.6% vs sub max = 16–20% → **main ให้เกือบ 2x เสมอ**
+- SPR: main Sky = 90.4% vs sub max = 40–50% → **main ให้เกือบ 2x เสมอ**
+- Crit Rate: main Star = 18.8% vs sub max = 8–10% → **main ให้ 2x**
+
+**ใช้ Sub stat เมื่อ:**
+- ไม่มี slot ว่างสำหรับ stat นั้น (slot ถูกใช้ไปกับ stat ที่สำคัญกว่า)
+- ปริมาณที่ต้องการน้อย — ตัวอย่าง Speed wind-tempest ต้องการแค่ ~28 จาก card → sub 3–4 rolls เพียงพอ ไม่ต้องเสีย Sky slot
+- stat นั้นไม่มี slot (Speed มีแค่ Sky — ถ้า Sky ใช้ SPR แทนได้มากกว่า → ยัด Speed ใน sub)
+
+### Template วิเคราะห์ต่อ stat
+
+```
+stat: [ชื่อ]
+ที่มา target: [สกิลหรือ passive ที่กำหนด cap/requirement]
+target value: [ตัวเลข]
+base (computeStats): [ตัวเลข]
+ต้องการจาก card: target − base = [ตัวเลข]
+main stat option: [slot → ค่า]
+sub stat option: [rolls × tier1 = ค่า โดยใช้กี่ roll]
+การตัดสิน: main / sub / mix
+เหตุผล: [เปรียบ efficiency + opportunity cost ของ slot ที่ต้องเสีย]
+```
+
+### ลำดับความสำคัญ slot ตามประเภทตัวละคร
+
+- **DPS (Assassin/Sweeper):** Star → Crit Mult, Sky → ATK% หรือ SPR ตามสกิล, Moon → ATK% หรือ DMG Mult
+- **Buffer (Strategist):** Star → Crit Mult (ถ้า scale buff), Sky → SPR, Moon → ATK% หรือตามสกิล
+- **Medic:** Moon → Heal Effect, Star → ATK% หรือ Ailment Acc, Sky → HP% หรือ SPR
+- **Speed สำหรับทุกบทบาท:** ใส่ใน sub stat ถ้าต้องการแค่ turn order — ไม่ต้องเสีย Sky slot ยกเว้นต้องการมาก
+
 ## ระบบ P5X ที่ต้องรู้
 
 ### Awareness vs Mindscape
