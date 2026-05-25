@@ -15,6 +15,7 @@ export default function CardSimulator({
   setMainStatSel,
   simCardSet,
   setSimCardSet,
+  simAwarenessLevel = 0,
 }) {
   // subSlots[cardSlotId] = [statKey|null, statKey|null, statKey|null, statKey|null]
   const [subSlots, setSubSlots] = useState({})
@@ -35,6 +36,11 @@ export default function CardSimulator({
     const s = computeStats(charForSim, selectedWeaponIdx ?? 0, weaponRefine)
     const all = {...s}
     Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
+    // Add awareness stats beyond A0 (A0 already included by computeStats)
+    for (let i = 1; i <= (simAwarenessLevel ?? 0); i++) {
+      const awStats = charForSim.awareness?.[i]?.stats || {}
+      Object.entries(awStats).forEach(([k,v]) => { all[k] = (all[k]||0)+v })
+    }
     return all
   })()
   // weapon-only contribution (for split display)
@@ -42,6 +48,10 @@ export default function CardSimulator({
     const s = computeStats(charForSim, -1, 0)
     const all = {...s}
     Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
+    for (let i = 1; i <= (simAwarenessLevel ?? 0); i++) {
+      const awStats = charForSim.awareness?.[i]?.stats || {}
+      Object.entries(awStats).forEach(([k,v]) => { all[k] = (all[k]||0)+v })
+    }
     return all
   })()
 
@@ -269,6 +279,10 @@ export default function CardSimulator({
           if (hiddenV) charParts.push({label:'Hidden ability', val:hiddenV, color:'#cc88ff'})
           const a0Stats = charForSim.awareness?.[0]?.stats || {}
           if (a0Stats[k]) charParts.push({label:`A0: ${charForSim.awareness[0].name}`, val:a0Stats[k], color:'#ffcc88'})
+          for (let awI = 1; awI <= (simAwarenessLevel ?? 0); awI++) {
+            const aw = charForSim.awareness?.[awI]
+            if (aw?.stats?.[k]) charParts.push({label:`A${aw.stage??awI}: ${aw.name}`, val:aw.stats[k], color:'#ffcc88'})
+          }
           const msV = msBonus[k] || 0
           if (msV) charParts.push({label:'Mindscape M5', val:msV, color:'#ff88ff'})
           const parts = [

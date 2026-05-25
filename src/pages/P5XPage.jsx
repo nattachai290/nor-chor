@@ -57,9 +57,10 @@ export default function P5XPage() {
   const [subAlloc, setSubAlloc] = useState({})
   const [mainStatSel, setMainStatSel] = useState({})
   const [simCardSet, setSimCardSet] = useState(null)
+  const [simAwarenessLevel, setSimAwarenessLevel] = useState(0)
 
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
-  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}); setSimCardSet(null) }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}); setSimCardSet(null); setSimAwarenessLevel(0) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const charTgt = (() => {
@@ -570,6 +571,57 @@ export default function P5XPage() {
 
               {charTab === 'sim' && (
                 <div className="kit-section">
+                  {/* Simulation controls */}
+                  <div className="info-panel" style={{marginBottom:8}}>
+                    {/* Weapon */}
+                    {currentChar.weapons && (
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:'0.7rem', color:'#aaa', marginBottom:4}}>⚔️ อาวุธ</div>
+                        <select className="sim-sub-select"
+                          value={selectedWeaponIdx ?? -1}
+                          onChange={e => setSelectedWeaponIdx(parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : null)}>
+                          <option value={-1}>— ไม่ใช้อาวุธ —</option>
+                          {currentChar.weapons.map((w, i) => (
+                            <option key={i} value={i}>{w.name}</option>
+                          ))}
+                        </select>
+                        {selectedWeaponIdx !== null && (
+                          <div style={{display:'flex', gap:4, flexWrap:'wrap', marginTop:4}}>
+                            {[1,2,3,4,5,6].map(r => (
+                              <button key={r} className={'refine-btn'+(weaponRefine===r?' active':'')} onClick={() => setWeaponRefine(r)}>★{r}</button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {/* Skill Level / charStage */}
+                    <div style={{marginBottom: currentChar.awareness?.length ? 10 : 0}}>
+                      <div style={{fontSize:'0.7rem', color:'#aaa', marginBottom:4}}>📊 Skill Level</div>
+                      <div style={{display:'flex', gap:4, flexWrap:'wrap'}}>
+                        <button className={'refine-btn'+(!charStage?' active':'')} onClick={() => setCharStage(null)}>Default</button>
+                        {currentChar.statTargets && Object.keys(currentChar.statTargets).map(stage => (
+                          <button key={stage} className={'refine-btn'+(charStage===stage?' active':'')} onClick={() => setCharStage(stage)}>{stage}</button>
+                        ))}
+                        {!currentChar.statTargets && SKILL_LEVEL_LABELS.map((l, i) => (
+                          <button key={l} className={'refine-btn'+(charStage===l?' active':'')} onClick={() => setCharStage(l)}>{l}</button>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Awareness level */}
+                    {(currentChar.awareness||[]).length > 0 && (
+                      <div>
+                        <div style={{fontSize:'0.7rem', color:'#aaa', marginBottom:4}}>🧬 Awareness (A)</div>
+                        <div style={{display:'flex', gap:4, flexWrap:'wrap'}}>
+                          {(currentChar.awareness||[]).map((aw, i) => (
+                            <button key={i} className={'refine-btn'+(simAwarenessLevel===i?' active':'')}
+                              onClick={() => setSimAwarenessLevel(i)}>
+                              A{aw.stage ?? i}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <CardSimulator
                     charTgt={charTgt}
                     currentChar={currentChar}
@@ -582,6 +634,7 @@ export default function P5XPage() {
                     setMainStatSel={setMainStatSel}
                     simCardSet={simCardSet}
                     setSimCardSet={setSimCardSet}
+                    simAwarenessLevel={simAwarenessLevel}
                   />
                   <div className="info-panel" style={{marginTop:8}}>
                     <div className="section-title" style={{ marginBottom: 8 }}>📊 สถิติรวม</div>
