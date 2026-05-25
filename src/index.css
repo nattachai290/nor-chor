@@ -508,6 +508,10 @@ body { font-family: 'Exo 2', sans-serif; background: var(--dark); color: var(--t
 .req-met { color:#00ff88; }
 .req-close { color:var(--persona3); }
 .req-far  { color:#ff7a8a; }
+.sub-rolls { font-size:0.6rem; font-weight:600; margin-left:4px; opacity:0.85; }
+.rolls-easy { color:#00ff88; }
+.rolls-mid  { color:#ffcc40; }
+.rolls-hard { color:#ff7a8a; }
 .req-a6-tgt { display:block; font-size:0.55rem; color:#fff; margin-top:1px; }
 .req-note { font-size:0.58rem; color:var(--p5x-muted); margin-top:6px; line-height:1.4; border-top:1px solid #1a1a1a; padding-top:5px; }
 .req-sources { margin-top:8px; border-top:1px solid #1a1a1a; padding-top:7px; display:flex; flex-direction:column; gap:3px; }

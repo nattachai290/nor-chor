@@ -861,6 +861,11 @@ export default function P5XPage() {
                           const fmt = v => k === 'spd' ? Math.round(v) : Math.floor(v) + '%'
                           const cls = need===0?'req-met':need<30?'req-close':'req-far'
                           const floor = currentChar.statFloor?.[k]
+                          const SUB_LABEL_MAP = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',dmgMulti:'Damage Mult',hp:'HP %',def:'Defense %',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy'}
+                          const subLabel = SUB_LABEL_MAP[k]
+                          const subT1 = subLabel ? CARD_SUB_STATS._other[subLabel]?.[0] : null
+                          const rolls = (need > 0 && subT1) ? Math.ceil(need / subT1) : null
+                          const rollCls = rolls == null ? '' : rolls <= 4 ? 'rolls-easy' : rolls <= 8 ? 'rolls-mid' : 'rolls-hard'
                           return (
                             <div key={k} className="req-row">
                               <span className="req-c-stat">{STAT_LABELS[k]||k}</span>
@@ -868,7 +873,10 @@ export default function P5XPage() {
                                 {floor ? <>{fmt(floor)}<span style={{color:'#666',margin:'0 2px'}}>→</span>{fmt(ideal)}</> : fmt(ideal)}
                               </span>
                               <span className="req-c-base">{fmt(b0)}</span>
-                              <span className={`req-c-need ${cls}`}>{fmt(need)}</span>
+                              <span className={`req-c-need ${cls}`}>
+                                {fmt(need)}
+                                {rolls != null && need > 0 && <span className={`sub-rolls ${rollCls}`}>~{rolls}r</span>}
+                              </span>
                             </div>
                           )
                         })}
