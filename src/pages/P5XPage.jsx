@@ -435,19 +435,19 @@ export default function P5XPage() {
                 <div className="kit-section">
                   {/* SKILLS */}
                   <div className="kit-block">
-                    <div className="kit-block-title" style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:6}}>
+                    <div className="kit-block-title" style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                       <span>Skills</span>
-                      <div style={{display:'flex',gap:4,alignItems:'center',flexWrap:'wrap'}}>
-                        <div className="slv-picker">
-                          {[['both','All'],['spring','🌿 Spring'],['winter','❄️ Winter']].map(([v,l]) => (
-                            <button key={v} className={'slv-btn'+(skillMode===v?' active':'')} onClick={()=>setSkillMode(v)}>{l}</button>
-                          ))}
-                        </div>
-                        <div className="slv-picker">
-                          {SKILL_LEVEL_LABELS.map((l, i) => (
-                            <button key={i} className={'slv-btn'+(skillLevel===i?' active':'')} onClick={()=>setSkillLevel(i)} title={['Skill LV10','LV10 + Mindscape 5','Skill LV13','LV13 + Mindscape 5'][i]}>{l}</button>
-                          ))}
-                        </div>
+                      <div className="slv-picker">
+                        {SKILL_LEVEL_LABELS.map((l, i) => (
+                          <button key={i} className={'slv-btn'+(skillLevel===i?' active':'')} onClick={()=>setSkillLevel(i)} title={['Skill LV10','LV10 + Mindscape 5','Skill LV13','LV13 + Mindscape 5'][i]}>{l}</button>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{marginBottom:8}}>
+                      <div className="slv-picker">
+                        {[['both','All'],['spring','🌿 Spring'],['winter','❄️ Winter']].map(([v,l]) => (
+                          <button key={v} className={'slv-btn'+(skillMode===v?' active':'')} onClick={()=>setSkillMode(v)}>{l}</button>
+                        ))}
                       </div>
                     </div>
                     {(currentChar.skills || []).length === 0
