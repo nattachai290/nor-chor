@@ -19,7 +19,7 @@ import { useState, useEffect } from 'react'
 // Bless Multiplier       — extra damage on Bless attacks
 // Curse Multiplier       — extra damage on Curse attacks
 // Almighty Multiplier    — extra damage on Almighty attacks
-//   → all element multipliers stored as generic (code: edm); per-element
+//   → all element multipliers stored as generic (code: dmgMulti); per-element
 //     handled at set-bonus level (Strife=Fire, Opulence=Ice, Courage=Physical…)
 //
 // ── UTILITY ────────────────────────────────────────────────────────────────────
@@ -78,41 +78,41 @@ const CARD_SETS = [
   {name:'Triumph',        bonus2:'CRIT Rate +7.5%',                                       bonus4:'Resonance ATK DMG +40%',
     stats2:{crit:7.5},      stats4:{}},
   {name:'Defeat',         bonus2:'Ailment Accuracy +15%',                                 bonus4:'Fire DMG to enemies with ailments +20%',
-    stats2:{},              stats4:{edm:20}},
+    stats2:{},              stats4:{dmgMulti:20}},
   {name:'Worry',          bonus2:'SP Recovery +80%',                                      bonus4:'Enter battle with +25% Highlight charge',
     stats2:{spr:80},        stats4:{}},
   {name:'Reconciliation', bonus2:'SPD +6',                                                bonus4:'In combat: HP, ATK, DEF +15%',
     stats2:{spd:6},         stats4:{hp:15,atk:15,def:15}},
   {name:'Virtue',         bonus2:'Bless DMG +10%',                                        bonus4:'Bless CRIT Rate +12% when HP ≥ 50%',
-    stats2:{edm:10},        stats4:{crit:12}},
+    stats2:{dmgMulti:10},        stats4:{crit:12}},
   {name:'Oppression',     bonus2:'Physical DMG +10%',                                     bonus4:'Each skill hit: [Resentment] ATK +5% for 2 turns, up to 6 stacks',
-    stats2:{edm:10},        stats4:{atk:30}},
+    stats2:{dmgMulti:10},        stats4:{atk:30}},
   {name:'Pleasure',       bonus2:'Psy DMG +10%',                                          bonus4:'ATK +15% when dealing Psy DMG; +15% more with 3+ foes',
-    stats2:{edm:10},        stats4:{atk:15}},
+    stats2:{dmgMulti:10},        stats4:{atk:15}},
   {name:'Labor',          bonus2:'HP +12%',                                               bonus4:'[Navigator Thieves] All allies HP, ATK, DEF +8%',
     stats2:{hp:12},         stats4:{hp:8,atk:8,def:8}},
   {name:'Peace',          bonus2:'DEF +20%',                                              bonus4:'Shield effectiveness +18%',
     stats2:{def:20},        stats4:{}},
   {name:'Hindrance',      bonus2:'Curse DMG +10%',                                        bonus4:'Skill DMG to debuffed enemies +20%',
-    stats2:{edm:10},        stats4:{}},
+    stats2:{dmgMulti:10},        stats4:{}},
   {name:'Control',        bonus2:'HP +12%',                                               bonus4:'Skill attacks deal bonus 8% max-HP dmg to main target',
     stats2:{hp:12},         stats4:{}},
   {name:'Renewal',        bonus2:'Electric DMG +10%',                                     bonus4:'After ally uses Electric skill: Electric DMG +9%, up to 3 stacks',
-    stats2:{edm:10},        stats4:{edm:27}},
+    stats2:{dmgMulti:10},        stats4:{dmgMulti:27}},
   {name:'Courage',        bonus2:'Physical DMG +10%',                                     bonus4:'CRIT DMG +30% for 2 turns; re-apply on Crit',
-    stats2:{edm:10},        stats4:{cdmg:30}},
+    stats2:{dmgMulti:10},        stats4:{cdmg:30}},
   {name:'Strife',         bonus2:'Fire DMG +10%',                                         bonus4:'ATK +15%; +15% more if enemy weak to Fire',
-    stats2:{edm:10},        stats4:{atk:15}},
+    stats2:{dmgMulti:10},        stats4:{atk:15}},
   {name:'Love',           bonus2:'Healing Effect +9%',                                    bonus4:'Healing +23% when target HP ≤ 50%',
     stats2:{heal:9},        stats4:{heal:23}},
   {name:'Opulence',       bonus2:'Ice DMG +10%',                                          bonus4:'Resonance ATK DMG +40%',
-    stats2:{edm:10},        stats4:{}},
+    stats2:{dmgMulti:10},        stats4:{}},
   {name:'Power',          bonus2:'ATK +12%',                                              bonus4:'ATK +10% every 6 turns, up to 3 stacks',
     stats2:{atk:12},        stats4:{atk:30}},
   {name:'Victory',        bonus2:'Wind DMG +10%',                                         bonus4:'25% chance per hit to deal 20% ATK bonus damage',
-    stats2:{edm:10},        stats4:{}},
+    stats2:{dmgMulti:10},        stats4:{}},
   {name:'Truth',          bonus2:'Nuke DMG +10%',                                         bonus4:'Deal 30% ATK to main target when target has Elemental Ailment',
-    stats2:{edm:10},        stats4:{}},
+    stats2:{dmgMulti:10},        stats4:{}},
   {name:'Prosperity',     bonus2:'DMG Taken -8%',                                         bonus4:'Enter battle with +25% Highlight charge',
     stats2:{},              stats4:{}},
 ]
@@ -129,7 +129,7 @@ const CARD_SLOTS = [
   ]},
   { id:'Moon', mainStats:[
     {label:'Attack %',        key:'atk',  min:4.6,  max:31.4, unit:'%'},
-    {label:'Damage Mult',      key:'edm',  min:3.7,  max:25.1, unit:'%'},
+    {label:'Damage Mult',      key:'dmgMulti',  min:3.7,  max:25.1, unit:'%'},
     {label:'HP %',            key:'hp',   min:4.7,  max:31.5, unit:'%'},
     {label:'Defense %',       key:'def',  min:7.1,  max:47.1, unit:'%'},
     {label:'Healing Effect', key:'heal', min:3.4,  max:22.6, unit:'%'},
@@ -328,7 +328,7 @@ const CHARACTERS = [
         desc:"After taking an extra action, if there are foes with below 25% HP, deal damage to those foes equal to up to 250% of Ren's Attack (once per enemy per battle).\nAfter using a skill on an extra action, deal Curse damage equal to 50% of Attack to all foes.",
         descTh:"หลังจากกระทำพิเศษ หากมีศัตรูที่มี HP ต่ำกว่า 25% สร้างความเสียหายให้ศัตรูเหล่านั้นสูงสุด 250% ของ Attack ของ Ren (1 ครั้งต่อศัตรู 1 ตัวต่อการต่อสู้)\nหลังจากใช้สกิลในการกระทำพิเศษ สร้างความเสียหาย Curse เท่ากับ 50% ของ Attack ให้ศัตรูทุกตัว"},
     ],
-    baseStats:     {hp:291, atk:105, def:49, spd:102, crit:17, cdmg:150, edm:16, meleeMulti:125, rangedMulti:27.1, rangedAcc:92, rangedCrit:5.43},
+    baseStats:     {hp:291, atk:105, def:49, spd:102, crit:17, cdmg:150, dmgMulti:16, meleeMulti:125, rangedMulti:27.1, rangedAcc:92, rangedCrit:5.43},
     baseStatsLv80: [
       {hp:3270, atk:1180, def:560, spd:102},
       {hp:3329, atk:1202, def:570, spd:102},
@@ -339,7 +339,7 @@ const CHARACTERS = [
       {hp:3623, atk:1307, def:621, spd:102},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {edm:16, crit:12},
+    mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {
         name: 'Phoenix Dagger', stars:5,
@@ -437,12 +437,12 @@ const CHARACTERS = [
       {hp:3590, atk:1340, def:687, spd:94},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {edm:16, crit:12},
+    mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {
         name: 'Rosethorn', stars:5,
         hp: 2141, atk: 799, def: 410,
-        bonusStats: {edm:24},
+        bonusStats: {dmgMulti:24},
         abilityName: 'Rosethorn',
         ability: [
           'Increase Fire damage by 24.2%/24.2%/31.5%/31.5%/38.8%/38.8%/46.1%.',
@@ -538,7 +538,7 @@ const CHARACTERS = [
       {hp:4388, atk:1219, def:591, spd:0},
     ],
     hiddenAbility: 'Crit Mult. +184.9%',
-    mindscapeBonus: {edm:16, cdmg:24},
+    mindscapeBonus: {dmgMulti:16, cdmg:24},
     weapons:[
       {name:'Revenge Axe', stars:5,
         hp:2616, atk:727, def:352,
@@ -636,7 +636,7 @@ const CHARACTERS = [
       {hp:3756, atk:1286, def:621, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {edm:16, crit:12},
+    mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {name:'Royal Étoile', stars:5,
         hp:2240, atk:766, def:370,
@@ -1303,7 +1303,7 @@ const CHARACTERS = [
         desc:"Evolve the effects of Inspiration and Imagination to Vision & Emotion and Creation.\nEach counterattack becomes 2 consecutive attacks, each dealing 90% of the original attack's damage. Also increase counterattack pierce rate by 30%.",
         descTh:"พัฒนาเอฟเฟกต์ Inspiration และ Imagination เป็น Vision & Emotion และ Creation\nแต่ละ counterattack กลายเป็นการโจมตีต่อเนื่อง 2 ครั้ง โดยแต่ละครั้งสร้างความเสียหาย 90% ของต้นฉบับ นอกจากนี้เพิ่ม pierce rate ของ counterattack 30%"},
     ],
-    baseStats:     {hp:331, atk:72, def:71, spd:102, crit:12.2, cdmg:150, edm:6.4, meleeMulti:125, rangedMulti:21, rangedAcc:80, rangedCrit:4.5},
+    baseStats:     {hp:331, atk:72, def:71, spd:102, crit:12.2, cdmg:150, dmgMulti:6.4, meleeMulti:125, rangedMulti:21, rangedAcc:80, rangedCrit:4.5},
     baseStatsLv80: [
       {hp:3720, atk:820, def:800, spd:102},
       {hp:3787, atk:834, def:814, spd:102},
@@ -1314,7 +1314,7 @@ const CHARACTERS = [
       {hp:4122, atk:909, def:886, spd:102},
     ],
     hiddenAbility: 'Defense % +43.6%',
-    mindscapeBonus: {edm:16, crit:12},
+    mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {
         name: 'Shadowkiller', stars:5,
@@ -1420,7 +1420,7 @@ const CHARACTERS = [
     weapons:[
       {name:'Nuclear Finisher', stars:5,
         hp:2061, atk:766, def:449,
-        bonusStats:{edm:24},
+        bonusStats:{dmgMulti:24},
         abilityName:'Will Extinction',
         ability:[
           'Increase Nuclear damage by 24.2%/24.2%/31.5%/31.5%/38.8%/38.8%/46.1%.',
@@ -1516,7 +1516,7 @@ const CHARACTERS = [
       {hp:3922, atk:1241, def:687, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {edm:16, crit:12},
+    mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {name:'Gordian Kopis', stars:5,
         hp:2339, atk:740, def:410,
@@ -1533,7 +1533,7 @@ const CHARACTERS = [
         ]},
       {name:'Victory Beam', stars:4,
         hp:1871, atk:592, def:328,
-        bonusStats:{edm:10},
+        bonusStats:{dmgMulti:10},
         abilityName:'Planar Cohesion',
         ability:[
           "Increase Almighty damage by 9.6%/9.6%/12.8%/12.8%/16.0%/16.0%/19.2%.",
@@ -1808,7 +1808,7 @@ const CHARACTERS = [
         desc:"If foes have Burn or Scald on Natsukawa's action, activate Sub-Zero Torrent on that foe 1 time.\nAlso, when the same foe is attacked repeatedly with Extinguishing Guidance or Requiem Guidance, increase the target's damage taken by 25% more for 1 turn.\nThe maximum number of Damnation stacks becomes 6.",
         descTh:"หากศัตรูมี Burn หรือ Scald ในเทิร์นของ Natsukawa จะเปิดใช้ Sub-Zero Torrent ต่อศัตรูนั้น 1 ครั้ง\nนอกจากนี้ เมื่อโจมตีศัตรูตัวเดิมซ้ำด้วย Extinguishing Guidance หรือ Requiem Guidance เพิ่มความเสียหายที่เป้าหมายรับ 25% เป็นเวลา 1 เทิร์น\nจำนวน stack สูงสุดของ Damnation กลายเป็น 6"},
     ],
-    baseStats:     {hp:316, atk:90, def:55, spd:104, crit:5, cdmg:150, ailm:58.9, edm:16, meleeMulti:125, rangedMulti:10, rangedAcc:72, rangedCrit:2.08},
+    baseStats:     {hp:316, atk:90, def:55, spd:104, crit:5, cdmg:150, ailm:58.9, dmgMulti:16, meleeMulti:125, rangedMulti:10, rangedAcc:72, rangedCrit:2.08},
     baseStatsLv80: [
       {hp:3540, atk:1020, def:627, spd:104},
       {hp:3604, atk:1038, def:638, spd:104},
@@ -1819,7 +1819,7 @@ const CHARACTERS = [
       {hp:3922, atk:1130, def:695, spd:104},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
-    mindscapeBonus: {edm:16, ailm:24},
+    mindscapeBonus: {dmgMulti:16, ailm:24},
     weapons:[
       {
         name: 'Entropy', stars:5,
@@ -1918,7 +1918,7 @@ const CHARACTERS = [
       {hp:3590, atk:1174, def:724, spd:105},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
-    mindscapeBonus: {edm:16, ailm:24},
+    mindscapeBonus: {dmgMulti:16, ailm:24},
     weapons:[
       {
         name: 'Cerberus Claws', stars:5,
@@ -2028,7 +2028,7 @@ const CHARACTERS = [
       {hp:3989, atk:1108, def:739, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {edm:16, cdmg:24},
+    mindscapeBonus: {dmgMulti:16, cdmg:24},
     weapons:[
       {name:"Warden's Judgement", stars:5,
         hp:2378, atk:661, def:440,
@@ -2610,7 +2610,7 @@ const CHARACTERS = [
       {hp:3623, atk:1319, def:657, spd:98},
     ],
     hiddenAbility: 'ATK +29%',
-    mindscapeBonus: {edm:16, pierce:7.5},
+    mindscapeBonus: {dmgMulti:16, pierce:7.5},
     weapons:[
       {
         name: 'Deus Xiphos', stars:5,
@@ -2716,7 +2716,7 @@ const CHARACTERS = [
     weapons:[
       {name:'Colorful Coast', stars:5,
         hp:2616, atk:707, def:361,
-        bonusStats:{edm:24},
+        bonusStats:{dmgMulti:24},
         abilityName:'Colorful Coast',
         ability:[
           'Increase Bless damage by 24.2%/24.2%/31.5%/31.5%/38.8%/38.8%/46.1%.',
@@ -3135,10 +3135,10 @@ const CHARACTERS = [
         ]},
     ],
     statTargets: {
-      'LV10':    {atk:[0,0], crit:[42,18], cdmg:[388,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,15], spr:[450,12], ailm:[0,0]},
-      'LV10+M5': {atk:[0,0], crit:[42,18], cdmg:[388,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,15], spr:[450,18], ailm:[0,0]},
-      'LV13':    {atk:[0,0], crit:[42,20], cdmg:[418,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,18], spr:[450,15], ailm:[0,0]},
-      'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[418,25], edm:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,18], spr:[450,20], ailm:[0,0]},
+      'LV10':    {atk:[0,0], crit:[42,18], cdmg:[388,25], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,15], spr:[450,12], ailm:[0,0]},
+      'LV10+M5': {atk:[0,0], crit:[42,18], cdmg:[388,25], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,15], spr:[450,18], ailm:[0,0]},
+      'LV13':    {atk:[0,0], crit:[42,20], cdmg:[418,25], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,18], spr:[450,15], ailm:[0,0]},
+      'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[418,25], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,18], spr:[450,20], ailm:[0,0]},
     },
     mindscapeBonus: {atk:20, cdmg:24},
   },
@@ -3619,7 +3619,7 @@ const CHARACTERS = [
       {hp:3922, atk:1119, def:731, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
-    mindscapeBonus: {edm:16, atk:20},
+    mindscapeBonus: {dmgMulti:16, atk:20},
     weapons:[
       {name:'Sweet Pickaxe', stars:5,
         hp:2339, atk:667, def:436,
@@ -3915,7 +3915,7 @@ const CHARACTERS = [
     weapons:[
       {name:'Quasar', stars:5,
         hp:2141, atk:727, def:454,
-        bonusStats:{edm:24},
+        bonusStats:{dmgMulti:24},
         abilityName:'Quasar',
         ability:[
           'Increase Electric damage by 24.2%/24.2%/31.5%/31.5%/38.8%/38.8%/46.1%.',
@@ -4678,10 +4678,10 @@ const BOSS_PRESETS = [
 ]
 
 const STAT_TARGETS = {
-  dps:      {atk:[120,25], crit:[70,20], cdmg:[200,20], edm:[60,15], hp:[0,0],   def:[0,0],  heal:[0,0],  spd:[0,0]},
-  support:  {atk:[60,10],  crit:[30,5],  cdmg:[0,0],    edm:[0,0],   hp:[80,20], def:[0,0],  heal:[0,0],  spd:[80,25]},
-  medic:    {atk:[20,5],   crit:[0,0],   cdmg:[0,0],    edm:[0,0],   hp:[100,30],def:[40,15],heal:[60,30],spd:[30,10]},
-  saboteur: {atk:[80,20],  crit:[30,10], cdmg:[0,0],    edm:[0,0],   hp:[0,0],   def:[20,5], heal:[0,0],  spd:[70,25]},
+  dps:      {atk:[120,25], crit:[70,20], cdmg:[200,20], dmgMulti:[60,15], hp:[0,0],   def:[0,0],  heal:[0,0],  spd:[0,0]},
+  support:  {atk:[60,10],  crit:[30,5],  cdmg:[0,0],    dmgMulti:[0,0],   hp:[80,20], def:[0,0],  heal:[0,0],  spd:[80,25]},
+  medic:    {atk:[20,5],   crit:[0,0],   cdmg:[0,0],    dmgMulti:[0,0],   hp:[100,30],def:[40,15],heal:[60,30],spd:[30,10]},
+  saboteur: {atk:[80,20],  crit:[30,10], cdmg:[0,0],    dmgMulti:[0,0],   hp:[0,0],   def:[20,5], heal:[0,0],  spd:[70,25]},
 }
 
 // Endgame stat targets keyed by character codename
@@ -4689,76 +4689,76 @@ const CHAR_STAT_TARGETS = {
   // Values = total bonus from ALL sources (computeStats set+weapon + userStats card mains+subs+hidden)
   // Calibrated to realistic endgame: ~2.5 sub rolls/card at tier 2, good main stat choices
   // ── SWEEPER / ASSASSIN ──
-  'Joker':           {atk:[120,25], crit:[40,18], cdmg:[80,22], edm:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Panther':         {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Skull':           {atk:[110,22], crit:[42,20], cdmg:[260,22], edm:[30,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Violet':          {atk:[110,22], crit:[45,22], cdmg:[85,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[40,18], hp:[80,18], def:[160,25],heal:[0,0],  spd:[0,0]},
-  'Queen':           {atk:[110,25], crit:[38,15], cdmg:[0,0],   edm:[55,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Crow':            {atk:[110,22], crit:[42,20], cdmg:[90,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Howler':          {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'J&C':             {atk:[110,22], crit:[38,18], cdmg:[85,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Noir':            {atk:[110,22], crit:[38,18], cdmg:[80,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Messa':           {atk:[100,22], crit:[35,18], cdmg:[0,0],   edm:[50,20], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'makoto':          {atk:[110,22], crit:[42,20], cdmg:[80,22], edm:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'closer-tropical': {atk:[70,15],  crit:[25,12], cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'rin-firecracker': {atk:[110,20], crit:[40,18], cdmg:[65,15], edm:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'KEY':             {atk:[50,12],  crit:[0,0],   cdmg:[0,0],   edm:[55,20], hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'mont-frostgale':  {atk:[110,22], crit:[42,20], cdmg:[260,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Bui':             {atk:[100,22], crit:[45,25], cdmg:[75,22], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Closer':          {atk:[85,22],  crit:[32,15], cdmg:[0,0],   edm:[45,15], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Mont':            {atk:[85,22],  crit:[38,18], cdmg:[70,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Sepia':           {atk:[80,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[30,18]},
-  'Fleuret':         {atk:[85,22],  crit:[38,18], cdmg:[75,20], edm:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Joker':           {atk:[120,25], crit:[40,18], cdmg:[80,22], dmgMulti:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Panther':         {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Skull':           {atk:[110,22], crit:[42,20], cdmg:[260,22], dmgMulti:[30,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Violet':          {atk:[110,22], crit:[45,22], cdmg:[85,22], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Fox':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[40,18], hp:[80,18], def:[160,25],heal:[0,0],  spd:[0,0]},
+  'Queen':           {atk:[110,25], crit:[38,15], cdmg:[0,0],   dmgMulti:[55,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Crow':            {atk:[110,22], crit:[42,20], cdmg:[90,22], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Howler':          {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'J&C':             {atk:[110,22], crit:[38,18], cdmg:[85,22], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Noir':            {atk:[110,22], crit:[38,18], cdmg:[80,22], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Messa':           {atk:[100,22], crit:[35,18], cdmg:[0,0],   dmgMulti:[50,20], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'makoto':          {atk:[110,22], crit:[42,20], cdmg:[80,22], dmgMulti:[35,12], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'closer-tropical': {atk:[70,15],  crit:[25,12], cdmg:[0,0],   dmgMulti:[0,0],   hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'rin-firecracker': {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,22], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'KEY':             {atk:[50,12],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[55,20], hp:[110,25],def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'mont-frostgale':  {atk:[110,22], crit:[42,20], cdmg:[260,22], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Bui':             {atk:[100,22], crit:[45,25], cdmg:[75,22], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Closer':          {atk:[85,22],  crit:[32,15], cdmg:[0,0],   dmgMulti:[45,15], hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Mont':            {atk:[85,22],  crit:[38,18], cdmg:[70,20], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Sepia':           {atk:[80,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[30,18]},
+  'Fleuret':         {atk:[85,22],  crit:[38,18], cdmg:[75,20], dmgMulti:[0,0],   hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[0,0]},
   // ── ELUCIDATOR ──
-  'Oracle':          {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'Wind':            {atk:[75,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'Ange':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'Phoebe':          {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'Okyann':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[28,20]},
-  'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
+  'Oracle':          {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Wind':            {atk:[75,18],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Ange':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Phoebe':          {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'Okyann':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[28,20]},
+  'Puppet':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[100,22],def:[85,25], heal:[0,0],  spd:[28,15]},
   // ── STRATEGIST ──
-  'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
-  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[388,25], edm:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[132,18], spr:[450,12], ailm:[0,0]},
-  'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
-  'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
-  'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
+  'Chord':           {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[0,0],  spd:[35,25]},
+  'wind-tempest':    {atk:[0,0],    crit:[42,20], cdmg:[388,25], dmgMulti:[0,0],  hp:[0,0],   def:[0,0],   heal:[0,0],  spd:[132,18], spr:[450,12], ailm:[0,0]},
+  'Turbo':           {atk:[65,15],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[155,25]},
+  'Riddle':          {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[65,15], def:[0,0],   heal:[0,0],  spd:[32,22]},
+  'Luce':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
   // ── SABOTEUR ──
-  'Rin':             {atk:[85,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[45,15], heal:[0,0],  spd:[155,25]},
-  'Matoi':           {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[75,20], heal:[0,0],  spd:[28,20]},
-  'Vino':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
-  'Key':             {atk:[65,20],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[0,0],   def:[38,12], heal:[0,0],  spd:[28,20]},
+  'Rin':             {atk:[85,20],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[0,0],   def:[45,15], heal:[0,0],  spd:[155,25]},
+  'Matoi':           {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[100,25],def:[75,20], heal:[0,0],  spd:[28,20]},
+  'Vino':            {atk:[65,18],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[55,12], def:[0,0],   heal:[0,0],  spd:[28,20],  ailm:[50,25]},
+  'Key':             {atk:[65,20],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[0,0],   def:[38,12], heal:[0,0],  spd:[28,20]},
   // ── MEDIC ──
-  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,28],def:[55,15], heal:[47,25],spd:[0,0]},
-  'Moko':            {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
-  'moko-seaside':    {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
-  'Mona':            {atk:[85,22],  crit:[32,12], cdmg:[0,0],   edm:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[0,0]},
-  'Cattle':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[45,15], heal:[26,25],spd:[0,0]},
+  'Marian':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[110,28],def:[55,15], heal:[47,25],spd:[0,0]},
+  'Moko':            {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
+  'moko-seaside':    {atk:[75,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[75,15], def:[0,0],   heal:[24,22],spd:[0,0]},
+  'Mona':            {atk:[85,22],  crit:[32,12], cdmg:[0,0],   dmgMulti:[0,0],   hp:[70,15], def:[0,0],   heal:[0,0],  spd:[0,0]},
+  'Cattle':          {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[100,25],def:[45,15], heal:[26,25],spd:[0,0]},
   // ── GUARDIAN ──
-  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[110,25],def:[140,20],heal:[23,15],spd:[0,0]},
-  'Leon':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[85,18], def:[45,15], heal:[0,0],  spd:[0,0]},
-  'Soy':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[100,25],def:[65,18], heal:[23,18],spd:[0,0]},
-  'Yuki':            {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   edm:[0,0],   hp:[85,20], def:[95,25], heal:[0,0],  spd:[28,15]},
+  'Cherish':         {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[110,25],def:[140,20],heal:[23,15],spd:[0,0]},
+  'Leon':            {atk:[85,22],  crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[85,18], def:[45,15], heal:[0,0],  spd:[0,0]},
+  'Soy':             {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[100,25],def:[65,18], heal:[23,18],spd:[0,0]},
+  'Yuki':            {atk:[0,0],    crit:[0,0],   cdmg:[0,0],   dmgMulti:[0,0],   hp:[85,20], def:[95,25], heal:[0,0],  spd:[28,15]},
 }
 
 // Maps a Space card's passive name → which stats it benefits and by how much
 const PASSIVE_STAT_MAP = {
   'Power':          {atk:15},
-  'Ruin':           {atk:10, edm:8},
+  'Ruin':           {atk:10, dmgMulti:8},
   'Tenacity':       {atk:8},
-  'Courage':        {edm:12, elements:['Physical','Electric']},
+  'Courage':        {dmgMulti:12, elements:['Physical','Electric']},
   'Triumph':        {crit:15},
   'Love':           {heal:15},
   'Reconciliation': {spd:10},
-  'Oppression':     {atk:10, edm:10},
-  'Pleasure':       {edm:12},
-  'Strife':         {edm:12, atk:8},
-  'Renewal':        {edm:12},
-  'Opulence':       {edm:12},
-  'Victory':        {edm:10},
-  'Truth':          {edm:10},
-  'Hindrance':      {edm:8},
-  'Virtue':         {crit:10, edm:8},
+  'Oppression':     {atk:10, dmgMulti:10},
+  'Pleasure':       {dmgMulti:12},
+  'Strife':         {dmgMulti:12, atk:8},
+  'Renewal':        {dmgMulti:12},
+  'Opulence':       {dmgMulti:12},
+  'Victory':        {dmgMulti:10},
+  'Truth':          {dmgMulti:10},
+  'Hindrance':      {dmgMulti:8},
+  'Virtue':         {crit:10, dmgMulti:8},
   'Control':        {def:8,   hp:5},
   'Labor':          {hp:8,    atk:5, def:5},
   'Peace':          {def:12},
@@ -4767,7 +4767,7 @@ const PASSIVE_STAT_MAP = {
   'Disappointment': {atk:10, crit:8, elements:['Almighty']},
   'Transformation': {},
   'Prudence':       {atk:8},
-  'Defeat':         {edm:8},
+  'Defeat':         {dmgMulti:8},
   'Worry':          {cdmg:12},
 }
 
@@ -4781,7 +4781,7 @@ const SUB_STAT_KEY = {
   'HP':           'hp',
   'Defense %':     'def',
   'Defense':       'def',
-  'Damage Mult':    'edm',
+  'Damage Mult':    'dmgMulti',
   'Ailment Accuracy': 'ailm',
   'Pierce Rate': 'pierce',
   'SP Recovery': 'spr',
@@ -4827,8 +4827,8 @@ function getRoleArchetype(role) {
   return 'support'
 }
 
-const statMap = {'Attack %':'atk','Crit Rate':'crit','Crit Mult.':'cdmg','HP %':'hp','Defense %':'def','Healing Effect':'heal','Speed':'spd','Damage Mult':'edm','Ailment Accuracy':'ailm'}
-const statLabels = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',edm:'Damage Mult',hp:'HP %',def:'Defense %',heal:'Healing Effect',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy',pierce:'Pierce Rate',dmgred:'Damage Reduction',dmgDown:'Damage Down'}
+const statMap = {'Attack %':'atk','Crit Rate':'crit','Crit Mult.':'cdmg','HP %':'hp','Defense %':'def','Healing Effect':'heal','Speed':'spd','Damage Mult':'dmgMulti','Ailment Accuracy':'ailm'}
+const statLabels = {atk:'Attack %',crit:'Crit Rate',cdmg:'Crit Mult.',dmgMulti:'Damage Mult',hp:'HP %',def:'Defense %',heal:'Healing Effect',spd:'Speed',spr:'SP Recovery',ailm:'Ailment Accuracy',pierce:'Pierce Rate',dmgred:'Damage Reduction',dmgDown:'Damage Down'}
 const statFlat = new Set(['spd'])
 
 function parseHiddenAbility(str) {
@@ -4893,7 +4893,7 @@ function getSpacePassiveBonus(char, stats) {
 }
 
 function computeStats(char, weaponIdx, refine = 0) {
-  const s = {atk:0, crit: char?.baseStats?.crit || 0, cdmg: char?.baseStats?.cdmg || 0, hp:0, def:0, edm: char?.baseStats?.edm || 0, heal: char?.baseStats?.heal || 0, spd: char?.baseStats?.spd || 0, ailm: char?.baseStats?.ailm || 0, dmgred: char?.baseStats?.dmgred || 0, dmgDown: char?.baseStats?.dmgDown || 0}
+  const s = {atk:0, crit: char?.baseStats?.crit || 0, cdmg: char?.baseStats?.cdmg || 0, hp:0, def:0, dmgMulti: char?.baseStats?.dmgMulti || 0, heal: char?.baseStats?.heal || 0, spd: char?.baseStats?.spd || 0, ailm: char?.baseStats?.ailm || 0, dmgred: char?.baseStats?.dmgred || 0, dmgDown: char?.baseStats?.dmgDown || 0}
   if (!char) return s
   char.cards.forEach(cardStr => {
     const m = cardStr.match(/^(.+?)\s+(2|4)pc$/i)
@@ -4939,14 +4939,14 @@ export default function P5XPage() {
     skillCoeff:100, weakness:'normal', finalDmgBonus:0, otherCoeff:100,
   })
   const [mobileTab, setMobileTab] = useState('chars')
-  const [userStats, setUserStats] = useState({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0})
+  const [userStats, setUserStats] = useState({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0})
   const [skillLevel, setSkillLevel] = useState(3)
   const [charStage, setCharStage] = useState(null)
   const [openSpaceCard, setOpenSpaceCard] = useState(null)
   const [subAlloc, setSubAlloc] = useState({})
   const [mainStatSel, setMainStatSel] = useState({})
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
-  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, edm:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}) }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const charTgt = (() => {
@@ -5014,7 +5014,7 @@ export default function P5XPage() {
   const totalCritR   = Math.min((5 + stats.crit + dmg.extraCritRate) / 100, 1)
   const totalCritD   = (150 + stats.cdmg + dmg.extraCritDmg) / 100
   const dmgA = (dmgCharAtk + dmgWeaponAtk) * (1 + totalAtkPct / 100) + dmg.atkConst
-  const dmgB = 1 + dmg.dmgMult / 100 + (stats.edm + dmg.extraEdm) / 100 + dmg.dmgTaken / 100
+  const dmgB = 1 + dmg.dmgMult / 100 + (stats.dmgMulti + dmg.extraEdm) / 100 + dmg.dmgTaken / 100
   const rawDefCoeff = (1 + dmg.addDefCoeff / 100) * (1 - dmg.pierce / 100) - dmg.defReduction / 100
   const defCoeff = Math.max(rawDefCoeff, 0)
   const windFactor = dmg.windswept ? 0.88 : 1
@@ -5037,13 +5037,13 @@ export default function P5XPage() {
     const charTargets = charTgt
     const targets = charTargets || STAT_TARGETS[arch]
     const prioKeys = charTargets ? [] : currentChar.statPrio.map(p => {
-      if (p.includes('DMG%') && !p.includes('CRIT')) return 'edm'
+      if (p.includes('DMG%') && !p.includes('CRIT')) return 'dmgMulti'
       return statMap[p] || null
     }).filter(Boolean)
 
     let totalWeight = 0, earnedScore = 0
     const breakdown = []
-    const statKeys = ['atk','crit','cdmg','edm','hp','def','heal','spd','spr','ailm']
+    const statKeys = ['atk','crit','cdmg','dmgMulti','hp','def','heal','spd','spr','ailm']
     statKeys.forEach(key => {
       const entry = targets[key]; if (!entry) return
       let [ideal, weight] = entry
@@ -5448,7 +5448,7 @@ export default function P5XPage() {
                       <div className="dmg-auto-row"><span>Attack % (Build)</span><span className="dmg-auto-val">{stats.atk.toFixed(1)}%</span></div>
                       <div className="dmg-auto-row"><span>CRIT Rate (5+build)</span><span className="dmg-auto-val">{(5+stats.crit).toFixed(1)}%</span></div>
                       <div className="dmg-auto-row"><span>CRIT DMG (150+build)</span><span className="dmg-auto-val">{(150+stats.cdmg).toFixed(1)}%</span></div>
-                      <div className="dmg-auto-row"><span>Elem DMG (Build)</span><span className="dmg-auto-val">{stats.edm.toFixed(1)}%</span></div>
+                      <div className="dmg-auto-row"><span>Elem DMG (Build)</span><span className="dmg-auto-val">{stats.dmgMulti.toFixed(1)}%</span></div>
                     </div>
                   </div>
 
@@ -5686,7 +5686,7 @@ export default function P5XPage() {
                   if (!entries.length) return null
                   const STAT_LABELS = {
                     atk:'Attack %', crit:'Crit Rate', cdmg:'Crit Mult.',
-                    edm:'Damage Mult', hp:'HP %', def:'Defense %',
+                    dmgMulti:'Damage Mult', hp:'HP %', def:'Defense %',
                     heal:'Healing Effect', spd:'Speed', spr:'SP Recovery',
                     ailm:'Ailment Accuracy', pierce:'Pierce Rate'
                   }
@@ -6152,7 +6152,7 @@ export default function P5XPage() {
               <StatRow label="Crit Mult."      statKey="cdmg" maxRange={150} />
               <StatRow label="HP %"            statKey="hp"   maxRange={200} />
               <StatRow label="Defense %"           statKey="def"  maxRange={220} />
-              <StatRow label="Element DMG%"   statKey="edm"  maxRange={100} />
+              <StatRow label="Element DMG%"   statKey="dmgMulti"  maxRange={100} />
               <StatRow label="Healing Effect" statKey="heal" maxRange={35} />
               <StatRow label="SPD (Speed)"    statKey="spd"  maxRange={50} unit="" />
             </div>
@@ -6171,7 +6171,7 @@ export default function P5XPage() {
                 <div className="sum-box"><div className="sum-val">{totalStats.atk.toFixed(1)}%</div><div className="sum-lbl">Attack %</div></div>
                 <div className="sum-box"><div className="sum-val">{Math.min(totalStats.crit, 100).toFixed(1)}%</div><div className="sum-lbl">CRIT Rate</div></div>
                 <div className="sum-box"><div className="sum-val">{totalStats.cdmg.toFixed(1)}%</div><div className="sum-lbl">CRIT DMG</div></div>
-                <div className="sum-box"><div className="sum-val">{totalStats.edm.toFixed(1)}%</div><div className="sum-lbl">Elem DMG</div></div>
+                <div className="sum-box"><div className="sum-val">{totalStats.dmgMulti.toFixed(1)}%</div><div className="sum-lbl">Elem DMG</div></div>
                 <div className="sum-box"><div className="sum-val">+{effHp}%</div><div className="sum-lbl">Eff.HP %</div></div>
                 <div className="sum-box"><div className="sum-val">{Math.round(totalStats.spd)}</div><div className="sum-lbl">SPD</div></div>
               </div>
