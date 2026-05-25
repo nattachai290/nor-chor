@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { CARD_SETS, CARD_SLOTS, CARD_SUB_STATS, REVELATION_CARDS } from '../../data/p5x-cards.js'
 import { SUB_STAT_KEY } from '../../data/p5x-targets.js'
-import { computeStats, getSpacePassiveBonus, statLabels } from '../../utils/p5x-stats.js'
+import { computeStats, getSpacePassiveBonus, statLabels, parseHiddenAbility } from '../../utils/p5x-stats.js'
 
 export default function CardSimulator({
   charTgt,
@@ -247,10 +247,30 @@ export default function CardSimulator({
           const total = baseVal + mainVal + subVal + spacePassiveVal + sunKissedVal
           const reach = total >= ideal
 
-          const charVal   = baseNoWeapon[k] || 0
-          const weaponVal = baseVal - charVal
+          const weaponVal = baseVal - (baseNoWeapon[k] || 0)
+          // Decompose char contribution into individual sources
+          const charParts = []
+          const baseStatV = charForSim.baseStats?.[k] || 0
+          if (baseStatV !== 0) charParts.push({label:'base', val:baseStatV, color:'#aaaaaa'})
+          charForSim.cards.forEach(cardStr => {
+            const m = cardStr.match(/^(.+?)\s+(2|4)pc$/i)
+            if (!m) return
+            const sn = m[1].trim(), pc = parseInt(m[2])
+            const sd = CARD_SETS.find(cs => cs.name.toLowerCase() === sn.toLowerCase())
+            if (!sd) return
+            let v = 0
+            if (sd.stats2?.[k]) v += sd.stats2[k]
+            if (pc >= 4 && sd.stats4?.[k]) v += sd.stats4[k]
+            if (v !== 0) charParts.push({label:`${sn} ${pc}pc`, val:v, color:'#88ffcc'})
+          })
+          const hiddenV = parseHiddenAbility(charForSim.hiddenAbility)?.[k] || 0
+          if (hiddenV) charParts.push({label:'Hidden ability', val:hiddenV, color:'#cc88ff'})
+          const a0Stats = charForSim.awareness?.[0]?.stats || {}
+          if (a0Stats[k]) charParts.push({label:`A0: ${charForSim.awareness[0].name}`, val:a0Stats[k], color:'#ffcc88'})
+          const msV = msBonus[k] || 0
+          if (msV) charParts.push({label:'Mindscape M5', val:msV, color:'#ff88ff'})
           const parts = [
-            {label: 'ตัวละคร',   val: charVal,         color: '#fff',    show: charVal !== 0},
+            ...charParts.map(p => ({...p, show: true})),
             {label: 'อาวุธ',     val: weaponVal,       color: '#ffaa66', show: weaponVal !== 0},
             {label: 'main stat', val: mainVal,         color: '#8888ff', show: mainVal > 0},
             {label: 'sub stat',  val: subVal,          color: '#88ccff', show: subVal > 0},
@@ -289,7 +309,7 @@ export default function CardSimulator({
       {/* SPR & Sun-kissed summaries */}
       {charTgt?.spr && (
         <div className="alloc-spr-summary" style={{marginTop:8}}>
-          <span>SPR {Math.floor(totalSpr)}%</span>
+          <span>SP Recovery {Math.floor(totalSpr)}%</span>
           <span className="alloc-spr-arrow">→</span>
           <span>SP/cast {spPerCast.toFixed(1)}</span>
           <span className="alloc-spr-arrow">→</span>

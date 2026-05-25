@@ -772,7 +772,17 @@ export default function P5XPage() {
                     Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
                     return all
                   }
-                  const base0 = applyMs(computeStats(currentChar, selectedWeaponIdx ?? 0, weaponRefine))
+                  const base0raw = applyMs(computeStats(currentChar, selectedWeaponIdx ?? 0, weaponRefine))
+                  const spacePassiveB = getSpacePassiveBonus(currentChar, base0raw)
+                  const sunKissedB = (() => {
+                    if (!currentChar?.skills?.some(s => s.name === 'Sun-kissed Blooms')) return {}
+                    const spr = base0raw.spr || 0
+                    const v = parseFloat((84 * Math.min(spr, 450) / 450).toFixed(1))
+                    return v > 0 ? { cdmg: v } : {}
+                  })()
+                  const base0 = {...base0raw}
+                  Object.entries(spacePassiveB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                  Object.entries(sunKissedB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
                   return (
                     <div className="info-panel">
                       <div className="info-label" style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}}>
@@ -841,12 +851,13 @@ export default function P5XPage() {
                           const mContrib = Object.fromEntries(Object.entries(msBonus).filter(([k]) => trackedKeys.has(k)))
                           if (Object.keys(mContrib).length) sources.push({ label:'Mindscape (M5)', contrib:mContrib })
                         }
-                        const spacePassive = getSpacePassiveBonus(currentChar, base0)
-                        const spContrib = Object.fromEntries(Object.entries(spacePassive).filter(([k]) => trackedKeys.has(k)))
+                        const spContrib = Object.fromEntries(Object.entries(spacePassiveB).filter(([k]) => trackedKeys.has(k)))
                         if (Object.keys(spContrib).length) {
                           const fourPcName = (currentChar.cards||[]).map(c=>{const m=c.match(/^(.+?)\s+4pc$/i);return m?m[1].trim():null}).find(Boolean)
                           sources.push({ label:`${fourPcName} Space passive`, contrib:spContrib })
                         }
+                        const skContrib = Object.fromEntries(Object.entries(sunKissedB).filter(([k]) => trackedKeys.has(k)))
+                        if (Object.keys(skContrib).length) sources.push({ label:'Sun-kissed Blooms', contrib:skContrib })
                         if (!sources.length) return null
                         // Group by stat key
                         const byKey = {}
