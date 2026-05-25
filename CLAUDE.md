@@ -2,12 +2,52 @@
 
 ## วิธีเลือก Card Set
 
-1. ดู Space card ที่ใช้ → passive มีอะไรบ้าง (เช่น Creation → Worry/Reconciliation/Tenacity passive)
-2. วิเคราะห์ mechanic ตัวละคร → stat หลักที่ต้องการคืออะไร
-3. เลือก 4pc set ที่ activate passive ของ Space card ที่ดีที่สุด พร้อมให้ stat ที่ต้องการ
-4. **2pc+2pc → ได้แค่ผล 2pc ของแต่ละ set, Space passive ไม่ activate**
-5. **4pc → ได้ผล 2pc + 4pc + Space passive activate**
-6. format ที่ถูกต้อง: Space 1 ใบ + 4pc เสมอ (ถ้าต้องการ Space passive)
+### กฎเหล็ก
+- **ห้ามเลือก 4pc set ก่อนแล้วค่อยหา Space card** — ลำดับผิด จะได้ผลผิดเสมอ
+- **ห้ามเลือก card set โดยไม่ตรวจ stat target ของตัวละครก่อน**
+- **ต้องตรวจว่า 4pc effect apply กับตัวละครนี้จริงไหม** (element check / condition check)
+
+### ลำดับที่ถูกต้อง
+
+**Step 1 — หา stat target ก่อน (จาก skill analysis)**
+- stat target คืออะไร? มาจากสกิล cap / mechanic ของตัวละคร
+- ห้ามใส่ stat ที่ไม่มี skill รองรับ (เช่น DEF ถ้าไม่มีสกิลที่ scale DEF)
+
+**Step 2 — หา card set ที่ให้ stat นั้นผ่าน 2pc หรือ 4pc**
+- ดู CARD_SETS ทีละตัว: stats2 และ stats4 ให้อะไร?
+- **ตรวจ 4pc effect ว่า apply กับตัวละครนี้จริงไหม:**
+  - มีเงื่อนไข element? (เช่น "Fire DMG" → ไม่ใช้กับ Ice character)
+  - มีเงื่อนไข role? (เช่น "Navigator Thieves only")
+  - conditional หรือ permanent? conditional ต้อง estimate uptime จาก kit
+- เปรียบระหว่าง set ต่างๆ: ผลรวม stat ที่ได้จริง (2pc + 4pc ที่ apply) ตัวไหนสูงกว่า
+
+**Step 3 — หา Space card ที่มี passive ตรงกับ set นั้น**
+- ดู REVELATION_CARDS.Space: Space card ไหนมี passive ชื่อเดียวกับ 4pc set ที่เลือก?
+- passive นั้นให้ stat อะไร? ตรงกับ stat target ของตัวละครไหม?
+- ถ้า Space card ที่มี passive นั้นมีหลายตัว ให้เลือกตัวที่ passive อื่นๆ เป็นประโยชน์ที่สุดด้วย
+
+**Step 4 — ยืนยัน pair**
+- 4pc set name ต้องตรงกับ passive name ใน Space card → Space passive activate
+- format: `cards: ['[SetName] 4pc']` เสมอ (ไม่ใช่ 2pc+2pc)
+
+### กฎ 2pc vs 4pc
+- **2pc+2pc → ได้แค่ผล 2pc ของแต่ละ set, Space passive ไม่ activate**
+- **4pc → ได้ผล 2pc + 4pc + Space passive activate**
+- ใช้ 2pc+2pc เฉพาะเมื่อ: ไม่มี 4pc set ที่ดีพอ และ Space passive ไม่จำเป็น
+
+### Checklist ก่อน commit card data
+```
+[ ] stat ที่ 4pc set ให้ตรงกับ stat target ของตัวละครจริง
+[ ] 4pc effect ไม่มีเงื่อนไข element/role ที่ตัวละครนี้ทำไม่ได้
+[ ] Space card มี passive ชื่อตรงกับ 4pc set name
+[ ] Space passive ให้ stat ที่ตัวละครต้องการ (ไม่ใช่แค่ชื่อตรง)
+[ ] cards array format: ['[SetName] 4pc'] ถูกต้อง
+```
+
+### ตัวอย่างที่ผิด (Matoi)
+- ❌ เลือก Peace 4pc + Opulence 2pc โดยไม่มาจาก skill → Opulence ให้ Ice dmgMulti ซึ่ง Matoi ไม่ต้องการ
+- ❌ เลือก Defeat 4pc เพราะ 2pc ให้ ailm — แต่ไม่ตรวจ 4pc effect ("Fire DMG") → Matoi เป็น Ice ใช้ไม่ได้
+- ✅ Futility 4pc: 4pc ให้ ailm +30% หลัง Technical — Matoi trigger Technical ทุก ~2 round → high uptime → ตรง mechanic โดยตรง
 
 ## ลำดับการวิเคราะห์ตัวละคร
 
