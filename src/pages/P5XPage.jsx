@@ -865,7 +865,7 @@ export default function P5XPage() {
                           const subLabel = SUB_LABEL_MAP[k]
                           const subT1 = subLabel ? CARD_SUB_STATS._other[subLabel]?.[0] : null
                           const rolls = (need > 0 && subT1) ? Math.ceil(need / subT1) : null
-                          const rollCls = rolls == null ? '' : rolls <= 4 ? 'rolls-easy' : rolls <= 8 ? 'rolls-mid' : 'rolls-hard'
+                          const rollCls = rolls == null ? '' : rolls <= 5 ? 'rolls-easy' : rolls <= 12 ? 'rolls-mid' : 'rolls-hard'
                           return (
                             <div key={k} className="req-row">
                               <span className="req-c-stat">{STAT_LABELS[k]||k}</span>
@@ -875,7 +875,7 @@ export default function P5XPage() {
                               <span className="req-c-base">{fmt(b0)}</span>
                               <span className={`req-c-need ${cls}`}>
                                 {fmt(need)}
-                                {rolls != null && need > 0 && <span className={`sub-rolls ${rollCls}`}>~{rolls}r</span>}
+                                {rolls != null && need > 0 && <span className={`sub-rolls ${rollCls}`}>{rolls > 20 ? '>20r' : `~${rolls}r`}/20</span>}
                               </span>
                             </div>
                           )
