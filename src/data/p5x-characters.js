@@ -3023,6 +3023,7 @@ export const CHARACTERS = [
       'LV13':    {atk:[0,0], crit:[42,20], cdmg:[418,25], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,8], spr:[525,22], ailm:[0,0]},
       'LV13+M5': {atk:[0,0], crit:[42,20], cdmg:[418,25], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[132,8], spr:[525,25], ailm:[0,0]},
     },
+    statFloor: {spr: 450},
     mindscapeBonus: {atk:20, cdmg:24},
   },
   {name:'Moko (Seaside)', codename:'moko-seaside', role:'Medic', element:'Psychokinesis', rarity:5,

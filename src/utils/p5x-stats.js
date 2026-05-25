@@ -85,7 +85,7 @@ export function getSpacePassiveBonus(char, stats) {
   return Object.fromEntries(Object.entries(raw).filter(([,v]) => v > 0))
 }
 
-export function scoreSpaceCard(card, charTargets, charCards, charElement, charElement2) {
+export function scoreSpaceCard(card, charTargets, charCards, charElement, charElement2, charRole) {
   if (!charTargets) return 0
   let score = 0
   const charElements = [charElement, charElement2].filter(Boolean)
@@ -94,8 +94,9 @@ export function scoreSpaceCard(card, charTargets, charCards, charElement, charEl
     return m ? m[1].trim() : null
   }).filter(Boolean)
   card.passives.forEach(p => {
-    const { elements, ...statWeights } = PASSIVE_STAT_MAP[p.name] || {}
+    const { elements, roles, ...statWeights } = PASSIVE_STAT_MAP[p.name] || {}
     if (elements && charElements.length > 0 && !elements.some(e => charElements.includes(e))) return
+    if (roles && charRole && !roles.includes(charRole)) return
     Object.entries(statWeights).forEach(([k, w]) => {
       const target = charTargets[k]
       if (target && target[1] > 0) score += (target[1] / 25) * w
