@@ -164,6 +164,19 @@ sub stat option: [rolls × tier1 = ค่า โดยใช้กี่ roll]
 เหตุผล: [เปรียบ efficiency + opportunity cost ของ slot ที่ต้องเสีย]
 ```
 
+### กฎ slot ที่ไม่มี stat target
+
+**ถ้า slot ไม่มี stat ที่มาจาก skill → แสดง "-" เท่านั้น ห้าม fallback เอง**
+
+เหตุผล:
+- **Survive เป็นหน้าที่ Medic/Guardian** ไม่ใช่ Saboteur/Assassin/Sweeper
+- HP%/DEF% ใส่ได้เฉพาะตัวละครที่ **skill scale จาก HP/DEF โดยตรง** (เช่น shield strength, heal scaling)
+- ถ้าใส่ DEF% ให้ Saboteur โดยไม่มีที่มาจาก skill = ทำผิด rule "ห้ามตั้งเองโดยไม่มีที่มาจาก skill"
+
+**HP% / DEF% main stat ใส่ได้เมื่อ:**
+- skill/passive ระบุ scaling จาก HP หรือ DEF โดยตรง
+- ตัวละครนั้นเป็น Guardian หรือ Medic ที่ต้องรับ damage แทนทีม และ kit scale จาก DEF/HP
+
 ### ลำดับความสำคัญ slot ตามประเภทตัวละคร
 
 - **DPS (Assassin/Sweeper):** Star → Crit Mult, Sky → ATK% หรือ SPR ตามสกิล, Moon → ATK% หรือ DMG Mult
