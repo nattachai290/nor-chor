@@ -1808,7 +1808,7 @@ const CHARACTERS = [
         desc:"If foes have Burn or Scald on Natsukawa's action, activate Sub-Zero Torrent on that foe 1 time.\nAlso, when the same foe is attacked repeatedly with Extinguishing Guidance or Requiem Guidance, increase the target's damage taken by 25% more for 1 turn.\nThe maximum number of Damnation stacks becomes 6.",
         descTh:"หากศัตรูมี Burn หรือ Scald ในเทิร์นของ Natsukawa จะเปิดใช้ Sub-Zero Torrent ต่อศัตรูนั้น 1 ครั้ง\nนอกจากนี้ เมื่อโจมตีศัตรูตัวเดิมซ้ำด้วย Extinguishing Guidance หรือ Requiem Guidance เพิ่มความเสียหายที่เป้าหมายรับ 25% เป็นเวลา 1 เทิร์น\nจำนวน stack สูงสุดของ Damnation กลายเป็น 6"},
     ],
-    baseStats:     {hp:316, atk:90, def:55, spd:104, crit:5, cdmg:150, ailm:34.9, meleeMulti:125, rangedMulti:10, rangedAcc:72, rangedCrit:2.08},
+    baseStats:     {hp:316, atk:90, def:55, spd:104, crit:5, cdmg:150, meleeMulti:125, rangedMulti:10, rangedAcc:72, rangedCrit:2.08},
     baseStatsLv80: [
       {hp:3540, atk:1020, def:627, spd:104},
       {hp:3604, atk:1038, def:638, spd:104},
