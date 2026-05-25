@@ -328,7 +328,7 @@ const CHARACTERS = [
         desc:"After taking an extra action, if there are foes with below 25% HP, deal damage to those foes equal to up to 250% of Ren's Attack (once per enemy per battle).\nAfter using a skill on an extra action, deal Curse damage equal to 50% of Attack to all foes.",
         descTh:"หลังจากกระทำพิเศษ หากมีศัตรูที่มี HP ต่ำกว่า 25% สร้างความเสียหายให้ศัตรูเหล่านั้นสูงสุด 250% ของ Attack ของ Ren (1 ครั้งต่อศัตรู 1 ตัวต่อการต่อสู้)\nหลังจากใช้สกิลในการกระทำพิเศษ สร้างความเสียหาย Curse เท่ากับ 50% ของ Attack ให้ศัตรูทุกตัว"},
     ],
-    baseStats:     {hp:291, atk:105, def:49, spd:102, crit:17, cdmg:150, dmgMulti:16, meleeMulti:125, rangedMulti:27.1, rangedAcc:92, rangedCrit:5.43},
+    baseStats:     {hp:291, atk:105, def:49, spd:102, crit:5, cdmg:150, meleeMulti:125, rangedMulti:27.1, rangedAcc:92, rangedCrit:5.43},
     baseStatsLv80: [
       {hp:3270, atk:1180, def:560, spd:102},
       {hp:3329, atk:1202, def:570, spd:102},
