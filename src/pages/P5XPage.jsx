@@ -2610,7 +2610,6 @@ const CHARACTERS = [
       {hp:3623, atk:1319, def:657, spd:98},
     ],
     hiddenAbility: 'ATK +29%',
-    mindscapeBonus: {dmgMulti:16, pierce:7.5},
     weapons:[
       {
         name: 'Deus Xiphos', stars:5,
