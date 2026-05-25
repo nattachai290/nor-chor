@@ -699,29 +699,43 @@ export default function P5XPage() {
                 <div className="info-panel">
                   <div className="info-label">🎴 Revelation Card — Main Stats แนะนำ</div>
                   <div className="slot-guide">
-                    {CARD_SLOTS.filter(slot => slot.mainStats.some(({key}) => key !== null)).map(slot => {
-                      let bestLabel = null, bestWeight = 0
-                      slot.mainStats.forEach(({label, key}) => {
-                        if (!key || !charTgt) return
-                        const w = (charTgt[key] || [0,0])[1]
-                        if (w > bestWeight) { bestWeight = w; bestLabel = label }
-                      })
-                      return (
-                        <div key={slot.id} className="slot-row">
-                          <span className="slot-name">{slot.id}</span>
-                          <div className="slot-options">
-                            {bestLabel
-                              ? slot.mainStats.filter(({label}) => label === bestLabel).map(({label, max, unit}) => (
-                                <span key={label} className="slot-opt slot-rec">
-                                  {label} ★{max != null && <span className="slot-range">{max}{unit}</span>}
-                                </span>
-                              ))
-                              : <span style={{color:'var(--p5x-muted)',fontSize:13}}>-</span>
-                            }
+                    {(() => {
+                      if (!charTgt) return null
+                      // How many slots offer each stat key (to detect exclusivity)
+                      const statSlotCount = {}
+                      CARD_SLOTS.forEach(s => s.mainStats.forEach(({key}) => {
+                        if (key) statSlotCount[key] = (statSlotCount[key] || 0) + 1
+                      }))
+                      const baseForMain = computeStats(currentChar, selectedWeaponIdx ?? 0, weaponRefine)
+                      return CARD_SLOTS.filter(slot => slot.mainStats.some(({key}) => key !== null)).map(slot => {
+                        let bestLabel = null, bestScore = 0
+                        slot.mainStats.forEach(({label, key}) => {
+                          if (!key) return
+                          const [ideal, w] = charTgt[key] || [0, 0]
+                          if (!w) return
+                          const need = Math.max(0, ideal - (baseForMain[key] || 0))
+                          if (need <= 0) return
+                          // Exclusive stats (only 1 slot) score higher than shared ones
+                          const score = w / (statSlotCount[key] || 1)
+                          if (score > bestScore) { bestScore = score; bestLabel = label }
+                        })
+                        return (
+                          <div key={slot.id} className="slot-row">
+                            <span className="slot-name">{slot.id}</span>
+                            <div className="slot-options">
+                              {bestLabel
+                                ? slot.mainStats.filter(({label}) => label === bestLabel).map(({label, max, unit}) => (
+                                  <span key={label} className="slot-opt slot-rec">
+                                    {label} ★{max != null && <span className="slot-range">{max}{unit}</span>}
+                                  </span>
+                                ))
+                                : <span style={{color:'var(--p5x-muted)',fontSize:13}}>-</span>
+                              }
+                            </div>
                           </div>
-                        </div>
-                      )
-                    })}
+                        )
+                      })
+                    })()}
                   </div>
                 </div>
 
