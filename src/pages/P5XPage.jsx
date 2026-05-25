@@ -625,7 +625,7 @@ const CHARACTERS = [
         desc:"After Kasumi activates her Highlight, she can activate her Highlight 1 more time while in Masquerade mode (80% of normal damage). Usable once per Masquerade. This additional Highlight will not activate automatically when Masquerade ends.",
         descTh:"หลัง Kasumi เปิดใช้ Highlight สามารถเปิดใช้ Highlight อีก 1 ครั้งในโหมด Masquerade (ดาเมจ 80%) ใช้ได้ครั้งละ 1 ครั้งต่อการเข้า Masquerade Highlight เพิ่มเติมนี้จะไม่เปิดใช้อัตโนมัติเมื่อ Masquerade สิ้นสุด"},
     ],
-    baseStats: {hp:301, atk:103, def:49, spd:102},
+    baseStats: {hp:301, atk:103, def:49, spd:102, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3390, atk:1160, def:560, spd:0},
       {hp:3451, atk:1181, def:570, spd:0},
@@ -1112,7 +1112,7 @@ const CHARACTERS = [
         desc:"Increase chance to gain Right to Strike by 20%. When at 5 Right to Strike stacks, Blustering Épée, Graceful Gale, and Saber Surge deal 1 more hit.",
         descTh:"เพิ่มโอกาสรับ Right to Strike 20% เมื่อมี Right to Strike 5 stack สกิล Blustering Épée, Graceful Gale และ Saber Surge ดีลเพิ่ม 1 ครั้ง"},
     ],
-    baseStats: {hp:220, atk:75, def:41, spd:100},
+    baseStats: {hp:220, atk:75, def:41, spd:100, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2475, atk:848, def:465, spd:0},
       {hp:2504, atk:857, def:471, spd:0},
@@ -1122,7 +1122,7 @@ const CHARACTERS = [
       {hp:2618, atk:896, def:493, spd:0},
       {hp:2647, atk:906, def:497, spd:0},
     ],
-    hiddenAbility: 'Crit Rate +18%',
+    hiddenAbility: 'Crit Rate +13%',
     mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {name:'Venus Sunrise', stars:5,
@@ -1505,7 +1505,7 @@ const CHARACTERS = [
         desc:"When using Rain of Justice, increase Arrow of Truth effect by 50%. Akechi and all allies are considered to have Mastermind (ATK increase based on ally with highest ATK). During battle, Akechi gains additional CRIT Rate equal to 40% of the Mastermind ally's CRIT Rate (up to 20%), and additional CRIT DMG equal to 40% of the highest CRIT DMG above 100% (up to 40%).",
         descTh:"เมื่อใช้ Rain of Justice เพิ่มเอฟเฟกต์ Arrow of Truth 50% Akechi และพันธมิตรทุกคนถือว่ามี Mastermind (การเพิ่ม ATK อ้างอิงพันธมิตรที่มี ATK สูงสุด) ระหว่างการต่อสู้ Akechi รับ CRIT Rate เพิ่มเติม 40% ของ CRIT Rate พันธมิตร Mastermind ที่สูงสุด (สูงสุด 20%) และ CRIT DMG เพิ่มเติม 40% ของ CRIT DMG ที่เกิน 100% สูงสุด (สูงสุด 40%)"},
     ],
-    baseStats: {hp:316, atk:99, def:55, spd:95},
+    baseStats: {hp:316, atk:99, def:55, spd:95, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3540, atk:1120, def:620, spd:0},
       {hp:3604, atk:1140, def:631, spd:0},
@@ -1603,7 +1603,7 @@ const CHARACTERS = [
         desc:"When the additional effects of Improvise are activated based on Improv state, extend the duration of the additional effects to 4 turns.",
         descTh:"เมื่อเอฟเฟกต์พิเศษของ Improvise เปิดใช้ตาม Improv state ขยายระยะเวลาเอฟเฟกต์พิเศษเป็น 4 เทิร์น"},
     ],
-    baseStats: {hp:231, atk:68, def:44, spd:104},
+    baseStats: {hp:231, atk:68, def:44, spd:104, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2588, atk:765, def:495, spd:0},
       {hp:2617, atk:774, def:501, spd:0},
@@ -1713,7 +1713,7 @@ const CHARACTERS = [
         desc:"Start battle with 120 Velocity. On extra action, spend 40 or 80 Velocity for bonus effects on the next skill: (40) Shockwave: +20% Mayumi CRIT Rate, if target downed party ATK +25% for 2 turns; Aero Setup: +20% shield, extend shield by 1 turn; Power Setup: change buff target from main target to all allies. (80) Shockwave: party damage to downed foes +15% for 1 turn; Aero Setup: party damage taken -20% for 1 turn; Power Setup: party damage +25% for 1 turn.",
         descTh:"เริ่มต้นด้วย Velocity 120 stack บนแอ็คชันพิเศษ ใช้ Velocity 40 หรือ 80 stack เพื่อผลโบนัสบนสกิลถัดไป: (40) Shockwave: CRIT Rate +20% หากเป้าหมาย Down ปาร์ตี้ ATK +25% 2 เทิร์น; Aero Setup: shield +20% ขยายระยะ 1 เทิร์น; Power Setup: เปลี่ยนเป้า buff จากเป้าหมายหลักเป็นทุกคน (80) Shockwave: ดาเมจต่อ Down +15% 1 เทิร์น; Aero Setup: ลดดาเมจที่รับ 20% 1 เทิร์น; Power Setup: ดาเมจปาร์ตี้ +25% 1 เทิร์น"},
     ],
-    baseStats: {hp:302, atk:93, def:55, spd:107},
+    baseStats: {hp:302, atk:93, def:55, spd:107, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3390, atk:1050, def:620, spd:107},
       {hp:3451, atk:1069, def:631, spd:107},
@@ -1907,7 +1907,7 @@ const CHARACTERS = [
         desc:"At the start of battle, gain Big Welcome and Furrocious Follow-Up for 2 turns.\nExtend the duration of debuffs from Welcome Hug, Furrious Bark, and Woof Woof Blaze by 1 turn.\nWhen Big Welcome and Furrocious Follow-Up are both active, increase Woof Woof Blaze's Fire, Ice, Electric, and Wind damage taken effect on all foes by 30%, increase the Resonance damage taken effect on the main target by 60%, and the effects granted by Big Welcome and Furrocious Follow-Up will both activate (the damage taken increase effects do not stack, and the greater effect is applied).",
         descTh:"เมื่อเริ่มต้นการต่อสู้ รับ Big Welcome และ Furrocious Follow-Up เป็นเวลา 2 เทิร์น\nขยายระยะเวลาของ debuff จาก Welcome Hug, Furrious Bark และ Woof Woof Blaze อีก 1 เทิร์น\nเมื่อ Big Welcome และ Furrocious Follow-Up ทำงานพร้อมกัน เพิ่มเอฟเฟกต์ความเสียหายธาตุไฟ น้ำแข็ง ไฟฟ้า ลมของ Woof Woof Blaze ต่อศัตรูทั้งหมด 30% เพิ่มเอฟเฟกต์ความเสียหาย Resonance ต่อเป้าหมายหลัก 60% และเอฟเฟกต์ทั้งจาก Big Welcome และ Furrocious Follow-Up จะเปิดใช้พร้อมกัน (เอฟเฟกต์เพิ่มความเสียหายที่รับไม่สะสม ใช้เอฟเฟกต์ที่มากกว่า)"},
     ],
-    baseStats:     {hp:288, atk:94, def:58, spd:105},
+    baseStats:     {hp:288, atk:94, def:58, spd:105, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3240, atk:1060, def:653, spd:105},
       {hp:3298, atk:1079, def:665, spd:105},
@@ -2115,7 +2115,7 @@ const CHARACTERS = [
         desc:"At 2+ Thoughtful Rounds: evolve ranged attacks to Resonating Shots (also fires all Thoughtful Round effects once at 70% damage). At 2+ Thoughtful Rounds from skills: Focused Round gives target ailment resistance -27% for 2 turns; Painpoint Round gives +12% pierce rate; Spillover Round gives +20% CRIT Rate and +20% CRIT DMG.",
         descTh:"ที่ 2+ Thoughtful Round: โจมตีระยะไกลพัฒนาเป็น Resonating Shots (ยิง Thoughtful Round ทั้งหมด 1 ครั้งที่ 70%) ที่ 2+ Thoughtful Round จากสกิล: Focused Round → ailment resistance ศัตรู -27% 2 เทิร์น; Painpoint Round → pierce rate +12%; Spillover Round → CRIT Rate +20%, CRIT DMG +20%"},
     ],
-    baseStats: {hp:288, atk:102, def:57, spd:97},
+    baseStats: {hp:288, atk:102, def:57, spd:97, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3240, atk:1150, def:647, spd:0},
       {hp:3298, atk:1171, def:659, spd:0},
@@ -2210,7 +2210,7 @@ const CHARACTERS = [
         desc:"When gaining Garden of Promises, gain Poise for 3 turns.\nPoise: Increase the party's critical rate by 15%.",
         descTh:"เมื่อได้รับ Garden of Promises รับ Poise 3 เทิร์น\nPoise: เพิ่ม CRIT Rate ของปาร์ตี้ 15%"},
     ],
-    baseStats:     {hp:315, atk:74, def:72, spd:104},
+    baseStats:     {hp:315, atk:74, def:72, spd:104, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3540, atk:840, def:813, spd:104},
       {hp:3604, atk:855, def:828, spd:104},
@@ -2311,7 +2311,7 @@ const CHARACTERS = [
         desc:"Increase max Bleed stacks to 13. Each foe always starts with 3 Bleed stacks. When using Midnight Surgery (Ripper mode), do not remove target's Bleed stacks. Rending evolves to Killing Frenzy: +100% damage, deals 50% damage to all other foes, and activates with all skills.",
         descTh:"เพิ่ม Bleed stack สูงสุดเป็น 13 ศัตรูทุกตัวเริ่มด้วย Bleed 3 stack เมื่อใช้ Midnight Surgery ใน Ripper mode ไม่ลบ Bleed ของเป้าหมาย Rending พัฒนาเป็น Killing Frenzy: +100% ดาเมจ ดีล 50% ต่อศัตรูอื่นทุกตัว และเปิดใช้ได้จากทุกสกิล"},
     ],
-    baseStats: {hp:331, atk:100, def:48, spd:97},
+    baseStats: {hp:331, atk:100, def:48, spd:97, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3720, atk:1130, def:547, spd:0},
       {hp:3787, atk:1150, def:556, spd:0},
@@ -2599,7 +2599,7 @@ const CHARACTERS = [
         desc:'When Makoto activates a Theurgy, the effects of the other Theurgy are activated at the same time.\nIncrease skill damage dealt by spending Full Moon stacks with Scarlet Hades by 35%.\nThe first time that Makoto takes fatal damage, he enters a special near-death state and survives with 1 HP, and will be KO\'d at the end of the turn. If Makoto\'s HP is restored above 25%, this state is removed.',
         descTh:'เมื่อ Makoto เปิดใช้ Theurgy เอฟเฟกต์ของ Theurgy อีกตัวจะถูกเปิดใช้พร้อมกัน\nเพิ่มความเสียหายจากการใช้ Full Moon stack ด้วย Scarlet Hades 35%\nครั้งแรกที่ Makoto โดนโจมตีถึงตาย จะเข้าสู่สภาวะใกล้ตายพิเศษและรอดด้วย HP 1 และจะถูก KO เมื่อสิ้นสุดเทิร์น หาก HP ของ Makoto ถูกฟื้นฟูเกิน 25% สภาวะนี้จะถูกยกเลิก'},
     ],
-    baseStats:     {hp:292, atk:105, def:52, spd:98},
+    baseStats:     {hp:292, atk:105, def:52, spd:98, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3270, atk:1190, def:593, spd:98},
       {hp:3329, atk:1212, def:604, spd:98},
@@ -2700,7 +2700,7 @@ const CHARACTERS = [
         desc:"Tropical Heart is not spent after using Surf 'n' Shine. Summer Hype enhances to Summer Blowout: Blue Sunrise bonus damage activates 3 times, Summer 'Splosion restores 20% more max HP, and Surf 'n' Shine damage multiplier +50%.",
         descTh:"Tropical Heart ไม่ถูกใช้หลังใช้ Surf 'n' Shine Summer Hype เพิ่มพลังเป็น Summer Blowout: ดาเมจโบนัสของ Blue Sunrise เปิดใช้ 3 ครั้ง Summer 'Splosion ฟื้นฟู HP สูงสุดเพิ่มอีก 20% และตัวคูณดาเมจของ Surf 'n' Shine +50%"},
     ],
-    baseStats: {hp:352, atk:95, def:48, spd:96},
+    baseStats: {hp:352, atk:95, def:48, spd:96, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3960, atk:1070, def:547, spd:0},
       {hp:4031, atk:1089, def:556, spd:0},
@@ -2797,7 +2797,7 @@ const CHARACTERS = [
         desc:"Flaming Sword Dance becomes permanent. Yanhua Slash evolves to Liuxing Slash, increasing damage dealt by 80%. Flaming Sword Dance is not removed even after Liuxing Slash is activated.\nAlso, Scarlet Surprise permanently maintains the critical rate increase and enhanced effects on Liuxing Slash. The duration of Firework Finale's Burn and enhanced effects on Liuxing Slash are extended by 1 turn.",
         descTh:"Flaming Sword Dance กลายเป็นถาวร Yanhua Slash พัฒนาเป็น Liuxing Slash เพิ่มความเสียหาย 80% และ Flaming Sword Dance จะไม่ถูกยกเลิกแม้หลังจากใช้ Liuxing Slash\nนอกจากนี้ Scarlet Surprise จะรักษาเอฟเฟกต์เพิ่ม CRIT Rate และ enhance บน Liuxing Slash อย่างถาวร ระยะเวลาของ Burn และ enhance ของ Firework Finale บน Liuxing Slash จะขยายออก 1 เทิร์น"},
     ],
-    baseStats:     {hp:301, atk:106, def:52, spd:95},
+    baseStats:     {hp:301, atk:106, def:52, spd:95, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3390, atk:1200, def:593, spd:95},
       {hp:3451, atk:1222, def:604, spd:95},
@@ -2896,7 +2896,7 @@ const CHARACTERS = [
         desc:"Increase the party's Fire damage by 30% for every 10 Chosen One stacks gained for 2 turns.",
         descTh:"เพิ่มความเสียหายธาตุไฟของปาร์ตี้ 30% ต่อการสะสม Chosen One ทุกๆ 10 stack เป็นเวลา 2 เทิร์น"},
     ],
-    baseStats:     {hp:284, atk:60, def:40, spd:99},
+    baseStats:     {hp:284, atk:60, def:40, spd:99, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3195, atk:675, def:450, spd:99},
       {hp:3232, atk:683, def:455, spd:99},
@@ -2994,7 +2994,7 @@ const CHARACTERS = [
         desc:"[Spring] After activating the Resonance when Spring's Edge ends, extend the duration of Spring's Edge by 1 turn. Regain up to 2 spent Spring's Vestige stacks, and regain up to 2 stacks that exceeded the maximum limit. Afterwards, the Resonance can be activated again (duration cannot be extended again). Also increase Resonance pierce rate by 4% for each Spring's Vestige stack (up to 20%).\n[Winter] After activating the Resonance when Winter's Edge ends, extend the duration of Winter's Edge by 1 turn. Regain up to 2 spent Winter's Vestige stacks, and regain up to 2 stacks that exceeded the maximum limit. Afterwards, the Resonance can be activated again. Also increase Resonance pierce rate by 4% for each Winter's Vestige stack (up to 20%).",
         descTh:"[Spring] หลังจากเปิดใช้ Resonance เมื่อ Spring's Edge สิ้นสุด ขยาย Spring's Edge อีก 1 เทิร์น คืน Spring's Vestige stack ที่ใช้ไปสูงสุด 2 stack และคืน stack ที่เกินสูงสุดสูงสุด 2 stack จากนั้น Resonance สามารถเปิดใช้ได้อีกครั้ง (ไม่สามารถขยายซ้ำได้) เพิ่ม pierce rate ของ Resonance 4% ต่อ Spring's Vestige stack (สูงสุด 20%)\n[Winter] หลังจากเปิดใช้ Resonance เมื่อ Winter's Edge สิ้นสุด ขยาย Winter's Edge อีก 1 เทิร์น คืน Winter's Vestige stack ที่ใช้ไปสูงสุด 2 stack และคืน stack ที่เกินสูงสุดสูงสุด 2 stack จากนั้น Resonance สามารถเปิดใช้ได้อีกครั้ง เพิ่ม pierce rate ของ Resonance 4% ต่อ Winter's Vestige stack (สูงสุด 20%)"},
     ],
-    baseStats:     {hp:309, atk:102, def:50, spd:98, crit:5, meleeMulti:115, rangedMulti:33.5, rangedAcc:86, rangedCrit:11.16},
+    baseStats:     {hp:309, atk:102, def:50, spd:98, crit:5, cdmg:150, meleeMulti:115, rangedMulti:33.5, rangedAcc:86, rangedCrit:11.16},
     baseStatsLv80: [
       {hp:3480, atk:1150, def:567, spd:98},
       {hp:3542, atk:1171, def:577, spd:98},
@@ -3004,7 +3004,7 @@ const CHARACTERS = [
       {hp:3794, atk:1253, def:618, spd:98},
       {hp:3856, atk:1274, def:628, spd:98},
     ],
-    hiddenAbility: 'Crit Mult. +184.9%',
+    hiddenAbility: 'Crit Mult. +34.9%',
     mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {
@@ -3199,7 +3199,7 @@ const CHARACTERS = [
         desc:"Summer Reminiscence gains: CRIT Rate +35% when dealing SR damage. Each SR effect on a foe → permanently +5% damage taken (stacks 3). At max stacks: CRIT DMG taken +20% more.",
         descTh:"Summer Reminiscence เพิ่ม: CRIT Rate +35% เมื่อดีลดาเมจ SR ทุก SR effect บนศัตรู → ดาเมจที่รับถาวร +5% (สะสม 3) ที่ stack สูงสุด: CRIT DMG ที่รับ +20% เพิ่มเติม"},
     ],
-    baseStats: {hp:315, atk:97, def:51, spd:103},
+    baseStats: {hp:315, atk:97, def:51, spd:103, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3540, atk:1090, def:580, spd:0},
       {hp:3604, atk:1110, def:590, spd:0},
@@ -3298,7 +3298,7 @@ const CHARACTERS = [
         desc:"Remove Gentle Fist's decreased accuracy effect. Increase target's damage taken by 15% for 2 turns.",
         descTh:"ลบผลลด accuracy ของ Gentle Fist ออก เพิ่มดาเมจที่รับของเป้าหมาย 15% เป็นเวลา 2 เทิร์น"},
     ],
-    baseStats: {hp:293, atk:97, def:57, spd:100},
+    baseStats: {hp:293, atk:97, def:57, spd:100, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3300, atk:1100, def:647, spd:0},
       {hp:3359, atk:1120, def:659, spd:0},
@@ -3308,7 +3308,7 @@ const CHARACTERS = [
       {hp:3597, atk:1199, def:705, spd:0},
       {hp:3657, atk:1219, def:716, spd:0},
     ],
-    hiddenAbility: 'Crit Rate +22.4%',
+    hiddenAbility: 'Crit Rate +17.4%',
     weapons:[
       {name:'Golden Legacy', stars:5,
         hp:2180, atk:727, def:427,
@@ -3411,7 +3411,7 @@ const CHARACTERS = [
         desc:"If only 1 foe is present, increase Yui's follow-up attack by 110% of Attack. Follow-up attacks also deal 25% of Attack damage to all other foes.",
         descTh:"หากมีศัตรูเพียง 1 ตัว เพิ่ม follow-up attack ของ Yui 110% ของ Attack follow-up attack ยังดีลดาเมจ 25% ของ Attack ต่อศัตรูอื่นทุกตัวด้วย"},
     ],
-    baseStats: {hp:304, atk:102, def:50, spd:103},
+    baseStats: {hp:304, atk:102, def:50, spd:103, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3420, atk:1150, def:567, spd:0},
       {hp:3482, atk:1171, def:577, spd:0},
@@ -3421,7 +3421,7 @@ const CHARACTERS = [
       {hp:3728, atk:1253, def:618, spd:0},
       {hp:3790, atk:1274, def:628, spd:0},
     ],
-    hiddenAbility: 'Crit Rate +22.4%',
+    hiddenAbility: 'Crit Rate +17.4%',
     mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Cyber Jammers', stars:5,
@@ -3509,7 +3509,7 @@ const CHARACTERS = [
         desc:"When an ally attacks a foe with Radiation, activate effects based on unique elemental ailments on the foe (effects stack): 1+: ATK +10%. 2+: Nuclear damage +10%. 3+: Pierce rate +8%.",
         descTh:"เมื่อพันธมิตรโจมตีศัตรูที่มี Radiation เปิดใช้เอฟเฟกต์ตามสภาวะธาตุต่างชนิดบนศัตรู (เอฟเฟกต์สะสม): 1+: ATK +10% 2+: ดาเมจนิวเคลียร์ +10% 3+: pierce rate +8%"},
     ],
-    baseStats: {hp:220, atk:70, def:44, spd:103},
+    baseStats: {hp:220, atk:70, def:44, spd:103, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2475, atk:788, def:505, spd:0},
       {hp:2504, atk:797, def:511, spd:0},
@@ -3607,7 +3607,7 @@ const CHARACTERS = [
         desc:"When Childish Heart reaches 5 stacks, gain Curiosity. Curiosity: When Haruna deals damage with a skill, increase damage by 75%. This effect ends after dealing skill damage to foes.",
         descTh:"เมื่อ Childish Heart ถึง 5 stack รับ Curiosity Curiosity: เมื่อ Haruna ดีลดาเมจด้วยสกิล เพิ่มดาเมจ 75% ผลนี้สิ้นสุดหลังดีลดาเมจสกิลต่อศัตรู"},
     ],
-    baseStats: {hp:315, atk:89, def:58, spd:101},
+    baseStats: {hp:315, atk:89, def:58, spd:101, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3540, atk:1010, def:660, spd:0},
       {hp:3604, atk:1028, def:672, spd:0},
@@ -3702,7 +3702,7 @@ const CHARACTERS = [
         desc:"After Starfire II ends, gain Starfire III for 1 turn.\nStarfire III: Increase Attack by 8% of Lufel's Attack, increase Fire damage by 20%, and increase healing received by 10%.",
         descTh:"หลังจาก Starfire II สิ้นสุด รับ Starfire III 1 เทิร์น\nStarfire III: เพิ่ม Attack 8% ของ Attack ของ Lufel เพิ่มความเสียหายธาตุไฟ 20% และเพิ่มการรับการฟื้นฟู 10%"},
     ],
-    baseStats:     {hp:250, atk:70, def:42, spd:95},
+    baseStats:     {hp:250, atk:70, def:42, spd:95, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2812, atk:788, def:475, spd:95},
       {hp:2845, atk:797, def:481, spd:95},
@@ -3801,7 +3801,7 @@ const CHARACTERS = [
         desc:"When using a skill on an ally with HP below 60%, increase critical damage by 25% for 1 turn.",
         descTh:"เมื่อใช้สกิลต่อพันธมิตรที่มี HP ต่ำกว่า 60% เพิ่ม CRIT DMG 25% 1 เทิร์น"},
     ],
-    baseStats: {hp:232, atk:69, def:43, spd:100},
+    baseStats: {hp:232, atk:69, def:43, spd:100, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2610, atk:780, def:490, spd:0},
       {hp:2640, atk:789, def:496, spd:0},
@@ -3900,7 +3900,7 @@ const CHARACTERS = [
         desc:"Increase Shocked foes' Electric damage taken by 20%, and increase Electric critical damage taken by 20%.",
         descTh:"เพิ่มดาเมจไฟฟ้าที่รับของศัตรูที่ติด Shock 20% และเพิ่ม CRIT DMG ไฟฟ้าที่รับ 20%"},
     ],
-    baseStats: {hp:216, atk:73, def:45, spd:98},
+    baseStats: {hp:216, atk:73, def:45, spd:98, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2430, atk:825, def:515, spd:0},
       {hp:2458, atk:835, def:521, spd:0},
@@ -3997,7 +3997,7 @@ const CHARACTERS = [
         desc:"At the start of battle, gain 4 Ice Crystal stacks. Increase the maximum number of Ice Crystal stacks to 15.",
         descTh:"เมื่อเริ่มต้นการต่อสู้ รับ Ice Crystal 4 stack และเพิ่มจำนวน stack สูงสุดของ Ice Crystal เป็น 15"},
     ],
-    baseStats: {hp:218, atk:76, def:41, spd:99},
+    baseStats: {hp:218, atk:76, def:41, spd:99, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2452, atk:862, def:465, spd:0},
       {hp:2480, atk:872, def:471, spd:0},
@@ -4080,7 +4080,7 @@ const CHARACTERS = [
       {name:'Masterful Cutting Skills', desc:"Increase the skill levels of Icy Defense and Thief Tactics by 2.", descTh:"เพิ่มระดับสกิล Icy Defense และ Thief Tactics ขึ้น 2 ระดับ"},
       {name:'Robbing and Smuggling', desc:"When attacking a foe while Desperado is active, deal bonus damage equal to 10% of Shun's max HP, and restore HP equal to damage dealt.", descTh:"เมื่อโจมตีศัตรูขณะ Desperado ใช้งานอยู่ ดีลดาเมจโบนัส 10% ของ HP สูงสุดของ Shun และฟื้นฟู HP เท่ากับดาเมจที่ดีล"},
     ],
-    baseStats: {hp:290, atk:56, def:38, spd:102},
+    baseStats: {hp:290, atk:56, def:38, spd:102, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:3262, atk:638, def:435, spd:0},
       {hp:3300, atk:645, def:440, spd:0},
@@ -4177,7 +4177,7 @@ const CHARACTERS = [
         desc:"Increase damage by 10% for Yukimi and allies with Oath. Increase Bless damage by 2% for each Blessing stack on Yukimi and allies with Oath (up to 20%).",
         descTh:"เพิ่มดาเมจ 10% สำหรับ Yukimi และพันธมิตรที่มี Oath เพิ่มดาเมจแสง 2% ต่อ Blessing stack บน Yukimi และพันธมิตรที่มี Oath (สูงสุด 20%)"},
     ],
-    baseStats: {hp:236, atk:56, def:52, spd:104},
+    baseStats: {hp:236, atk:56, def:52, spd:104, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2655, atk:638, def:595, spd:0},
       {hp:2686, atk:645, def:603, spd:0},
@@ -4369,7 +4369,7 @@ const CHARACTERS = [
         desc:"After using a skill, the Verse of Hate, Verse of Healing, or Verse of Passion gained activates 3 more times next turn.\nIf 2 or more different types of Verses are stacked, increase Sonnet of Fate damage by 67%.",
         descTh:"หลังจากใช้สกิล Verse of Hate, Verse of Healing หรือ Verse of Passion ที่ได้รับจะทำงานเพิ่มอีก 3 ครั้งในเทิร์นถัดไป\nหาก Verse ต่างประเภท 2 ชนิดขึ้นไปสะสมอยู่ เพิ่มความเสียหายของ Sonnet of Fate 67%"},
     ],
-    baseStats:     {hp:228, atk:74, def:41, spd:98},
+    baseStats:     {hp:228, atk:74, def:41, spd:98, crit:5, cdmg:150},
     baseStatsLv80: [
       {hp:2565, atk:840, def:470, spd:98},
       {hp:2595, atk:850, def:476, spd:98},
