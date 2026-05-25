@@ -1567,7 +1567,7 @@ export const CHARACTERS = [
         ]},
     ],
   },
-  {name:'Matoi',              codename:'Matoi',          role:'Saboteur',   element:'Ice',            rarity:5, cards:['Peace 4pc','Opulence 2pc'],     weapon:'Best Ice Saboteur weapon',                      statPrio:['Ailment Accuracy'],                              note:'Ice Saboteur. Provides party-wide damage mitigation and debuffs.',
+  {name:'Matoi',              codename:'Matoi',          role:'Saboteur',   element:'Ice',            rarity:5, cards:['Defeat 4pc'],                   weapon:'Best Ice Saboteur weapon',                      statPrio:['Ailment Accuracy'],                              note:'Ice Saboteur. Provides party-wide damage mitigation and debuffs.',
     mechanics: "Extinguish stack (สูงสุด 4) สะสมทุกเทิร์นของ Natsukawa + จาก Sub-Zero Torrent Extinguishing Guidance ใช้ 2 stack; Requiem Guidance ใช้ 4 stack — ทั้งคู่ติด Damnation บนศัตรูทุกตัว (DMG taken +6% ต่อ stack, สูงสุด 4; M5 เพิ่ม cap เป็น 6) Ice Technical จากทักษะเปิด Disaster Preparedness: shield ปาร์ตี้ทั้งหมดทุกครั้ง Ailment accuracy สเกลค่า DEF down ทั้งหมดโดยตรง Cold Flames (จาก Iceburn Technical) เพิ่ม DMG taken multiplier มหาศาลบน DEF down Biting Cold awareness เพิ่มดาเมจ +27% ต่อเป้าที่ Frozen/Icebound",
     rotation: [
       "เทิร์น 1 → Sub-Zero Torrent (AoE Ice + DEF down + โอกาส 50% Freeze; ได้ Extinguish)",

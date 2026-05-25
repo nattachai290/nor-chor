@@ -103,7 +103,7 @@ export const PASSIVE_STAT_MAP = {
   'Disappointment': {atk:10, crit:8, elements:['Almighty']},
   'Transformation': {},
   'Prudence':       {atk:8},
-  'Defeat':         {dmgMulti:8},
+  'Defeat':         {ailm:15, dmgMulti:8},
   'Worry':          {cdmg:12},
 }
 
