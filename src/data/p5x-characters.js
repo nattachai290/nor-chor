@@ -65,6 +65,12 @@ export const CHARACTERS = [
       {hp:3623, atk:1307, def:621, spd:102},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[120,25], crit:[40,18], cdmg:[80,22], dmgMulti:[35,12], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[120,25], crit:[40,16], cdmg:[80,22], dmgMulti:[35,10], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[120,25], crit:[40,19], cdmg:[80,24], dmgMulti:[35,13], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[120,25], crit:[40,17], cdmg:[80,24], dmgMulti:[35,11], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {
@@ -163,6 +169,12 @@ export const CHARACTERS = [
       {hp:3590, atk:1340, def:687, spd:94},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,20], crit:[40,16], cdmg:[65,15], dmgMulti:[50,20], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,22], crit:[40,19], cdmg:[65,16], dmgMulti:[50,24], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,22], crit:[40,17], cdmg:[65,16], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {
@@ -264,6 +276,12 @@ export const CHARACTERS = [
       {hp:4388, atk:1219, def:591, spd:0},
     ],
     hiddenAbility: 'Crit Mult. +34.9%',
+    statTargets: {
+      'LV10'   : {atk:[110,22], crit:[42,20], cdmg:[260,22], dmgMulti:[30,12], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,22], crit:[42,20], cdmg:[260,19], dmgMulti:[30,10], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,24], crit:[42,22], cdmg:[260,24], dmgMulti:[30,13], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,24], crit:[42,22], cdmg:[260,21], dmgMulti:[30,11], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, cdmg:24},
     weapons:[
       {name:'Revenge Axe', stars:5,
@@ -362,6 +380,12 @@ export const CHARACTERS = [
       {hp:3756, atk:1286, def:621, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[110,22], crit:[45,22], cdmg:[85,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,22], crit:[45,20], cdmg:[85,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,24], crit:[45,24], cdmg:[85,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,24], crit:[45,22], cdmg:[85,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {name:'Royal Étoile', stars:5,
@@ -459,6 +483,12 @@ export const CHARACTERS = [
       {hp:3756, atk:1263, def:665, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[85,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[85,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,12], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[85,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[85,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,13], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:'Technomage Ultra FS', stars:5,
@@ -557,6 +587,12 @@ export const CHARACTERS = [
       {hp:3823, atk:1197, def:650, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[85,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[85,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[85,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[85,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgDown:16, atk:20},
     weapons:[
       {name:'Superstar', stars:5,
@@ -657,6 +693,12 @@ export const CHARACTERS = [
       {hp:2791, atk:834, def:487, spd:0},
     ],
     hiddenAbility:'SPD +119.1',
+    statTargets: {
+      'LV10'   : {atk:[75,18], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[75,15], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,12], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[75,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[75,16], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,13], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:"Kunoichi: Sky's Edge", stars:5, hp:2299, atk:687, def:401, bonusStats:{spd:15},
@@ -779,6 +821,10 @@ export const CHARACTERS = [
         ],
       },
     ],
+    statTargets: {
+      'LV10': {atk:[85,20], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[0,0], def:[45,15], heal:[0,0], spd:[155,25], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[85,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[0,0], def:[45,16], heal:[0,0], spd:[155,25], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Seiji Shiratori', codename:'Fleuret', role:'Assassin', element:'Wind', rarity:4,
     cards:['Courage 4pc','Triumph 2pc'], weapon:'Best CRIT/Wind weapon (Venus Sunrise)',
@@ -849,6 +895,12 @@ export const CHARACTERS = [
       {hp:2647, atk:906, def:497, spd:0},
     ],
     hiddenAbility: 'Crit Rate +13%',
+    statTargets: {
+      'LV10'   : {atk:[85,22], crit:[38,18], cdmg:[75,20], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[85,19], crit:[38,16], cdmg:[75,20], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[85,24], crit:[38,19], cdmg:[75,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[85,21], crit:[38,17], cdmg:[75,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {name:'Venus Sunrise', stars:5,
@@ -947,6 +999,12 @@ export const CHARACTERS = [
       {hp:3723, atk:1274, def:665, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[85,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[85,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,12], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[85,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[85,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,13], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:"Angel's Hymn", stars:5,
@@ -1040,6 +1098,12 @@ export const CHARACTERS = [
       {hp:4122, atk:909, def:886, spd:102},
     ],
     hiddenAbility: 'Defense % +43.6%',
+    statTargets: {
+      'LV10'   : {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[40,18], hp:[80,18], def:[160,25], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[40,16], hp:[80,18], def:[160,25], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[40,19], hp:[80,19], def:[160,25], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[40,17], hp:[80,19], def:[160,25], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {
@@ -1142,6 +1206,12 @@ export const CHARACTERS = [
       {hp:3457, atk:1286, def:754, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[110,25], crit:[38,15], cdmg:[0,0], dmgMulti:[55,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,22], crit:[38,13], cdmg:[0,0], dmgMulti:[55,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,25], crit:[38,16], cdmg:[0,0], dmgMulti:[55,24], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,22], crit:[38,14], cdmg:[0,0], dmgMulti:[55,24], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {name:'Nuclear Finisher', stars:5,
@@ -1242,6 +1312,12 @@ export const CHARACTERS = [
       {hp:3922, atk:1241, def:687, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[110,22], crit:[42,20], cdmg:[90,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,22], crit:[42,18], cdmg:[90,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,24], crit:[42,22], cdmg:[90,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,24], crit:[42,20], cdmg:[90,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, crit:12},
     weapons:[
       {name:'Gordian Kopis', stars:5,
@@ -1340,6 +1416,12 @@ export const CHARACTERS = [
       {hp:2767, atk:818, def:530, spd:0},
     ],
     hiddenAbility: 'Ailment Accuracy +26.1%',
+    statTargets: {
+      'LV10'   : {atk:[65,18], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,12], def:[0,0], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[50,25]},
+      'LV10+M5': {atk:[65,15], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,12], def:[0,0], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[50,22]},
+      'LV13'   : {atk:[65,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,13], def:[0,0], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[50,25]},
+      'LV13+M5': {atk:[65,16], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,13], def:[0,0], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[50,22]},
+    },
     mindscapeBonus: {atk:20, ailm:24},
     weapons:[
       {name:'Ribalta', stars:5,
@@ -1450,6 +1532,12 @@ export const CHARACTERS = [
       {hp:3756, atk:1164, def:687, spd:107},
     ],
     hiddenAbility: 'SPD +125.8',
+    statTargets: {
+      'LV10'   : {atk:[65,15], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[155,25], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[65,15], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[155,23], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[65,16], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[155,25], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[65,16], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[155,23], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {spd:10, crit:12},
     weapons:[
       {name:'Nebula Pennant', stars:5,
@@ -1545,6 +1633,12 @@ export const CHARACTERS = [
       {hp:3922, atk:1130, def:695, spd:104},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
+    statTargets: {
+      'LV10'   : {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[75,20], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[75,20], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[75,22], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[75,22], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, ailm:24},
     weapons:[
       {
@@ -1644,6 +1738,12 @@ export const CHARACTERS = [
       {hp:3590, atk:1174, def:724, spd:105},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
+    statTargets: {
+      'LV10'   : {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,20], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,22], crit:[40,19], cdmg:[65,16], dmgMulti:[50,24], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,22], crit:[40,19], cdmg:[65,16], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, ailm:24},
     weapons:[
       {
@@ -1754,6 +1854,12 @@ export const CHARACTERS = [
       {hp:3989, atk:1108, def:739, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[110,22], crit:[38,18], cdmg:[85,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,22], crit:[38,18], cdmg:[85,19], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,24], crit:[38,19], cdmg:[85,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,24], crit:[38,19], cdmg:[85,21], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, cdmg:24},
     weapons:[
       {name:"Warden's Judgement", stars:5,
@@ -1852,6 +1958,12 @@ export const CHARACTERS = [
       {hp:3590, atk:1274, def:716, spd:0},
     ],
     hiddenAbility: 'Ailment Accuracy +34.9%',
+    statTargets: {
+      'LV10'   : {atk:[110,22], crit:[38,18], cdmg:[80,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,19], crit:[38,18], cdmg:[80,19], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,24], crit:[38,19], cdmg:[80,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,21], crit:[38,19], cdmg:[80,21], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Last Quarter', stars:5,
@@ -1978,6 +2090,10 @@ export const CHARACTERS = [
         ],
       },
     ],
+    statTargets: {
+      'LV10': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[140,20], heal:[23,15], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[140,22], heal:[23,16], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Messa', codename:'Messa', role:'Assassin', element:'Physical', rarity:5,
     cards:['Courage 4pc','Triumph 2pc'], weapon:'Best Physical/Bleed weapon (Bloodletter)',
@@ -2048,6 +2164,12 @@ export const CHARACTERS = [
       {hp:4122, atk:1252, def:606, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[100,22], crit:[35,18], cdmg:[0,0], dmgMulti:[50,20], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[100,19], crit:[35,18], cdmg:[0,0], dmgMulti:[50,20], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[100,24], crit:[35,19], cdmg:[0,0], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[100,21], crit:[35,19], cdmg:[0,0], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, pierce:7.5},
     weapons:[
       {name:'Bloodletter', stars:5,
@@ -2148,6 +2270,12 @@ export const CHARACTERS = [
       {hp:3823, atk:1230, def:672, spd:0},
     ],
     hiddenAbility:'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[85,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[85,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,12], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[85,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[85,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,13], def:[0,0], heal:[0,0], spd:[35,25], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {hp:20, atk:20},
     weapons:[
       {name:'Moonlit Feather', stars:5, hp:2279, atk:733, def:401, bonusStats:{atk:30},
@@ -2263,6 +2391,10 @@ export const CHARACTERS = [
           'หลังใช้สกิลรักษา มีโอกาส 26.0%/34.0%/34.0%/42.0%/42.0%/50.0%/50.0% มอบ Blessing ให้เป้าหมายหลัก',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[110,28], def:[55,15], heal:[47,25], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[55,16], heal:[47,25], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Makoto',             codename:'makoto',         role:'Assassin',   element:'Fire',           rarity:5, cards:['Courage 4pc','Triumph 2pc'],    weapon:'Best Fire ATK weapon',                          statPrio:['Attack %','Crit Rate','Crit Mult.','Damage Mult'],     note:'Fire Assassin variant. Moon Phase stacks → Scarlet Hades burst. Dual Theurgy (Ardhanari + Cadenza). Strong with ally buff support.',
     mechanics: "Moon Phase stack (สูงสุด 4, คงอยู่ 2 เทิร์น) สะสมจาก Melody of Flames (2 stack/ครั้ง) และ Nocturne of Battle (2 stack/ครั้ง) Scarlet Hades ใช้ Moon Phase ทั้งหมดเพื่อ (stack) hits แล้วใช้ Full Moon stack ทั้งหมดเพื่อ hit เพิ่ม — ที่ 4 stack pierce rate และดาเมจเพิ่มสูงสุด Full Moon stack มาจาก Ardhanari (Fire Theurgy) Cadenza (Theurgy ที่สอง) บัฟ CRIT DMG ปาร์ตี้ + ATK ของ Makoto เอง วงจรที่ดีที่สุดใช้ Theurgy ทั้งสองเพื่อสะสม Moon Phase และ Full Moon ก่อนระเบิดด้วย Scarlet Hades",
@@ -2367,6 +2499,10 @@ export const CHARACTERS = [
         ],
       },
     ],
+    statTargets: {
+      'LV10': {atk:[110,22], crit:[42,20], cdmg:[80,22], dmgMulti:[35,12], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[110,24], crit:[42,22], cdmg:[80,24], dmgMulti:[35,13], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Closer (Tropical)', codename:'closer-tropical', role:'Sweeper', element:'Bless', rarity:5,
     cards:['Courage 4pc','Virtue 2pc'], weapon:'Best HP/Bless ATK weapon',
@@ -2437,6 +2573,12 @@ export const CHARACTERS = [
       {hp:4388, atk:1185, def:606, spd:0},
     ],
     hiddenAbility: 'HP % +29%',
+    statTargets: {
+      'LV10'   : {atk:[70,15], crit:[25,12], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[70,12], crit:[25,12], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[70,16], crit:[25,13], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[70,13], crit:[25,13], cdmg:[0,0], dmgMulti:[0,0], hp:[110,25], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Colorful Coast', stars:5,
@@ -2534,6 +2676,12 @@ export const CHARACTERS = [
       {hp:3756, atk:1330, def:657, spd:95},
     ],
     hiddenAbility: 'ATK +29%',
+    statTargets: {
+      'LV10'   : {atk:[110,20], crit:[40,18], cdmg:[65,15], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,17], crit:[40,18], cdmg:[65,12], dmgMulti:[50,22], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,22], crit:[40,19], cdmg:[65,16], dmgMulti:[50,24], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,19], crit:[40,19], cdmg:[65,13], dmgMulti:[50,24], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {
@@ -2664,6 +2812,10 @@ export const CHARACTERS = [
         ],
       },
     ],
+    statTargets: {
+      'LV10': {atk:[50,12], crit:[0,0], cdmg:[0,0], dmgMulti:[55,20], hp:[110,25], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[50,13], crit:[0,0], cdmg:[0,0], dmgMulti:[55,22], hp:[110,25], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Mont (Frostgale)',   codename:'mont-frostgale', role:'Assassin',   element:'Wind',           element2:'Ice', rarity:5, cards:['Courage 4pc','Triumph 2pc'], weapon:'Best Wind/Ice ATK weapon',               statPrio:['Attack %','Crit Rate','Crit Mult.'],                 note:'Dual-element Wind/Ice Assassin variant. Unique frostgale mechanics merge both elements.',
     mechanics: "Frostgale Kotone สลับระหว่าง Spring (Wind) และ Winter (Ice) modes สลับได้ขณะไม่มี Edge active การใช้ Ailes au Vent/Frozen Wings เปิด Spring's/Winter's Edge 1 เทิร์น — ระหว่าง Edge ทุก ally Wind/Ice skill ให้ 1 Vestige stack และโบนัส Edge เฉพาะ (Spring: follow-up Wind hit; Winter: shield ปาร์ตี้) เมื่อ Edge หมด Vestige ทั้งหมดยิงเป็น Resonance burst แต่ละ Vestige ที่ได้เพิ่ม ATK +5% ถาวร (สูงสุด 7 stack = +35%) Swan's Gaze M2: ระหว่าง Edge ศัตรู DEF -40% (Spring) หรือปาร์ตี้ Ice DMG +30% (Winter) — เปิด Edge ก่อนเทิร์น DPS",
@@ -2731,6 +2883,12 @@ export const CHARACTERS = [
       {hp:3856, atk:1274, def:628, spd:98},
     ],
     hiddenAbility: 'Crit Mult. +34.9%',
+    statTargets: {
+      'LV10'   : {atk:[110,22], crit:[42,20], cdmg:[260,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[110,19], crit:[42,18], cdmg:[260,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[110,24], crit:[42,22], cdmg:[260,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[110,21], crit:[42,20], cdmg:[260,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, crit:12},
     weapons:[
       {
@@ -2936,6 +3094,12 @@ export const CHARACTERS = [
       {hp:3922, atk:1208, def:642, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[75,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[24,22], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[75,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[24,22], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[75,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[24,24], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[75,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[24,24], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {spr:125, atk:20, cdmg:24},
     weapons:[
       {name:'Bubble Babies', stars:5,
@@ -3078,6 +3242,10 @@ export const CHARACTERS = [
           'โอกาส 2.0%/3.0%/3.0%/4.0%/4.0%/5.0%/5.0% ทำให้ศัตรูเป้าหมายติด Forget 1 เทิร์น',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[85,22], crit:[32,12], cdmg:[0,0], dmgMulti:[0,0], hp:[70,15], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[85,24], crit:[32,13], cdmg:[0,0], dmgMulti:[0,0], hp:[70,16], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Yui', codename:'Bui', role:'Sweeper', element:'Electric', rarity:5,
     cards:['Courage 4pc','Triumph 2pc'], weapon:'Best follow-up/Electric weapon (Cyber Jammers)',
@@ -3148,6 +3316,12 @@ export const CHARACTERS = [
       {hp:3790, atk:1274, def:628, spd:0},
     ],
     hiddenAbility: 'Crit Rate +17.4%',
+    statTargets: {
+      'LV10'   : {atk:[100,22], crit:[45,25], cdmg:[75,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[100,19], crit:[45,25], cdmg:[75,19], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[100,24], crit:[45,25], cdmg:[75,24], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[100,21], crit:[45,25], cdmg:[75,21], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {atk:20, cdmg:24},
     weapons:[
       {name:'Cyber Jammers', stars:5,
@@ -3246,6 +3420,12 @@ export const CHARACTERS = [
       {hp:2647, atk:842, def:541, spd:0},
     ],
     hiddenAbility: 'Ailment Accuracy +26.1%',
+    statTargets: {
+      'LV10'   : {atk:[65,18], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,12], def:[0,0], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[50,25]},
+      'LV10+M5': {atk:[65,15], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,12], def:[0,0], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[50,22]},
+      'LV13'   : {atk:[65,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,13], def:[0,0], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[50,25]},
+      'LV13+M5': {atk:[65,16], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[55,13], def:[0,0], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[50,22]},
+    },
     mindscapeBonus: {ailm:24, atk:20},
     weapons:[
       {name:'Jolting Pulse', stars:5,
@@ -3344,6 +3524,12 @@ export const CHARACTERS = [
       {hp:3922, atk:1119, def:731, spd:0},
     ],
     hiddenAbility: 'Attack % +29%',
+    statTargets: {
+      'LV10'   : {atk:[75,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[32,22], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[75,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[32,22], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[75,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[32,24], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[75,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[32,24], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {dmgMulti:16, atk:20},
     weapons:[
       {name:'Sweet Pickaxe', stars:5,
@@ -3468,6 +3654,10 @@ export const CHARACTERS = [
         ],
       },
     ],
+    statTargets: {
+      'LV10': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[45,15], heal:[26,25], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[45,16], heal:[26,25], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Leon', codename:'Leon', role:'Guardian', element:'Nuclear', rarity:4,
     cards:['Peace 4pc','Triumph 2pc'], weapon:'Best ATK support weapon (Final Buster)',
@@ -3567,6 +3757,10 @@ export const CHARACTERS = [
           'ต่อ HP ที่สูญเสียทุก 20% ของเป้าหมาย เพิ่ม Attack 20%',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[85,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[85,18], def:[45,15], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[85,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[85,19], def:[45,16], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Closer', codename:'Closer', role:'Sweeper', element:'Electric', rarity:4,
     cards:['Courage 4pc','Triumph 2pc'], weapon:'Best Electric DMG weapon (Quasar)',
@@ -3664,6 +3858,10 @@ export const CHARACTERS = [
           'หากมีศัตรูติด Shock เพิ่ม Attack 20%/26%/26%/32%/32%/38%/38%',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[85,22], crit:[32,15], cdmg:[0,0], dmgMulti:[45,15], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[85,24], crit:[32,16], cdmg:[0,0], dmgMulti:[45,16], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Mont', codename:'Mont', role:'Assassin', element:'Ice', rarity:4,
     cards:['Courage 4pc','Triumph 2pc'], weapon:'Best Ice ATK weapon',
@@ -3761,6 +3959,10 @@ export const CHARACTERS = [
           'ทุกครั้งที่ Kotone ได้รับ Ice Crystal stack เพิ่มความเสียหายธาตุน้ำแข็ง 2.4%/3.1%/3.1%/3.8%/3.8%/4.5%/4.5% เป็นเวลา 1 เทิร์น สะสมสูงสุด 10 ครั้ง',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[85,22], crit:[38,18], cdmg:[70,20], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[85,24], crit:[38,19], cdmg:[70,22], dmgMulti:[0,0], hp:[0,0], def:[0,0], heal:[0,0], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Soy', codename:'Soy', role:'Guardian', element:'Ice', rarity:4,
     cards:['Love 4pc','Virtue 2pc'], weapon:'Best HP/Ice Guardian weapon',
@@ -3844,6 +4046,10 @@ export const CHARACTERS = [
           'ขณะ Desperado ใช้งานอยู่ เพิ่ม HP สูงสุดเพิ่มเติม 11.0%/14.3%/14.3%/17.7%/17.7%/21.0%/21.0%, DEF 11.0%/14.3%/14.3%/17.7%/17.7%/21.0%/21.0% และต้านทานสภาวะแปรปรวน 11.0%/14.3%/14.3%/17.7%/17.7%/21.0%/21.0%',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[65,18], heal:[23,18], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,25], def:[65,19], heal:[23,19], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Yuki', codename:'Yuki', role:'Guardian', element:'Bless', rarity:4,
     cards:['Triumph 4pc','Courage 2pc'], weapon:'Best Defense % Bless weapon (Karmic Cycle)',
@@ -3941,8 +4147,17 @@ export const CHARACTERS = [
           'เมื่อมอบ shield ให้พันธมิตรที่มี HP ต่ำกว่า 50% เพิ่ม shield 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0%',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[85,20], def:[95,25], heal:[0,0], spd:[28,15], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[85,22], def:[95,25], heal:[0,0], spd:[28,16], spr:[0,0], ailm:[0,0]},
+    },
   },
-  {name:'Key',                codename:'Key',            role:'Saboteur',   element:'Fire',           rarity:4, cards:['Hindrance 4pc','Strife 2pc'],    weapon:'Best Fire debuff weapon',                       statPrio:['Attack %','Speed','Defense %'],                             note:'4★ Fire Saboteur. Applies debuffs to reduce enemy Fire resistance.'},
+  {name:'Key',                codename:'Key',            role:'Saboteur',   element:'Fire',           rarity:4, cards:['Hindrance 4pc','Strife 2pc'],    weapon:'Best Fire debuff weapon',                       statPrio:['Attack %','Speed','Defense %'],                             note:'4★ Fire Saboteur. Applies debuffs to reduce enemy Fire resistance.',
+    statTargets: {
+      'LV10': {atk:[65,20], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[0,0], def:[38,12], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[65,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[0,0], def:[38,13], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[0,0]},
+    },
+  },
   {name:'Moko', codename:'Moko', role:'Medic', element:'Psychokinesis', rarity:4,
     cards:['Love 4pc','Opulence 2pc'], weapon:'Best Healing/Psy weapon (Bubble Babies)',
     statPrio:['Attack %','Healing Effect','HP %'], note:'Psy Medic. Sparks → Summer Reminiscence Resonance cycles heal and debuff simultaneously. ATK scales all healing; Power of Memories grants Psy DMG and HP from healing output.',
@@ -4039,6 +4254,10 @@ export const CHARACTERS = [
           "เมื่อเปิดใช้ Summer Reminiscence เพิ่มการรักษาของ Tomoko 13.0%/16.9%/16.9%/20.9%/20.9%/24.8%/24.8% เป็นเวลา 2 เทิร์น",
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[75,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,15], def:[0,0], heal:[24,22], spd:[0,0], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[75,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[75,16], def:[0,0], heal:[24,24], spd:[0,0], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Sepia',              codename:'Sepia',          role:'Assassin',   element:'Curse',          rarity:4, cards:['Reconciliation 4pc','Opulence 2pc'],  weapon:'Best Curse ATK weapon',                         statPrio:['Attack %','Speed','HP %'],                              note:'4★ Curse Assassin. High-speed burst damage with Curse element.',
     mechanics: "Sepia มี Verse 3 ประเภท (Hate/Healing/Passion) ที่สะสมจากทักษะต่างกัน Sonnet of Fate Resonance ใช้ Verse stack และเปิด secondary effect เฉพาะต่อประเภท: Hate = ติด Curse, Healing = ฟื้น HP, Passion = ดาเมจ Almighty โบนัส This Beautiful Woman passive เพิ่มดาเมจ Sonnet +10% ต่อ Verse stack ที่ใช้ SPD สูงเร่ง Verse generation ทำให้วงจร Resonance เร็วขึ้น ในฐานะ Curse Assassin 4★ Sepia แลก burst potential กับ high-speed cycling ที่สม่ำเสมอ",
@@ -4137,6 +4356,10 @@ export const CHARACTERS = [
         ],
       },
     ],
+    statTargets: {
+      'LV10': {atk:[80,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[30,18], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[80,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[30,19], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Puppet', codename:'Puppet', role:'Elucidator', element:'-', rarity:4,
     cards:['Love 4pc','Peace 2pc'], weapon:'Best DEF/HP support weapon',
@@ -4222,6 +4445,10 @@ export const CHARACTERS = [
           'เพิ่ม Defense ของพันธมิตรที่มี shield 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0%',
         ]},
     ],
+    statTargets: {
+      'LV10': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,22], def:[85,25], heal:[0,0], spd:[28,15], spr:[0,0], ailm:[0,0]},
+      'LV13': {atk:[0,0], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[100,24], def:[85,25], heal:[0,0], spd:[28,16], spr:[0,0], ailm:[0,0]},
+    },
   },
   {name:'Okyann', codename:'Okyann', role:'Elucidator', element:'-', rarity:4,
     cards:['Opulence 4pc','Reconciliation 2pc'], weapon:'Best ATK support weapon (Retro Disco Style)',
@@ -4292,6 +4519,12 @@ export const CHARACTERS = [
       {hp:2839, atk:842, def:514, spd:0},
     ],
     hiddenAbility:'Attack % +21.8%',
+    statTargets: {
+      'LV10'   : {atk:[75,22], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[0,0]},
+      'LV10+M5': {atk:[75,19], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,15], def:[0,0], heal:[0,0], spd:[28,20], spr:[0,0], ailm:[0,0]},
+      'LV13'   : {atk:[75,24], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[0,0]},
+      'LV13+M5': {atk:[75,21], crit:[0,0], cdmg:[0,0], dmgMulti:[0,0], hp:[65,16], def:[0,0], heal:[0,0], spd:[28,22], spr:[0,0], ailm:[0,0]},
+    },
     mindscapeBonus: {ailm:28, atk:20},
     weapons:[
       {name:'Retro Disco Style', stars:5, hp:2339, atk:694, def:423, bonusStats:{atk:30},
