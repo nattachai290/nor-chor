@@ -717,8 +717,6 @@ export default function P5XPage() {
                           const score = w / (statSlotCount[key] || 1)
                           if (score > bestScore) { bestScore = score; bestLabel = label }
                         })
-                        // Moon/Star/Sky always show something — fallback to first keyed stat
-                        if (!bestLabel) bestLabel = (slot.mainStats.find(({key}) => key) || {}).label || null
                         return (
                           <div key={slot.id} className="slot-row">
                             <span className="slot-name">{slot.id}</span>

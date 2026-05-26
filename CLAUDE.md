@@ -179,7 +179,12 @@ Stat แต่ละตัวมีจำนวน slot ที่รองรั
 **กฎเหล็ก: Moon / Star / Sky ห้ามแสดง "-" เด็ดขาด**
 - แม้ base stats จะเกิน target แล้ว (need ≤ 0) ก็ยังต้องแนะนำ main stat
 - Player ต้องใส่ main stat ในทุก slot อยู่ดี — "-" ทำให้ไม่รู้ว่าต้องใส่อะไร
-- ถ้าทุก stat ใน slot มี weight = 0 → fallback เป็น stat แรกใน slot (ATK% สำหรับ Moon/Sky, Crit Rate สำหรับ Star)
+- **ห้ามใช้ fallback default** — "-" หมายความว่าข้อมูล stat weight ผิด ต้องแก้ที่ data ไม่ใช่ UI
+
+**เงื่อนไขที่ต้องมี weight > 0 อย่างน้อยหนึ่งตัวต่อ slot:**
+- Moon ต้องมี: atk / dmgMulti / hp / def / heal อย่างน้อยหนึ่งตัว weight > 0
+- Star ต้องมี: crit / cdmg / atk / hp / def / ailm อย่างน้อยหนึ่งตัว weight > 0
+- Sky ต้องมี: atk / def / hp / spd / spr อย่างน้อยหนึ่งตัว weight > 0
 
 **ผลลัพธ์ที่ตามมา:**
 - DMG Mult ใน charTgt → Moon → DMG Mult เสมอ (score = weight/1 ชนะ ATK% ที่ weight/3)
