@@ -153,6 +153,34 @@ max SPR = (SP ที่ต้องการต่อ cycle / จำนวน ca
 | Speed (flat)   | 2.8           | 2.2                       | 11.2           | 8.8            |
 | HP%            | 4.4%          | 3.6%                      | 17.6%          | 14.4%          |
 
+### อัลกอริทึมการเลือก Main Stat Slot
+
+**หลักการ: exclusive stat ได้ slot ก่อน, shared stat เติมช่องที่เหลือ**
+
+Stat แต่ละตัวมีจำนวน slot ที่รองรับ (slotCount):
+| Stat | Slot ที่มี | slotCount |
+|---|---|---|
+| DMG Mult | Moon เท่านั้น | 1 |
+| Heal Effect | Moon เท่านั้น | 1 |
+| Crit Rate | Star เท่านั้น | 1 |
+| Crit Mult | Star เท่านั้น | 1 |
+| Ailment Acc | Star เท่านั้น | 1 |
+| SP Recovery | Sky เท่านั้น | 1 |
+| Speed | Sky เท่านั้น | 1 |
+| ATK% | Moon + Star + Sky | 3 |
+| HP% | Moon + Star + Sky | 3 |
+| DEF% | Moon + Star + Sky | 3 |
+
+**ลำดับการกำหนด slot:**
+1. ตัด stat ที่ need = 0 ออกจากการแข่งขันทันที
+2. คำนวณ score = weight / slotCount สำหรับแต่ละ option ในแต่ละ slot
+3. ใน slot นั้น เลือก option ที่ score สูงสุด
+
+**ผลลัพธ์ที่ตามมา:**
+- ถ้า DMG Mult need > 0 → Moon → DMG Mult เสมอ (score = weight/1 ชนะ ATK% ที่ weight/3)
+- ถ้า SPR need > 0 → Sky → SPR เสมอ
+- ATK% ได้ slot ก็ต่อเมื่อ exclusive stat ใน slot นั้น need = 0
+
 ### กฎการเลือก Main vs Sub
 
 **ใช้ Main stat เมื่อ:**
@@ -180,15 +208,42 @@ sub stat option: [rolls × tier1 = ค่า โดยใช้กี่ roll]
 เหตุผล: [เปรียบ efficiency + opportunity cost ของ slot ที่ต้องเสีย]
 ```
 
+### Checklist ก่อน commit statTargets
+
+```
+[ ] target ทุกตัวมาจากสกิล/passive — ไม่ได้ตั้งเองโดยไม่มีที่มา
+[ ] cdmg target > 150 (base) หรือ [0,0] — ห้าม < 150
+[ ] crit target > 5 (base) หรือ [0,0] — ห้าม < 5
+[ ] sum ของ roll demand ≤ 20r หลังหัก main stat แล้ว
+[ ] main stat assignment สมเหตุสมผล (exclusive stat ได้ slot ที่ถูกต้อง)
+[ ] weight ของ primary stat ≥ 15, secondary stat ≤ 12
+[ ] ถ้ามี statTargets หลาย stage — LV13+M5 ต้องสูงกว่าหรือเท่ากับ LV10 เสมอ
+```
+
 ### กฎ stat weight
 
-**Primary stat** — มีที่มาจาก skill cap / mechanic โดยตรง → weight ตามความสำคัญ (10–25)
-**Secondary stat** — skill scale จากสถิตินั้นจริง แต่ไม่มี cap specific → weight ต่ำ (5–10)
-**ไม่เกี่ยว** — ไม่มีสกิลรองรับ → weight = 0, แสดง "-"
+**Primary stat** — มีที่มาจาก skill cap / mechanic โดยตรง → weight (15–25)
+
+| ตัวอย่าง | เหตุผล |
+|---|---|
+| ailm Matoi weight 25 | skill cap ระบุชัด → mechanic หยุดขยายที่ค่านั้น |
+| spr wind-tempest weight 25 | SP engine cap คำนวณได้ → ต้องถึงเพื่อไม่เสีย SP |
+| crit ทุก DPS weight 18–20 | ต้องการสูงแต่ไม่มี cap ชัด → primary แต่ weight ต่ำกว่า cap stat |
+
+**Secondary stat** — skill scale จากสถิตินั้นจริง แต่ไม่มี cap specific → weight (8–12)
+
+| ตัวอย่าง | เหตุผล |
+|---|---|
+| cdmg DPS ทั่วไป weight 15 | scale ดาเมจ แต่ไม่มี mechanic cap |
+| atk Matoi weight 8 | skill scale ATK แต่ ailm สำคัญกว่ามาก |
+| dmgMulti Joker weight 12 | scale ดาเมจ แต่ set/weapon ให้มาบางส่วนแล้ว |
+
+**ไม่เกี่ยว** — ไม่มีสกิลรองรับ → weight = 0
 
 กฎ:
 - **Survive เป็นหน้าที่ Medic/Guardian** — HP%/DEF% ใส่ได้เฉพาะตัวละครที่ skill scale จาก HP/DEF โดยตรง
 - ห้าม fallback เป็น HP%/DEF% เพื่อ "อยู่รอด" สำหรับ Saboteur/Assassin/Sweeper
+- **weight ต้องสะท้อน priority จริง** — ถ้า Star ควรไป Crit Rate ไม่ใช่ Crit Mult → cdmg weight ต้องต่ำกว่า crit weight
 
 ### กฎเลือก Sky slot
 
@@ -203,15 +258,20 @@ sub stat option: [rolls × tier1 = ค่า โดยใช้กี่ roll]
 
 ### กฎเลือก Moon slot (ATK% vs DMG Mult)
 
+**ขั้นที่ 1 — exclusivity check:**
+- ถ้า DMG Mult need > 0 → Moon → DMG Mult เสมอ (exclusive slot, ไม่ต้องคำนวณ multiplier)
+- ถ้า Heal Effect need > 0 → Moon → Heal Effect เสมอ
+
+**ขั้นที่ 2 — ถ้า DMG Mult need = 0** (Moon ว่าง) ค่อยเปรียบ multiplier:
+
 สมการ: `BaseATK × (1+ATK%) × skill% × (1+DMGMult%)`
 → **เลือก stat ที่ multiplier ต่ำกว่าเสมอ** (return สูงกว่า)
 
-ขั้นตอน:
-1. รวม ATK% ทั้งหมด (base + weapon + set + Sky)
-2. รวม DMGMult% ทั้งหมด
-3. (1+ATK%) > (1+DMGMult%) → Moon → DMG Mult / กลับกัน → Moon → ATK%
+1. รวม ATK% ทั้งหมด (base + weapon + set + Sky main)
+2. รวม DMGMult% ทั้งหมด (base + weapon + set)
+3. (1+ATK%) > (1+DMGMult%) → Moon → ATK% ไม่คุ้ม, ใช้ DMG Mult แทน
 
-**กรณีทั่วไป:** Sky ใส่ ATK% อยู่แล้ว (+31.4%) → ATK% ฝั่งสูงขึ้น → **Moon → DMG Mult**
+**กรณีทั่วไป:** Sky ใส่ ATK% +31.4% อยู่แล้ว → ATK% ฝั่งสูงขึ้น → **Moon → DMG Mult** เกือบทุกกรณีถ้า DMG Mult ยังขาดอยู่
 
 ### กฎเลือก Star slot (Crit Rate vs Crit Mult vs Ailment)
 
