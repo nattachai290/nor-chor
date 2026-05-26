@@ -69,6 +69,15 @@ export default function CardSimulator({
       return {...prev, [k]: {...cur, [slotId]: Math.max(0, curRolls + delta)}}
     })
 
+  const setRolls = (k, slotId, raw) =>
+    setSubAlloc(prev => {
+      const cur = prev[k] || {}
+      const curRolls = cur[slotId] || 0
+      const otherRolls = totalRollsForSlot(prev, slotId) - curRolls
+      const val = Math.max(0, Math.min(4 - otherRolls, parseInt(raw) || 0))
+      return {...prev, [k]: {...cur, [slotId]: val}}
+    })
+
   const getCardSlots = (slotId) => subSlots[slotId] || [null, null, null, null]
 
   const setSlotStat = (cardSlotId, slotIdx, newKey) => {
@@ -231,7 +240,14 @@ export default function CardSimulator({
                       {selKey && opt ? (
                         <>
                           <button className="alloc-btn" onClick={() => bump(selKey, slot.id, -1)} disabled={rolls===0}>−</button>
-                          <span className="alloc-num">{rolls}</span>
+                          <input
+                            type="number"
+                            className="alloc-num-input"
+                            value={rolls}
+                            min={0}
+                            max={4 - totalRollsForSlot(subAlloc, slot.id) + rolls}
+                            onChange={e => setRolls(selKey, slot.id, e.target.value)}
+                          />
                           <button className="alloc-btn" onClick={() => bump(selKey, slot.id, +1)} disabled={full && rolls===0}>+</button>
                           <span className="alloc-hint">+{opt.t1}{opt.unit}/roll</span>
                         </>
