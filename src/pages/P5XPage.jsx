@@ -890,13 +890,16 @@ export default function P5XPage() {
                     const v = parseFloat((84 * Math.min(spr, 450) / 450).toFixed(1))
                     return v > 0 ? { cdmg: v } : {}
                   })()
+                  const cbTypes = new Set((currentChar.combatBuffs||[]).map(b => b.type).filter(Boolean))
                   const base0 = {...base0raw}
-                  Object.entries(spacePassiveB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
-                  Object.entries(sunKissedB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                  if (!cbTypes.has('spacePassiveB')) Object.entries(spacePassiveB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                  if (!cbTypes.has('sunKissedB'))   Object.entries(sunKissedB).forEach(([k,v])   => { base0[k] = (base0[k]||0)+v })
                   if (inclCombatBuff && currentChar.combatBuffs?.length) {
+                    const typedSrcs = { sunKissedB, spacePassiveB }
                     currentChar.combatBuffs.forEach(b => {
-                      if (b.inBase) return  // already in base0 from spacePassiveB/sunKissedB/computeStats
-                      Object.entries(b.stats || {}).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                      const src = b.type ? typedSrcs[b.type] : b.stats
+                      if (!src) return
+                      Object.entries(src).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
                     })
                   }
                   // Compute recommended main stat bonus (same exclusivity logic as the recommender)
@@ -1026,28 +1029,26 @@ export default function P5XPage() {
                           const mContrib = Object.fromEntries(Object.entries(msBonus).filter(([k]) => trackedKeys.has(k)))
                           if (Object.keys(mContrib).length) sources.push({ label:'Mindscape (M5)', contrib:mContrib })
                         }
+                        const fourPcName = (currentChar.cards||[]).map(c=>{const m=c.match(/^(.+?)\s+4pc$/i);return m?m[1].trim():null}).find(Boolean)
+                        const spaceCardObj = fourPcName && (REVELATION_CARDS.Space||[]).find(c => c.passives.some(p => p.name === fourPcName))
+                        const spLabel = spaceCardObj ? `${spaceCardObj.name} & ${fourPcName}` : fourPcName ? `${fourPcName} Space passive` : null
                         const spContrib = Object.fromEntries(Object.entries(spacePassiveB).filter(([k]) => trackedKeys.has(k)))
-                        if (Object.keys(spContrib).length) {
-                          const fourPcName = (currentChar.cards||[]).map(c=>{const m=c.match(/^(.+?)\s+4pc$/i);return m?m[1].trim():null}).find(Boolean)
-                          const spaceCardObj = fourPcName && (REVELATION_CARDS.Space||[]).find(c => c.passives.some(p => p.name === fourPcName))
-                          const spLabel = spaceCardObj ? `${spaceCardObj.name} & ${fourPcName}` : `${fourPcName} Space passive`
-                          sources.push({ label:spLabel, contrib:spContrib })
-                        }
+                        if (Object.keys(spContrib).length && !cbTypes.has('spacePassiveB') && spLabel) sources.push({ label:spLabel, contrib:spContrib })
                         const skContrib = Object.fromEntries(Object.entries(sunKissedB).filter(([k]) => trackedKeys.has(k)))
-                        if (Object.keys(skContrib).length) sources.push({ label:'Sun-kissed Blooms', contrib:skContrib })
+                        if (Object.keys(skContrib).length && !cbTypes.has('sunKissedB')) sources.push({ label:'Sun-kissed Blooms', contrib:skContrib })
                         if (inclMain) {
                           recMainSources.forEach(({ slot, key, label, max }) => {
                             if (trackedKeys.has(key)) sources.push({ label:`${slot} main: ${label}`, contrib:{ [key]: max } })
                           })
                         }
                         if (inclCombatBuff && currentChar.combatBuffs?.length) {
-                          const typedSrcs = { sunKissedB: sunKissedB, spacePassiveB: spacePassiveB }
+                          const typedSrcs = { sunKissedB, spacePassiveB }
                           currentChar.combatBuffs.forEach(b => {
-                            if (b.inBase) return  // already shown in sources via existing spacePassiveB/sunKissedB entries
                             const src = b.type ? typedSrcs[b.type] : b.stats
                             if (!src) return
+                            const label = b.type === 'spacePassiveB' && spLabel ? spLabel : b.name
                             const contrib = Object.fromEntries(Object.entries(src).filter(([k]) => trackedKeys.has(k)))
-                            if (Object.keys(contrib).length) sources.push({ label:b.name, contrib })
+                            if (Object.keys(contrib).length) sources.push({ label, contrib })
                           })
                         }
                         if (!sources.length) return null
