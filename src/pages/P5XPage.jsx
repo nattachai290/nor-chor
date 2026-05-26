@@ -128,7 +128,7 @@ export default function P5XPage() {
     return result
   })()
   const totalStats = Object.fromEntries(
-    Object.keys(stats).map(k => [k, (stats[k]||0) + (userStats[k]||0) + (cardSimStats[k]||0) + (combatBuffStats[k]||0)])
+    ['atk','crit','cdmg','dmgMulti','hp','def','heal','spd','ailm','spr','pierce','dmgred','dmgDown'].map(k => [k, (stats[k]||0) + (userStats[k]||0) + (cardSimStats[k]||0) + (combatBuffStats[k]||0)])
   )
   const effHp = ((1 + totalStats.hp / 100) * (1 + totalStats.def / 100) * 100 - 100).toFixed(1)
 
@@ -142,7 +142,7 @@ export default function P5XPage() {
   const finalAtk = lv80 ? Math.round((lv80.atk + wAtk) * (1 + totalStats.atk / 100)) : null
   const finalHp  = lv80 ? Math.round((lv80.hp  + wHp)  * (1 + totalStats.hp  / 100)) : null
   const finalDef = lv80 ? Math.round((lv80.def + wDef)  * (1 + totalStats.def / 100)) : null
-  const finalSpd = Math.round(totalStats.spd)
+  const finalSpd = totalStats.spd.toFixed(1)
 
   const filtered = CHARACTERS.filter(c =>
     (filter === 'all' || c.role === filter) &&
@@ -714,16 +714,18 @@ export default function P5XPage() {
                         <div className="final-stat"><span className="fs-label">ATK</span><span className="fs-val">{finalAtk?.toLocaleString()}</span></div>
                         <div className="final-stat"><span className="fs-label">HP</span><span className="fs-val">{finalHp?.toLocaleString()}</span></div>
                         <div className="final-stat"><span className="fs-label">DEF</span><span className="fs-val">{finalDef?.toLocaleString()}</span></div>
-                        <div className="final-stat"><span className="fs-label">SPD</span><span className="fs-val">{finalSpd}</span></div>
+                        <div className="final-stat"><span className="fs-label">Speed</span><span className="fs-val">{finalSpd}</span></div>
                       </div>
                     )}
                     <div className="summary-grid">
-                      <div className="sum-box"><div className="sum-val">{totalStats.atk.toFixed(1)}%</div><div className="sum-lbl">Attack %</div></div>
                       <div className="sum-box"><div className="sum-val">{Math.min(totalStats.crit, 100).toFixed(1)}%</div><div className="sum-lbl">CRIT Rate</div></div>
                       <div className="sum-box"><div className="sum-val">{totalStats.cdmg.toFixed(1)}%</div><div className="sum-lbl">CRIT DMG</div></div>
                       <div className="sum-box"><div className="sum-val">{totalStats.dmgMulti.toFixed(1)}%</div><div className="sum-lbl">Damage Mult</div></div>
                       <div className="sum-box"><div className="sum-val">+{effHp}%</div><div className="sum-lbl">Eff.HP %</div></div>
-                      <div className="sum-box"><div className="sum-val">{Math.round(totalStats.spd)}</div><div className="sum-lbl">SPD</div></div>
+                      <div className="sum-box"><div className="sum-val">{totalStats.spr.toFixed(1)}%</div><div className="sum-lbl">SP Recovery</div></div>
+                      <div className="sum-box"><div className="sum-val">{(16 * (1 + totalStats.spr / 100) * 2).toFixed(1)}</div><div className="sum-lbl">SP/2 round</div></div>
+                      <div className="sum-box"><div className="sum-val">{totalStats.ailm.toFixed(1)}%</div><div className="sum-lbl">Ailment Acc</div></div>
+                      <div className="sum-box"><div className="sum-val">{totalStats.pierce.toFixed(1)}%</div><div className="sum-lbl">Pierce Rate</div></div>
                     </div>
                     {scoreData && (
                       <div className="stat-target-card">

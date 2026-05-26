@@ -146,7 +146,7 @@ export default function CardSimulator({
     subFromAlloc[k] = SLOT_IDS.reduce((sum, slotId) => sum + ((subAlloc[k]||{})[slotId] || 0), 0)
   })
 
-  const fmt = (k, v) => k === 'spd' ? Math.floor(v) : Math.floor(v) + '%'
+  const fmt = (k, v) => k === 'spd' ? v.toFixed(1) : v.toFixed(1) + '%'
 
   const totalSpr = (base0.spr||0) + (mainFromSel.spr||0) + (subFromAlloc.spr||0)
   const spPerCast = 16 * (1 + totalSpr / 100)
