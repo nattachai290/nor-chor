@@ -79,6 +79,24 @@
 3. Stage = skill level (LV10/LV13) + Mindscape level (M5 = Mindscape LV5)
 4. Mindscape bonus คิดแยกต่างหาก ไม่รวมในค่า base
 
+### กฎ: stat target คือ total value รวม baseStats
+
+**ค่า base ที่ทุกตัวละครมีอยู่แล้วก่อนใส่ card/weapon:**
+- `crit` = 5%
+- `cdmg` = 150%
+- `spd` = ตาม role (Dealer ~94–102, Support ~100–106)
+
+**กฎเหล็ก:**
+- target ใน `statTargets` / `CHAR_STAT_TARGETS` คือ **total รวม baseStats** — ไม่ใช่ bonus บน base
+- **ห้ามตั้ง cdmg target ต่ำกว่า 150** — ทุกตัวมี cdmg 150% อยู่แล้ว target ต่ำกว่านี้ = meaningless
+- **ห้ามตั้ง crit target ต่ำกว่า 5** — ทุกตัวมี crit 5% อยู่แล้ว
+- ตรวจสอบ: `need = target − computeStats(base)` ถ้า need < 0 → target ผิด ต้องแก้
+
+**ค่า cdmg target ที่สมเหตุสมผล:**
+- Primary (Star → Crit Mult): ~220–260% (base 150 + Star main 37.6 + subs ~30%)
+- Secondary (Star → Crit Rate, cdmg จาก sub เท่านั้น): ~185% (base 150 + subs ~35%)
+- ไม่สำคัญ: [0,0]
+
 ## หลักการ Min vs Max ของ stat target
 
 stat target แต่ละตัวมีสองขอบ — ต้องระบุทั้งคู่:
@@ -195,17 +213,46 @@ sub stat option: [rolls × tier1 = ค่า โดยใช้กี่ roll]
 
 **กรณีทั่วไป:** Sky ใส่ ATK% อยู่แล้ว (+31.4%) → ATK% ฝั่งสูงขึ้น → **Moon → DMG Mult**
 
+### กฎเลือก Star slot (Crit Rate vs Crit Mult vs Ailment)
+
+Star มี 3 stat exclusive ที่ไม่มี slot อื่น: Crit Rate, Crit Mult, Ailment Acc
+
+**ลำดับความสำคัญ:**
+1. คำนวณ `need` ของแต่ละ stat (target − base)
+2. stat ที่ need > 0 เท่านั้นที่แข่งกัน — need = 0 ตัดออกทันที
+3. เปรียบ weight: ตัวที่ weight สูงกว่าได้ Star
+
+**กรณีที่พบบ่อย:**
+- Crit Rate need > 0, Crit Mult need = 0 → Star → **Crit Rate**
+- Crit Mult need > 0, Crit Rate need = 0 → Star → **Crit Mult**
+- ทั้งคู่ need > 0: ดู weight — ถ้า cdmg weight < crit weight → Star → **Crit Rate**, cdmg จาก sub
+- Ailment need > 0 และ weight สูงกว่า → Star → **Ailment**
+
+**หมายเหตุ cdmg:** เนื่องจาก base cdmg = 150% อยู่แล้ว ตัวละครส่วนใหญ่มี cdmg need ต่ำกว่า crit need → Star → Crit Rate มักถูกต้องกว่า Star → Crit Mult สำหรับ DPS ทั่วไป
+
+### กฎ Roll Budget
+
+**Sub stat budget = 5 cards × 4 rolls = 20r สูงสุด**
+
+เมื่อตั้ง stat target ให้ตรวจ:
+```
+sum ของ ceil(need_i / sub_tier1_i) ≤ 20r (รวม main stat แล้ว)
+```
+- ถ้า sum > 20r แม้หลังหัก main stat → target ไม่สามารถบรรลุทั้งหมดพร้อมกัน → ลด target หรือลด weight ของ secondary stat
+- budget ควรมีเหลือสำหรับ stat อื่น — ไม่ใช่ทุก roll ต้องไปที่ stat เดียว
+
 ### ลำดับ slot ตามบทบาท
 
 | บทบาท | Star | Sky | Moon |
 |---|---|---|---|
-| Assassin/Sweeper | Crit Mult | ATK% (หรือ SPR) | DMG Mult* |
-| Saboteur | Ailment Acc (ถ้า target) | ATK% | DMG Mult* |
+| Assassin/Sweeper | Crit Rate\* | ATK% (หรือ SPR) | DMG Mult† |
+| Saboteur | Ailment Acc (ถ้า target) | ATK% | DMG Mult† |
 | Strategist | Crit Mult (ถ้า scale buff) | SPR | ATK%/ตามสกิล |
 | Medic | ATK%/Ailment Acc | HP%/SPR | Heal Effect |
 | Guardian | — | DEF%/HP% | — |
 
-*ดูสูตร ATK% vs DMGMult ก่อนเสมอ — Speed ให้ใส่ sub stat ถ้าต้องการแค่ turn order
+\*ดูกฎ Star slot ข้างบน — Crit Mult ชนะถ้า cdmg need สูงกว่าและ weight สูงกว่า  
+†ดูสูตร ATK% vs DMGMult ก่อนเสมอ — Speed ให้ใส่ sub stat ถ้าต้องการแค่ turn order
 
 ## ระบบ P5X ที่ต้องรู้
 
