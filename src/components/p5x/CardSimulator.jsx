@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CARD_SETS, CARD_SLOTS, CARD_SUB_STATS, REVELATION_CARDS } from '../../data/p5x-cards.js'
 import { SUB_STAT_KEY } from '../../data/p5x-targets.js'
 import { computeStats, getSpacePassiveBonus, statLabels, parseHiddenAbility } from '../../utils/p5x-stats.js'
@@ -21,6 +21,12 @@ export default function CardSimulator({
   const [subSlots, setSubSlots] = useState({})
   const [expandedStats, setExpandedStats] = useState({})
   const [simSpaceCard, setSimSpaceCard] = useState(null)
+  const [subEditing, setSubEditing] = useState({})
+  const [inclCombatBuff, setInclCombatBuff] = useState(false)
+
+  useEffect(() => {
+    if (Object.keys(subAlloc).length === 0) setSubEditing({})
+  }, [subAlloc])
 
   if (!charTgt) return null
   const simEntries = Object.entries(charTgt).filter(([,[,w]]) => w > 0)
@@ -36,14 +42,12 @@ export default function CardSimulator({
     const s = computeStats(charForSim, selectedWeaponIdx ?? 0, weaponRefine)
     const all = {...s}
     Object.keys(msBonus).forEach(k => { all[k] = (all[k]||0) + msBonus[k] })
-    // Add awareness stats beyond A0 (A0 already included by computeStats)
     for (let i = 1; i <= (simAwarenessLevel ?? 0); i++) {
       const awStats = charForSim.awareness?.[i]?.stats || {}
       Object.entries(awStats).forEach(([k,v]) => { all[k] = (all[k]||0)+v })
     }
     return all
   })()
-  // weapon-only contribution (for split display)
   const baseNoWeapon = (() => {
     const s = computeStats(charForSim, -1, 0)
     const all = {...s}
@@ -69,15 +73,6 @@ export default function CardSimulator({
       return {...prev, [k]: {...cur, [slotId]: Math.max(0, curRolls + delta)}}
     })
 
-  const setRolls = (k, slotId, raw) =>
-    setSubAlloc(prev => {
-      const cur = prev[k] || {}
-      const curRolls = cur[slotId] || 0
-      const otherRolls = totalRollsForSlot(prev, slotId) - curRolls
-      const val = Math.max(0, Math.min(4 - otherRolls, parseInt(raw) || 0))
-      return {...prev, [k]: {...cur, [slotId]: val}}
-    })
-
   const setPct = (k, slotId, pctStr, tier1) =>
     setSubAlloc(prev => {
       const cur = prev[k] || {}
@@ -94,13 +89,11 @@ export default function CardSimulator({
     const current = getCardSlots(cardSlotId)
     const oldKey = current[slotIdx]
 
-    // Clear old stat's rolls
     if (oldKey && oldKey !== newKey) {
       setSubAlloc(prev => ({...prev, [oldKey]: {...(prev[oldKey]||{}), [cardSlotId]: 0}}))
     }
 
     const newSlots = [...current]
-    // If new stat already used in another slot of same card, clear that slot
     if (newKey) {
       const dupIdx = current.findIndex((k, i) => k === newKey && i !== slotIdx)
       if (dupIdx !== -1) newSlots[dupIdx] = null
@@ -109,7 +102,6 @@ export default function CardSimulator({
     setSubSlots(prev => ({...prev, [cardSlotId]: newSlots}))
   }
 
-  // main stat contributions
   const mainFromSel = {}
   Object.entries(mainStatSel).forEach(([slotId, label]) => {
     if (!label) return
@@ -118,7 +110,6 @@ export default function CardSimulator({
     if (ms?.key) mainFromSel[ms.key] = (mainFromSel[ms.key]||0) + ms.max
   })
 
-  // sub contributions
   const subFromAlloc = {}
   simEntries.forEach(([k]) => {
     subFromAlloc[k] = SLOT_IDS.reduce((sum, slotId) => {
@@ -141,6 +132,20 @@ export default function CardSimulator({
     .map(c => { const m = c.match(/^(.+?)\s+4pc$/i); return m ? m[1].trim() : null })
     .find(Boolean) || 'passive'
 
+  // Combat buff logic for summary section
+  const cbTypes = new Set((currentChar?.combatBuffs||[]).map(b => b.type).filter(Boolean))
+  const hasCombatBuffs = (currentChar?.combatBuffs||[]).length > 0
+
+  // Static combat buffs (no .type, has .stats) — only applied when toggled
+  const staticCombatBuffStats = {}
+  if (inclCombatBuff) {
+    ;(currentChar?.combatBuffs||[]).forEach(b => {
+      if (!b.type && b.stats) {
+        Object.entries(b.stats).forEach(([k,v]) => { staticCombatBuffStats[k] = (staticCombatBuffStats[k]||0) + v })
+      }
+    })
+  }
+
   return (
     <div className="info-panel">
       <div className="info-label">🎛️ จำลอง Card Stats</div>
@@ -153,7 +158,6 @@ export default function CardSimulator({
           const full = usedRolls >= 4
           const cardSlots = getCardSlots(slot.id)
 
-          // Build option list for this pool
           const poolOptions = Object.entries(pool).map(([label, tiers]) => ({
             key: SUB_STAT_KEY[label],
             label,
@@ -235,6 +239,9 @@ export default function CardSimulator({
                   const selKey = cardSlots[i]
                   const opt = selKey ? poolOptions.find(o => o.key === selKey) : null
                   const rolls = selKey ? ((subAlloc[selKey]||{})[slot.id] || 0) : 0
+                  const editKey = selKey ? `${selKey}-${slot.id}` : null
+                  const curPct = opt ? +(rolls * opt.t1).toFixed(1) : 0
+                  const displayVal = editKey && editKey in subEditing ? subEditing[editKey] : curPct
                   return (
                     <div key={i} className={'sim-sub-row' + (selKey ? ' locked' : '')}>
                       <select
@@ -251,12 +258,15 @@ export default function CardSimulator({
                         <>
                           <button className="alloc-btn" onClick={() => bump(selKey, slot.id, -1)} disabled={rolls===0}>−</button>
                           <input
-                            key={`${selKey}-${slot.id}-${rolls}`}
                             type="text"
                             inputMode="decimal"
                             className="alloc-num-input"
-                            defaultValue={+(rolls * opt.t1).toFixed(1)}
-                            onBlur={e => setPct(selKey, slot.id, e.target.value, opt.t1)}
+                            value={displayVal}
+                            onChange={e => setSubEditing(prev => ({...prev, [editKey]: e.target.value}))}
+                            onBlur={e => {
+                              setPct(selKey, slot.id, e.target.value, opt.t1)
+                              setSubEditing(prev => { const n={...prev}; delete n[editKey]; return n })
+                            }}
                           />
                           <span className="alloc-unit">{opt.unit || ''}</span>
                           <button className="alloc-btn" onClick={() => bump(selKey, slot.id, +1)} disabled={full && rolls===0}>+</button>
@@ -276,18 +286,31 @@ export default function CardSimulator({
 
       {/* Totals */}
       <div style={{marginTop:12, borderTop:'1px solid #333', paddingTop:8}}>
-        <div className="alloc-section-label">สรุป</div>
+        <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:6}}>
+          <div className="alloc-section-label" style={{margin:0}}>สรุป</div>
+          {hasCombatBuffs && (
+            <button
+              className={'refine-btn'+(inclCombatBuff?' active':'')}
+              onClick={() => setInclCombatBuff(v => !v)}
+              style={{fontSize:'0.6rem'}}>
+              + Combat Buff
+            </button>
+          )}
+        </div>
         {simEntries.map(([k, [ideal]]) => {
-          const spacePassiveVal = simSpacePassive[k] || 0
-          const sunKissedVal = (k==='cdmg' && hasSunKissed) ? sunKissedCdmg : 0
-          const subVal = subFromAlloc[k] || 0
+          const simSpacePassiveVal = simSpacePassive[k] || 0
+          const sunKissedVal_raw = (k==='cdmg' && hasSunKissed) ? sunKissedCdmg : 0
+          // Typed combat buffs: only include when toggled
+          const spacePassiveVal = cbTypes.has('spacePassiveB') ? (inclCombatBuff ? simSpacePassiveVal : 0) : simSpacePassiveVal
+          const sunKissedVal    = cbTypes.has('sunKissedB')    ? (inclCombatBuff ? sunKissedVal_raw   : 0) : sunKissedVal_raw
+          const staticBuffVal   = staticCombatBuffStats[k] || 0
+          const subVal  = subFromAlloc[k] || 0
           const mainVal = mainFromSel[k] || 0
           const baseVal = base0[k] || 0
-          const total = baseVal + mainVal + subVal + spacePassiveVal + sunKissedVal
+          const total = baseVal + mainVal + subVal + spacePassiveVal + sunKissedVal + staticBuffVal
           const reach = total >= ideal
 
           const weaponVal = baseVal - (baseNoWeapon[k] || 0)
-          // Decompose char contribution into individual sources
           const charParts = []
           const baseStatV = charForSim.baseStats?.[k] || 0
           if (baseStatV !== 0) charParts.push({label:'base', val:baseStatV, color:'#aaaaaa'})
@@ -312,13 +335,19 @@ export default function CardSimulator({
           }
           const msV = msBonus[k] || 0
           if (msV) charParts.push({label:'Mindscape M5', val:msV, color:'#ff88ff'})
+          const staticBuffParts = inclCombatBuff
+            ? (currentChar?.combatBuffs||[]).filter(b => !b.type && b.stats && b.stats[k]).map(b => ({
+                label: b.name, val: b.stats[k], color: '#ff88aa', show: true
+              }))
+            : []
           const parts = [
             ...charParts.map(p => ({...p, show: true})),
-            {label: 'อาวุธ',     val: weaponVal,       color: '#ffaa66', show: weaponVal !== 0},
-            {label: 'main stat', val: mainVal,         color: '#8888ff', show: mainVal > 0},
-            {label: 'sub stat',  val: subVal,          color: '#88ccff', show: subVal > 0},
-            {label: spacePassiveName, val: spacePassiveVal, color: '#88ffcc', show: spacePassiveVal > 0},
-            {label: 'Sun-kissed',    val: sunKissedVal,    color: '#ffcc44', show: sunKissedVal > 0},
+            {label: 'อาวุธ',          val: weaponVal,       color: '#ffaa66', show: weaponVal !== 0},
+            {label: 'main stat',      val: mainVal,         color: '#8888ff', show: mainVal > 0},
+            {label: 'sub stat',       val: subVal,          color: '#88ccff', show: subVal > 0},
+            {label: spacePassiveName, val: spacePassiveVal,  color: '#88ffcc', show: spacePassiveVal > 0},
+            {label: 'Sun-kissed',     val: sunKissedVal,     color: '#ffcc44', show: sunKissedVal > 0},
+            ...staticBuffParts,
           ]
 
           const isExpanded = expandedStats[k]
