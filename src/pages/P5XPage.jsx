@@ -59,9 +59,10 @@ export default function P5XPage() {
   const [simCardSet, setSimCardSet] = useState(null)
   const [simAwarenessLevel, setSimAwarenessLevel] = useState(0)
   const [inclMain, setInclMain] = useState(false)
+  const [inclCombatBuff, setInclCombatBuff] = useState(false)
 
   useEffect(() => { if (charName) setMobileTab('detail') }, [charName])
-  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}); setSimCardSet(null); setSimAwarenessLevel(0); setInclMain(false) }, [charName])
+  useEffect(() => { setUserStats({atk:0, crit:0, cdmg:0, dmgMulti:0, hp:0, def:0, heal:0, spd:0}); setCharStage(null); setOpenSpaceCard(null); setSubAlloc({}); setMainStatSel({}); setSimCardSet(null); setSimAwarenessLevel(0); setInclMain(false); setInclCombatBuff(false) }, [charName])
 
   const currentChar = CHARACTERS.find(c => c.name === charName) || null
   const charTgt = (() => {
@@ -96,8 +97,16 @@ export default function P5XPage() {
       })
     return result
   })()
+  const combatBuffStats = (() => {
+    if (!inclCombatBuff || !currentChar?.combatBuffs?.length) return {}
+    const result = {}
+    currentChar.combatBuffs.forEach(b => {
+      Object.entries(b.stats).forEach(([k, v]) => { result[k] = (result[k]||0) + v })
+    })
+    return result
+  })()
   const totalStats = Object.fromEntries(
-    Object.keys(stats).map(k => [k, (stats[k]||0) + (userStats[k]||0) + (cardSimStats[k]||0)])
+    Object.keys(stats).map(k => [k, (stats[k]||0) + (userStats[k]||0) + (cardSimStats[k]||0) + (combatBuffStats[k]||0)])
   )
   const effHp = ((1 + totalStats.hp / 100) * (1 + totalStats.def / 100) * 100 - 100).toFixed(1)
 
@@ -200,7 +209,7 @@ export default function P5XPage() {
       if (weight === 0) return
       if (prioKeys.includes(key)) weight = Math.round(weight * 1.4)
       totalWeight += weight
-      const val = (stats[key] || 0) + (userStats[key] || 0) + (cardSimStats[key] || 0)
+      const val = (stats[key] || 0) + (userStats[key] || 0) + (cardSimStats[key] || 0) + (combatBuffStats[key] || 0)
       const ratio = ideal > 0 ? Math.min(val / ideal, 1.0) : 0
       earnedScore += ratio * weight
       breakdown.push({ label: statLabels[key], val: key==='spd'?Math.round(val):val.toFixed(1)+'%', ratio, ideal: key==='spd'?Math.round(ideal):ideal+'%' })
@@ -873,6 +882,11 @@ export default function P5XPage() {
                   const base0 = {...base0raw}
                   Object.entries(spacePassiveB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
                   Object.entries(sunKissedB).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                  if (inclCombatBuff && currentChar.combatBuffs?.length) {
+                    currentChar.combatBuffs.forEach(b => {
+                      Object.entries(b.stats).forEach(([k,v]) => { base0[k] = (base0[k]||0)+v })
+                    })
+                  }
                   // Compute recommended main stat bonus (same exclusivity logic as the recommender)
                   const { recMainBonus, recMainSources } = (() => {
                     const bonus = {}, srcs = []
@@ -913,6 +927,11 @@ export default function P5XPage() {
                         {Object.keys(recMainBonus).length > 0 && (
                           <button className={'refine-btn'+(inclMain?' active':'')} onClick={() => setInclMain(v => !v)} style={{fontSize:'0.6rem'}}>
                             + Main Stat
+                          </button>
+                        )}
+                        {currentChar.combatBuffs?.length > 0 && (
+                          <button className={'refine-btn'+(inclCombatBuff?' active':'')} onClick={() => setInclCombatBuff(v => !v)} style={{fontSize:'0.6rem'}}>
+                            + Combat Buff
                           </button>
                         )}
                       </div>
@@ -1005,6 +1024,12 @@ export default function P5XPage() {
                         if (inclMain) {
                           recMainSources.forEach(({ slot, key, label, max }) => {
                             if (trackedKeys.has(key)) sources.push({ label:`${slot} main: ${label}`, contrib:{ [key]: max } })
+                          })
+                        }
+                        if (inclCombatBuff && currentChar.combatBuffs?.length) {
+                          currentChar.combatBuffs.forEach(b => {
+                            const contrib = Object.fromEntries(Object.entries(b.stats).filter(([k]) => trackedKeys.has(k)))
+                            if (Object.keys(contrib).length) sources.push({ label:b.name, contrib })
                           })
                         }
                         if (!sources.length) return null

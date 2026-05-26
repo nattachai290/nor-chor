@@ -2623,6 +2623,9 @@ export const CHARACTERS = [
       "คู่กับ Fire ally (Panther/Howler) เพื่อ Fire Resonance synergy และ DEF down ร่วมกัน",
     ],
     realName:'Firecracker Yaoling', persona:'Meng Po',
+    combatBuffs:[
+      {name:'Happy New Year!', stats:{atk:42}, note:'เพิ่ม ATK 42% เมื่อเริ่มต้นการต่อสู้ 2 เทิร์น รีเซ็ตทุกครั้งที่ Technical ถูกเปิด — ใช้งานได้ตลอดในทางปฏิบัติ'},
+    ],
     weakRes:{ Fire:'res', Ice:'normal', Electric:'normal', Wind:'wk', Nuclear:'normal', Curse:'normal', Bless:'normal', Physical:'normal', Almighty:'normal', Psychokinesis:'normal' },
     skills:[
       {name:'Scarlet Surprise',     type:'Skill',   element:'Fire', sp:20,
