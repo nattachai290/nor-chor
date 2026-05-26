@@ -714,11 +714,11 @@ export default function P5XPage() {
                           if (!key) return
                           const [, w] = charTgt[key] || [0, 0]
                           if (!w) return
-                          // Exclusive stats (only 1 slot) score higher than shared ones
-                          // Always recommend best stat regardless of whether target is already met
                           const score = w / (statSlotCount[key] || 1)
                           if (score > bestScore) { bestScore = score; bestLabel = label }
                         })
+                        // Moon/Star/Sky always show something — fallback to first keyed stat
+                        if (!bestLabel) bestLabel = (slot.mainStats.find(({key}) => key) || {}).label || null
                         return (
                           <div key={slot.id} className="slot-row">
                             <span className="slot-name">{slot.id}</span>
