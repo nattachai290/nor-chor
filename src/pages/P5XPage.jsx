@@ -219,6 +219,21 @@ export default function P5XPage() {
     return result
   })()
 
+  const flatMainStats = (() => {
+    const FLAT_MAP = {'Attack': 'atk', 'Defense': 'def', 'HP': 'hp'}
+    const result = {}
+    Object.entries(mainStatSel).forEach(([slotId, label]) => {
+      if (!label) return
+      const slot = CARD_SLOTS.find(s => s.id === slotId)
+      const ms = slot?.mainStats.find(m => m.label === label)
+      if (ms && !ms.key) {
+        const k = FLAT_MAP[ms.label]
+        if (k) result[k] = (result[k]||0) + ms.max
+      }
+    })
+    return result
+  })()
+
   const lv80arr = currentChar?.baseStatsLv80
   const lv80all = lv80arr ? (Array.isArray(lv80arr) ? lv80arr : [lv80arr]) : null
   const lv80 = lv80all ? lv80all[Math.min(ascension, lv80all.length - 1)] : null
@@ -226,9 +241,9 @@ export default function P5XPage() {
   const wAtk = selWeapon?.atk || 0
   const wHp  = selWeapon?.hp  || 0
   const wDef = selWeapon?.def || 0
-  const finalAtk = lv80 ? Math.round((lv80.atk + wAtk) * (1 + totalStats.atk / 100)) : null
-  const finalHp  = lv80 ? Math.round((lv80.hp  + wHp)  * (1 + totalStats.hp  / 100)) : null
-  const finalDef = lv80 ? Math.round((lv80.def + wDef)  * (1 + totalStats.def / 100)) : null
+  const finalAtk = lv80 ? Math.round((lv80.atk + wAtk + (flatMainStats.atk||0)) * (1 + totalStats.atk / 100)) : null
+  const finalHp  = lv80 ? Math.round((lv80.hp  + wHp  + (flatMainStats.hp||0))  * (1 + totalStats.hp  / 100)) : null
+  const finalDef = lv80 ? Math.round((lv80.def + wDef + (flatMainStats.def||0))  * (1 + totalStats.def / 100)) : null
   const finalSpd = totalStats.spd.toFixed(1)
 
   const filtered = CHARACTERS.filter(c =>
@@ -799,9 +814,9 @@ export default function P5XPage() {
                     <div className="section-title" style={{ marginBottom: 8 }}>📊 สถิติรวม</div>
                     {lv80 && (
                       <div className="final-stats-row">
-                        <div className="final-stat"><span className="fs-label">ATK</span><span className="fs-val">{lv80 ? Math.round((lv80.atk + wAtk) * (1 + simStats.atk / 100)).toLocaleString() : '—'}</span></div>
-                        <div className="final-stat"><span className="fs-label">HP</span><span className="fs-val">{lv80 ? Math.round((lv80.hp + wHp) * (1 + simStats.hp / 100)).toLocaleString() : '—'}</span></div>
-                        <div className="final-stat"><span className="fs-label">DEF</span><span className="fs-val">{lv80 ? Math.round((lv80.def + wDef) * (1 + simStats.def / 100)).toLocaleString() : '—'}</span></div>
+                        <div className="final-stat"><span className="fs-label">ATK</span><span className="fs-val">{lv80 ? Math.round((lv80.atk + wAtk + (flatMainStats.atk||0)) * (1 + simStats.atk / 100)).toLocaleString() : '—'}</span></div>
+                        <div className="final-stat"><span className="fs-label">HP</span><span className="fs-val">{lv80 ? Math.round((lv80.hp + wHp + (flatMainStats.hp||0)) * (1 + simStats.hp / 100)).toLocaleString() : '—'}</span></div>
+                        <div className="final-stat"><span className="fs-label">DEF</span><span className="fs-val">{lv80 ? Math.round((lv80.def + wDef + (flatMainStats.def||0)) * (1 + simStats.def / 100)).toLocaleString() : '—'}</span></div>
                         <div className="final-stat"><span className="fs-label">Speed</span><span className="fs-val">{simStats.spd.toFixed(1)}</span></div>
                       </div>
                     )}
