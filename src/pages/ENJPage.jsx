@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 // สร้าง Client ID ที่ https://console.cloud.google.com → APIs & Services → Credentials
 // เพิ่ม Authorized JS origins: https://nattachai290.github.io
 // เพิ่ม Authorized redirect URIs: https://nattachai290.github.io/enj-excavator/oauth-callback.html
-const DRIVE_CLIENT_ID = ''   // ← วาง Client ID ของคุณที่นี่
+const DRIVE_CLIENT_ID = '45222114320-a9vtesr80s6publ5q3okffv6tsa36at8.apps.googleusercontent.com'
 const DRIVE_FILE = 'enj-excavator-data.json'
 // ────────────────────────────────────────────────────────────────────────────
 
