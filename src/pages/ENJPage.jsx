@@ -176,8 +176,9 @@ export default function ENJPage() {
     try {
       const data = JSON.stringify({ version: 1, dragon, boost, counts, usteps })
       const existing = await driveSearch(driveToken)
+      let resp
       if (existing) {
-        await fetch(`https://www.googleapis.com/upload/drive/v3/files/${existing.id}?uploadType=media`, {
+        resp = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${existing.id}?uploadType=media`, {
           method: 'PATCH',
           headers: { Authorization: `Bearer ${driveToken}`, 'Content-Type': 'application/json' },
           body: data,
@@ -186,13 +187,17 @@ export default function ENJPage() {
         const form = new FormData()
         form.append('metadata', new Blob([JSON.stringify({ name: DRIVE_FILE, parents: ['appDataFolder'] })], { type: 'application/json' }))
         form.append('file', new Blob([data], { type: 'application/json' }))
-        await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+        resp = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
           method: 'POST', headers: { Authorization: `Bearer ${driveToken}` }, body: form,
         })
       }
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}))
+        throw new Error(err?.error?.message || `HTTP ${resp.status}`)
+      }
       setDriveStatus('connected'); setDriveMsg('✅ บันทึกแล้ว')
-    } catch { setDriveStatus('error'); setDriveMsg('❌ บันทึกไม่สำเร็จ') }
-    setTimeout(() => setDriveMsg(''), 2500)
+    } catch (e) { setDriveStatus('error'); setDriveMsg(`❌ บันทึกไม่สำเร็จ: ${e.message}`) }
+    setTimeout(() => setDriveMsg(''), 4000)
   }
 
   async function loadFromDrive() {
@@ -204,13 +209,17 @@ export default function ENJPage() {
       const resp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
         headers: { Authorization: `Bearer ${driveToken}` }
       })
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}))
+        throw new Error(err?.error?.message || `HTTP ${resp.status}`)
+      }
       const d = await resp.json()
       if (d.counts) setCounts(d.counts.slice(0, G.length).map(v => Number(v) || 0))
       if (d.usteps) setUsteps(d.usteps.slice(0, G.length).map(v => Number(v) || 0))
       if (d.dragon !== undefined) setDragon(Number(d.dragon) || 0)
       if (d.boost !== undefined) setBoost(Number(d.boost) || 0)
       setDriveStatus('connected'); setDriveMsg('✅ โหลดแล้ว')
-    } catch { setDriveStatus('error'); setDriveMsg('❌ โหลดไม่สำเร็จ') }
+    } catch (e) { setDriveStatus('error'); setDriveMsg(`❌ โหลดไม่สำเร็จ: ${e.message}`) }
     setTimeout(() => setDriveMsg(''), 2500)
   }
   // ──────────────────────────────────────────────────────────────────────────
