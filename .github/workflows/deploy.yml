@@ -1,7 +1,7 @@
 name: Deploy to GitHub Pages
 on:
   push:
-    branches: [main, claude/pensive-franklin-g60mW]
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -16,12 +16,10 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run build
-      - if: github.ref == 'refs/heads/claude/pensive-franklin-g60mW'
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
   deploy:
-    if: github.ref == 'refs/heads/claude/pensive-franklin-g60mW'
     needs: build
     runs-on: ubuntu-latest
     environment:
